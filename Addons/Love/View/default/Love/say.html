@@ -1,0 +1,144 @@
+<!DOCTYPE html5>
+<!-- saved from url=(0022)http://www.hlo.cc/bbq/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta  http-equiv="pragma"  content="no-cache">
+
+<meta  http-equiv="cache-control"  content="no-cache">
+<meta  name="viewport"  content="width=device-width,target-densitydpi=middle-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>表白墙 - 微诚毅</title>
+<link  rel="stylesheet"  type="text/css"  href="./表白墙 - 微诚毅_files/style.css">
+</head>
+<body>
+<div  id="bg">
+	<div  id="top">
+		<ul  id="num">
+			 <li>1</li><li>3</li>			<div  class="clear"></div>
+		</ul>
+		<div  id="right" >
+			I love you
+			<p>次告白</p>
+		</div>
+		<span ><b  class="iconfont">㑃</b>我想说</span>
+	</div>
+</div>
+<form  action=""  method="get"  id="search">
+		<input  type="text"  name="name"  value="搜索看被表白了吗?"    autocomplete="off"  required="">
+		<div  class="iconfont"  id="submit">󰁌</div>
+</form>
+<ul  id="item">
+		<li  style="top: 0px; opacity: 1;"><div  class="result iconfont senting">󰀌</div><div  class="box"><div  class="info">TO <b>式坚</b><i>2014-07-29</i></div><a  href="http://www.hlo.cc/bbq/show.php?id=41"  class="content">式坚我宣你~！</a><div   class="like iconfont"> 63</div><a  href="http://www.hlo.cc/bbq/show.php?id=41"  class="comment iconfont"> 4</a></div></li><li  style="top: 0px; opacity: 1;"><div  class="result iconfont senting">󰀌</div><div  class="box"><div  class="info">TO <b>啦啦啦</b><i>2014-07-29</i></div><a  href="http://www.hlo.cc/bbq/show.php?id=40"  class="content">啦啦啦</a><div   class="like iconfont"> 8</div><a  href="http://www.hlo.cc/bbq/show.php?id=40"  class="comment iconfont"> 2</a></div></li><li  style="top: 0px; opacity: 1;"><div  class="result iconfont senting">󰀌</div><div  class="box"><div  class="info">TO <b>sdfdsf</b><i>2014-07-29</i></div><a  href="http://www.hlo.cc/bbq/show.php?id=39"  class="content">dfsssssssssss</a><div   class="like iconfont"> 3</div><a  href="http://www.hlo.cc/bbq/show.php?id=39"  class="comment iconfont"> 1</a></div></li><li  style="top: 0px; opacity: 1;"><div  class="result iconfont senting">󰀌</div><div  class="box"><div  class="info">TO <b>asdasd</b><i>2014-07-29</i></div><a  href="http://www.hlo.cc/bbq/show.php?id=38"  class="content">1111111111111</a><div   class="like iconfont"> 3</div><a  href="http://www.hlo.cc/bbq/show.php?id=38"  class="comment iconfont"> 1</a></div></li><li  style="top: 0px; opacity: 1;"><div  class="result iconfont senting">󰀌</div><div  class="box"><div  class="info">TO <b></b><i>2014-07-29</i></div><a  href="http://www.hlo.cc/bbq/show.php?id=37"  class="content"></a><div   class="like iconfont"> 1</div><a  href="http://www.hlo.cc/bbq/show.php?id=37"  class="comment iconfont"> 1</a></div></li></ul>
+<ul  id="page">
+		
+		
+		
+		<li><a  href="http://www.hlo.cc/bbq/index.php?page=2">下一页</a></li>
+		<div  class="clear"></div>
+</ul>
+<form  action="http://www.hlo.cc/bbq/InsetToDB.php"  method="post"  id="add">
+	我想写给:<input  type="text"  name="to"><br>
+	我的名字:<input  type="text"  name="name"><br>
+	她的电话:<input  type="text"  name="phone"><br><br>
+	我想说:<textarea  rows="3"  cols="20"  name="content"></textarea>
+	<div  id="send" >发送</div>
+</form>
+<script>
+
+
+var xmlHttp
+
+function likes(id,l)
+{ 
+xmlHttp=GetXmlHttpObject()
+if (xmlHttp==null)
+ {
+ alert ("Browser does not support HTTP Request")
+ return
+ }
+l.innerHTML='&#xe601; '+(parseInt(l.innerHTML.substr(1,5))+1);
+var url="changeLikeDislike.php"
+url=url+"?id="+id;
+url=url+"&type=likes"
+xmlHttp.onreadystatechange=stateChanged 
+xmlHttp.open("GET",url,true)
+xmlHttp.send(null)
+}
+
+function stateChanged() 
+{ 
+if (xmlHttp.readyState==4 || xmlHttp.readyState=="complete")
+ { 
+	//alert(xmlHttp.responseText)
+ }
+}
+
+function GetXmlHttpObject()
+{
+var xmlHttp=null;
+try
+ {
+ // Firefox, Opera 8.0+, Safari
+ xmlHttp=new XMLHttpRequest();
+ }
+catch (e)
+ {
+ //Internet Explorer
+ try
+  {
+  xmlHttp=new ActiveXObject("Msxml2.XMLHTTP");
+  }
+ catch (e)
+  {
+  xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+ }
+return xmlHttp;
+}
+
+
+
+
+function add(){
+	var add =document.getElementById('add')
+	add.style.display='block';
+	add.style.opacity='0.2';
+	move(add,{'opacity':100,'top':114},5);
+	document.body.scrollTop =0;
+
+}
+function hadd(){
+	var add =document.getElementById('add')
+	if(add.style.display=='block'){
+	move(add,{'opacity':0,'top':214},5);
+	add.style.display='none';
+	}
+
+}
+function submit(){
+ document.getElementById('add').submit();
+}
+window.onload=function()
+{
+	var li=document.getElementById("item").getElementsByTagName("li");
+	for(var i=0;i<li.length;i++){
+			li[i].style.top='30px';
+			li[i].style.opacity='0.2';
+			move(li[i],{'opacity':100,'top':0},8);
+			var fdiv=li[i].firstChild;
+			if(fdiv.innerHTML=='senting'){
+				fdiv.innerHTML='&#xf000c;'
+			}else if(fdiv.innerHTML=='bad'){
+				fdiv.innerHTML='&#xf014e;'
+			}else{
+				fdiv.innerHTML='&#xe62c;'
+			}
+	}
+	
+}
+
+
+
+	function move(obj,json,sv,fnEnd){function getStyle(obj,attr){if(obj.currentStyle){return obj.currentStyle[attr]}else{return getComputedStyle(obj,false)[attr]}};clearInterval(obj.timer);obj.timer=setInterval(function(){var isAllCompleted=true;for(attr in json){var attrValue=0;switch(attr){case'opacity':attrValue=Math.round(parseFloat(getStyle(obj,attr))*100);break;default:attrValue=parseInt(getStyle(obj,attr))};var speed=(json[attr]-attrValue)/(sv||4);speed=speed>0?Math.ceil(speed):Math.floor(speed);if(attrValue!=json[attr])isAllCompleted=false;switch(attr){case'opacity':{obj.style.filter="alpha(opacity="+(attrValue+speed)+")";obj.style.opacity=(attrValue+speed)/100};break;default:obj.style[attr]=attrValue+speed+'px'}};if(isAllCompleted){clearInterval(obj.timer);if(fnEnd)fnEnd()}},30)}
+
+</script>
+
+</body></html>

@@ -1,0 +1,41 @@
+<include file="Public/mobile_head"/>
+<include file="header"/>
+<link rel="stylesheet" href="__STATIC__/mui.3.5.0/css/mui.min.css?v={:SITE_VERSION}">
+<link href="{:ADDON_PUBLIC_PATH}/css.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+<body >
+<div  class="mui-content">
+<div class="mui-card">
+    <div class="mui-card-header"><p class="name"><center><strong>{$data.translationName}</strong></center><br/></p></div>
+    <div class="mui-card-content">
+        <div class="shop_intro">
+            <img  src="{$data.picurl|get_cover_url}"/>
+            <p class="intro">
+                电话：{$data.mobile}<br/>
+            微信：{$data.wechat}<br/>
+           </p>
+            <div class="content">{$data.intro}</div>
+        </div>
+    </div>
+    </div>
+    </div>
+<include file="_footer"/>
+<script src="__STATIC__/mui.3.5.0/js/mui.min.js?v={:SITE_VERSION}"></script>
+<script>
+    /*公共底部菜单js*/
+    mui(".bottom_menu").on('tap','.list-page-bottom',function(){
+        //获取id
+        var from = this.getAttribute("data");
+        if(from==1){
+            var url = "{:addons_url('HumanTranslation://Wap/index', array('token'=>$token))}";
+        }else if(from==2){
+            var url = "{:addons_url('HumanTranslation://Wap/translate', array('token'=>$token))}";
+        }else{
+            var url = "{:addons_url('HumanTranslation://Wap/ucenter', array('token'=>$token))}";
+        }
+        mui.openWindow({
+            url: url,
+        })
+    })
+</script>
+</body>
+</html>

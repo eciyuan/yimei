@@ -1,0 +1,103 @@
+<!DOCTYPE html5>
+<!-- saved from url=(0036)http://www.hlo.cc/bbq/show.php?id=41 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta  http-equiv="pragma"  content="no-cache">
+
+<title>表白墙 - 微诚毅</title>
+<meta  http-equiv="cache-control"  content="no-cache">
+<meta  name="viewport"  content="width=device-width,target-densitydpi=middle-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link  rel="stylesheet"  type="text/css"  href="./表白墙 - 微诚毅2_files/style.css">
+</head>
+<body  style="background:#fff">
+<div  id="items">
+	<div  class="infos" >
+	 TO <b>式坚</b><i>2014-07-29</i></div><p  class="contents">式坚我宣你~！</p><div  id="replay"><span  class="iconfont senting">󰅎 </span><p>您的告白正在发送中..</p> 
+	</div>
+</div>
+<ul  id="commentl">
+
+<li><span  class="iconfont"  style="background-color: rgb(232, 160, 89); background-position: initial initial; background-repeat: initial initial;">㐲</span>他喜欢你</li><li><span  class="iconfont"  style="background-color: rgb(89, 217, 232); background-position: initial initial; background-repeat: initial initial;"></span>加油！</li><li><span  class="iconfont"  style="background-color: rgb(89, 217, 232); background-position: initial initial; background-repeat: initial initial;">󰁁</span>碉堡了</li> 
+	
+	
+</ul>
+<form  action="http://www.hlo.cc/bbq/addcomment.php"  method="post"  id="addcom">
+	<input  type="text"  name="comment"  value="你的看法"    autocomplete="off"  required=""><br>
+	<input  type="text"  name="id"  value="41 "  style="display:none">
+	<div  id="acom" >发送</div>
+</form>
+<div  id="fake" >
+	你的看法
+	<div  id="acom">发送</div>
+</div>
+<script>
+function addcom(){
+	var addcom =document.getElementById('addcom')
+	var fake =document.getElementById('fake')
+	fake.style.display='none';
+	addcom.style.display='block';
+	addcom.style.opacity='0.2';
+	move(addcom,{'opacity':100,'top':50},5);
+	document.body.scrollTop =0;
+}
+function haddcom(){
+	var addcom =document.getElementById('addcom')
+	var fake =document.getElementById('fake')
+	if(addcom.style.display=='block'){
+		move(addcom,{'opacity':0,'top':214},5);
+		addcom.style.display='none';
+		fake.style.display='block';
+	}
+
+}
+function submit(){
+ document.getElementById('addcom').submit();
+}
+window.onload=function()
+{
+	var an=new Array("&#xf00ad;","&#x3432;","&#xf0041;","&#xf0041;","&#xe619;","&#xe61a;","&#xe603;")
+	var bg=new Array("#A5FA75","#fe6f6f","#a56ffe","#6fb5fe","#59d9e8","#e8a059","#e6dd4f")
+
+	var li=document.getElementById("commentl").getElementsByTagName("span");
+	for(var i=0;i<li.length;i++){
+		li[i].innerHTML=an[GetRandomNum(0,6)];
+		li[i].style.background=bg[GetRandomNum(0,6)];
+	}
+
+	var fdiv=document.getElementById("replay").firstChild;
+	for(var i=0;i<fdiv.length;i++){
+		if(fdiv[0].innerHTML=='senting'){
+			fdiv.innerHTML='&#xf000c;'
+		}else if(fdiv[0].innerHTML=='bad'){
+			fdiv[0].innerHTML='&#xf014e;'
+		}else{
+			fdiv[0].innerHTML='&#xe62c;'
+		}
+	}
+	
+	
+	
+	var ldiv=document.getElementById("replay").getElementsByTagName("p");
+	for(var i=0;i<ldiv.length;i++){
+		if(ldiv[0].innerHTML==''){
+		ldiv[0].innerHTML='您的告白正在发送中..'
+	}
+	}
+	
+	
+
+	
+}
+
+function GetRandomNum(Min,Max){ 
+ 
+        var Range = Max - Min; 
+ 
+        var Rand = Math.random(); 
+ 
+        return(Min + Math.round(Rand * Range)); 
+ 
+} 
+	function move(obj,json,sv,fnEnd){function getStyle(obj,attr){if(obj.currentStyle){return obj.currentStyle[attr]}else{return getComputedStyle(obj,false)[attr]}};clearInterval(obj.timer);obj.timer=setInterval(function(){var isAllCompleted=true;for(attr in json){var attrValue=0;switch(attr){case'opacity':attrValue=Math.round(parseFloat(getStyle(obj,attr))*100);break;default:attrValue=parseInt(getStyle(obj,attr))};var speed=(json[attr]-attrValue)/(sv||4);speed=speed>0?Math.ceil(speed):Math.floor(speed);if(attrValue!=json[attr])isAllCompleted=false;switch(attr){case'opacity':{obj.style.filter="alpha(opacity="+(attrValue+speed)+")";obj.style.opacity=(attrValue+speed)/100};break;default:obj.style[attr]=attrValue+speed+'px'}};if(isAllCompleted){clearInterval(obj.timer);if(fnEnd)fnEnd()}},30)}
+</script>
+
+</body></html>

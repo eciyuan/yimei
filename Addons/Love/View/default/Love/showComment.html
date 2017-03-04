@@ -1,0 +1,225 @@
+﻿
+<!DOCTYPE HTML5>
+<html>
+<head>
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>“{$info.nickname}”向“{$info.lover}”表白啦——艾豆乐园表白墙</title>
+<meta http-equiv="cache-control" content="no-cache">
+<meta name="viewport" content="width=device-width,target-densitydpi=middle-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<link  rel="stylesheet" type="text/css" href="{:ADDON_PUBLIC_PATH}/img/style.css" />
+</head>
+<body style="background:#fff">
+<div id="items">
+	<div class="infos" onclick="haddcom()">
+	 TO <b>{$info.lover}</b><i>{$info.cTime|time_format}</i></div><p class='contents' style="font-size:14px;line-height:24px;">{$info.content}</p><div style="text-align:right"><i>from</i>&nbsp;&nbsp;<b>{$info.nickname}</b></div><div id='replay'><span class='iconfont senting'>&#xf014e; </span><p><if condition="$info['state'] eq 0">表白失败<elseif condition="$info['state'] eq 1"/>表白成功<else />表白ing</if></p> 
+	</div>
+</div>
+
+
+<!--分享到朋友圈-->
+<div id="mcover" onclick="document.getElementById('mcover').style.display='';" style="display:none;">
+                    <img src="http://help.gz.1251011432.cee.myqcloud.com/messagehelper/templates/images/guide.png" />
+                </div>
+   <div class="text" id="content">
+                    <div id="mess_share">
+                        <div id="share_1">
+                            <button class="button2" onclick="document.getElementById('mcover').style.display='block';">
+                                <img src="http://help.gz.1251011432.cee.myqcloud.com/messagehelper/templates/images/icon_msg.png" width="64" height="64" />
+                                 发送给朋友
+                            </button>
+                        </div>
+                        <div id="share_2">
+                            <button class="button2" onclick="document.getElementById('mcover').style.display='block';">
+                                <img src="http://help.gz.1251011432.cee.myqcloud.com/messagehelper/templates/images/icon_timeline.png" width="64" height="64" />
+                                 分享到朋友圈
+                            </button>
+                        </div>
+                        <div class="clr"></div>
+                    </div>
+                </div>
+
+<style>
+#mcover {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    z-index: 20000;
+ }
+ #mcover img {
+    position: fixed;
+    right: 18px;
+    top: 5px;
+    width: 260px!important;
+    height: 180px!important;
+    z-index: 20001;
+ }
+ .text {
+    margin: 15px 0;
+    font-size: 14px;
+    word-wrap: break-word;
+    color: #727272;
+ }
+ #mess_share {
+    margin: 15px 0;
+    display: block;
+ }
+ #share_1 {
+    float: left;
+    width: 49%;
+    display: block;
+ }
+ #share_2 {
+    float: right;
+    width: 49%;
+    display: block;
+ }
+ .clr {
+    display: block;
+    clear: both;
+    height: 0;
+    overflow: hidden;
+ }
+ .button2 {
+    font-size: 16px;
+    padding: 8px 0;
+    border: 1px solid #adadab;
+    color: #000000;
+    background-color: #e8e8e8;
+    background-image: linear-gradient(to top, #dbdbdb, #f4f4f4);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.45), inset 0 1px 1px #efefef;
+    text-shadow: 0.5px 0.5px 1px #fff;
+    text-align: center;
+    border-radius: 3px;
+    width: 100%;
+ }
+ #mess_share img {
+    width: 22px!important;
+    height: 22px!important;
+    vertical-align: top;
+    border: 0;
+ }
+ /**********************audio***********************/
+ .btn_music{
+    display:inline-block;
+    width:35px;
+    height:35px;
+    background:url('../../img/play.png') no-repeat center center;
+    background-size:100% auto;
+    position:absolute;
+    z-index:100;
+    left:15px;
+    top:20px;
+ }
+ .btn_music.on{
+    background-image:url('../../img/stop.png');
+ }
+ /******************************动画*************************/
+ #iframe_screen{
+    background:#fff;
+    position:absolute;
+    width:100%;
+    height:100%;
+    left:0;
+    top:0;
+    z-index:300000;
+    overflow:hidden;
+ }
+
+</style>
+
+
+<ul id="commentl">
+<empty name="comment_info"><li><span class='iconfont'>&#xe601; </span>请留一个言给楼主加油打气吧^_^</li></empty>
+<volist name="comment_info" id="vo">
+<li><span class='iconfont'>&#xe601; </span>{$vo.content}</li>
+</volist>
+
+	
+	
+</ul>
+<form  method="post" id="addcom">
+	<input type="text" name="content" value="给楼主助威" onfocus="if(this.value == '给楼主助威') this.value = ''" onblur="if(this.value =='') this.value = '给楼主助威'" autocomplete="off" required="" /></br>
+	<input type="hidden" name="loveId" value="{$info.id} " style="display:none"/>
+	<div id="acom" onclick="submit()">发送</div>
+</form>
+<div id="fake" onclick="addcom()">
+	给楼主助威
+	<div id="acom">发送</div>
+</div>
+<script>
+function addcom(){
+	var addcom =document.getElementById('addcom')
+	var fake =document.getElementById('fake')
+	fake.style.display='none';
+	addcom.style.display='block';
+	addcom.style.opacity='0.2';
+	move(addcom,{'opacity':100,'top':50},5);
+	document.body.scrollTop =0;
+}
+function haddcom(){
+	var addcom =document.getElementById('addcom')
+	var fake =document.getElementById('fake')
+	if(addcom.style.display=='block'){
+		move(addcom,{'opacity':0,'top':214},5);
+		addcom.style.display='none';
+		fake.style.display='block';
+	}
+
+}
+function submit(){
+ document.getElementById('addcom').submit();
+}
+window.onload=function()
+{
+	var an=new Array("&#xf00ad;","&#x3432;","&#xf0041;","&#xf0041;","&#xe619;","&#xe61a;","&#xe603;")
+	var bg=new Array("#A5FA75","#fe6f6f","#a56ffe","#6fb5fe","#59d9e8","#e8a059","#e6dd4f")
+
+	var li=document.getElementById("commentl").getElementsByTagName("span");
+	for(var i=0;i<li.length;i++){
+		li[i].innerHTML=an[GetRandomNum(0,6)];
+		li[i].style.background=bg[GetRandomNum(0,6)];
+	}
+
+	var fdiv=document.getElementById("replay").firstChild;
+	for(var i=0;i<fdiv.length;i++){
+		if(fdiv[0].innerHTML=='senting'){
+			fdiv.innerHTML='&#xf000c;'
+		}else if(fdiv[0].innerHTML=='bad'){
+			fdiv[0].innerHTML='&#xf014e;'
+		}else{
+			fdiv[0].innerHTML='&#xe62c;'
+		}
+	}
+	
+	
+	
+	var ldiv=document.getElementById("replay").getElementsByTagName("p");
+	for(var i=0;i<ldiv.length;i++){
+		if(ldiv[0].innerHTML==''){
+		ldiv[0].innerHTML='您的告白正在发送中..'
+	}
+	}
+	
+	
+
+	
+}
+
+function GetRandomNum(Min,Max){ 
+ 
+        var Range = Max - Min; 
+ 
+        var Rand = Math.random(); 
+ 
+        return(Min + Math.round(Rand * Range)); 
+ 
+} 
+	function move(obj,json,sv,fnEnd){function getStyle(obj,attr){if(obj.currentStyle){return obj.currentStyle[attr]}else{return getComputedStyle(obj,false)[attr]}};clearInterval(obj.timer);obj.timer=setInterval(function(){var isAllCompleted=true;for(attr in json){var attrValue=0;switch(attr){case'opacity':attrValue=Math.round(parseFloat(getStyle(obj,attr))*100);break;default:attrValue=parseInt(getStyle(obj,attr))};var speed=(json[attr]-attrValue)/(sv||4);speed=speed>0?Math.ceil(speed):Math.floor(speed);if(attrValue!=json[attr])isAllCompleted=false;switch(attr){case'opacity':{obj.style.filter="alpha(opacity="+(attrValue+speed)+")";obj.style.opacity=(attrValue+speed)/100};break;default:obj.style[attr]=attrValue+speed+'px'}};if(isAllCompleted){clearInterval(obj.timer);if(fnEnd)fnEnd()}},30)}
+</script>
+</body>
+</html>

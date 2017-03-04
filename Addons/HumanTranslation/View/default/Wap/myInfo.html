@@ -1,0 +1,87 @@
+<include file="Public/mobile_head"/>
+<include file="header"/>
+<link rel="stylesheet" href="__STATIC__/mui.3.5.0/css/mui.min.css?v={:SITE_VERSION}">
+<link href="{:ADDON_PUBLIC_PATH}/css.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+<body>
+    <div  class="mui-content">
+        <div class="myInfo">
+                <ul class="mui-table-view">
+                    <volist name="orderList" id="vo">
+                    <li class="mui-table-view-cell mui-media">
+                            <img class="mui-media-object mui-pull-left thumb-img" src="{:ADDON_PUBLIC_PATH}/xitong.png">
+                            <div class="mui-media-body docs-sub-content">
+                                <span class="xitong-title">系统消息</span>
+                                <p class='page-description'>有人要接单了</p>
+                                <p class="mui-ellipsis">
+                                    <a href="javascript:;"class="xitong-title">查看详情 </a>
+                                </p>
+                                <p>2016-06-30 15:30</p>
+                            </div>
+                    </li>
+                        <li class="mui-table-view-cell mui-media">
+                            <img class="mui-media-object mui-pull-left thumb-img" src="{:ADDON_PUBLIC_PATH}/xitong.png">
+                            <div class="mui-media-body docs-sub-content">
+                                <span class="xitong-title">系统消息</span>
+                                <p class='page-description'>有人要接单了</p>
+                                <p class="mui-ellipsis">
+                                    <a href="javascript:;" class="xitong-title">查看详情 </a>
+                                </p>
+                                <p>2016-06-30 15:30</p>
+                            </div>
+                        </li>
+
+                    </volist>
+                </ul>
+          </div>
+    </div>
+<!-- 底部导航 -->
+<include file="_footer"/>
+<script src="__STATIC__/mui.3.5.0/js/mui.min.js?v={:SITE_VERSION}"></script>
+<script>
+    document.getElementById("delOrder").addEventListener('tap', function() {
+        var btnArray = ['否', '是'];
+        alert($(this).attr('data'));
+        mui.confirm('你确认删除该订单？', '', btnArray, function(e) {
+            if (e.index == 1) {
+                delOrder($(this).attr('data'));
+            } else {
+
+                //info.innerText = 'MUI没有得到你的认可，继续加油'
+            }
+        })
+    });
+    function delOrder(id){
+        $.Dialog.loading();
+        $.ajax({
+            type: 'post',
+            url:"{:addons_url('HumanTranslation://Wap/delOrder')}",
+            data: {id:id},
+            dataType: 'json',
+            success: function (result) {
+                if (result==1){
+                    $.Dialog.success('删除成功');
+                }else {
+                    $.Dialog.fail('删除失败，稍后再试');
+                }
+
+            }
+        });
+    }
+    /*公共底部菜单js*/
+    mui(".bottom_menu").on('tap','.list-page-bottom',function(){
+        //获取id
+        var from = this.getAttribute("data");
+        if(from==1){
+            var url = "{:addons_url('HumanTranslation://Wap/index', array('token'=>$token))}";
+        }else if(from==2){
+            var url = "{:addons_url('HumanTranslation://Wap/translate', array('token'=>$token))}";
+        }else{
+            var url = "{:addons_url('HumanTranslation://Wap/ucenter', array('token'=>$token))}";
+        }
+        mui.openWindow({
+            url: url,
+        })
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,192 @@
+﻿
+<!DOCTYPE HTML5>
+<html>
+<head>
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="cache-control" content="no-cache">
+<meta name="viewport" content="width=device-width,target-densitydpi=middle-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<title>艾豆乐园表白墙</title>
+<link  rel="stylesheet" type="text/css" href="{:ADDON_PUBLIC_PATH}/img/style.css" />
+
+<script>
+	       function collectTrends(tid, uid){
+		        loading(true);
+	    	    $.post("{:U('likeAjax',array('token'=>get_token()))}",{
+	    	        "tid"  : tid,
+	    	        "uid"  : uid,
+		    	    },function(res){
+		    	    	loading(false);
+		    	        if(res) {
+							
+			    	        location.reload();
+		    	        }
+
+		    	    });
+	        }
+	       function praiseTrends(tid, uid){
+	    	    loading(true);
+	    	    $.post("{:U('favourAjax',array('token'=>get_token()))}",{
+	    	        "tid"  : tid,
+	    	        "uid"  : uid,
+		    	    },function(res){
+		    	    	loading(false);
+		    	        if(res) {
+			    	        location.reload();
+		    	        }
+
+		    	    });
+	        }
+		</script>
+
+</head>
+<body>
+<div id="bg">
+	<div id="top">
+		<ul id="num">
+			<volist name="sum_arr" id="vo">
+				<li>{$vo}</li>
+			</volist>
+			 			<div class="clear"></div>
+		</ul>
+		<div id="right" onclick="hadd()">
+			I love you
+			<p>次告白</p>
+		</div>
+		<span onclick="add()"><b class="iconfont">&#x3443;</b>我要表白</span>
+	</div>
+</div>
+<form  method="post" id="search">
+		<input type="hidden" name="type" value="search" />
+		<input type="text" name="keyword" value="搜索我有没有被表白?" onfocus="if(this.value == '搜索我有没有被表白?') this.value = ''" onblur="if(this.value =='') this.value = '搜索看被表白了吗?'" autocomplete="off" required="">
+		<div   class="iconfont" id="submit">&#xf004c;</div>
+		<div id="acom" onclick="submit2()">搜索</div>
+</form>
+<ul id="item">
+		<volist name='list_data' id='vo'>
+		<li><div class='result iconfont senting'>senting{$vo.id}</div><div class='box'><div class='info'>TO <b>{$vo.lover}</b><i>{$vo.cTime|time_format}</i></div><a href='{:U('showComment',array('id'=>$vo['id'],'openid'=>get_openid(),'token'=>get_token()))}' class='content'>{$vo.content|msubstr=0,30,'utf-8',true}</a>
+			<div style="text-align:right"><i style="color:#999">from</i>&nbsp;&nbsp;<b>{$vo.nickname}</b></div>
+
+<div onclick="praiseTrends({$vo.id},'{$wecha_id}')" class='like iconfont'>&#xe601; <a href="{:U('favourAjax',array('token'=>get_token(),'tid'=>$vo['id'],'uid'=>$wecha_id))}" class="a_like <php>if(in_array($wecha_id,explode(',',$vo['favourid']))){echo 'on';}else{ }</php>" ><span class="icons icons_like">&nbsp;</span><label><if condition="empty($vo['favourid'])">0<else />{:count(explode(',',$vo['favourid']))}</if></label></a></div>
+			<a href="{:U('showComment',array('id'=>$vo['id'],'openid'=>get_openid(),'token'=>get_token()))}" class='comment iconfont'>&#xe635; {$vo.cnum}</a></div></li>
+		</volist>
+</ul>
+<ul id="page">
+		
+		{$page}
+		<!--<li><a href="index.php?page=2">下一页</a></li>-->
+		<div class="clear"></div>
+</ul>
+<form method="post" id="add">
+	Ta的名字:<input type="text" name="lover"/></br>
+	
+	Ta的电话:<input type="text" name="phone"/></br></br>
+	我的名字:<input type="text" name="nickname" value="{$user.nickname}"/></br>
+	我想对Ta说:<textarea rows="3" cols="20" name="content"></textarea>
+		<input type="hidden" name="type" value="say"/>
+	<div id="send" onclick="submit()">发送</div>
+</form>
+<script>
+
+
+var xmlHttp
+
+function likes(id,l)
+{ 
+xmlHttp=GetXmlHttpObject()
+if (xmlHttp==null)
+ {
+ alert ("Browser does not support HTTP Request")
+ return
+ }
+l.innerHTML='&#xe601; '+(parseInt(l.innerHTML.substr(1,5))+1);
+var url="changeLikeDislike.php"
+url=url+"?id="+id;
+url=url+"&type=likes"
+xmlHttp.onreadystatechange=stateChanged 
+xmlHttp.open("GET",url,true)
+xmlHttp.send(null)
+}
+
+function stateChanged() 
+{ 
+if (xmlHttp.readyState==4 || xmlHttp.readyState=="complete")
+ { 
+	//alert(xmlHttp.responseText)
+ }
+}
+
+function GetXmlHttpObject()
+{
+var xmlHttp=null;
+try
+ {
+ // Firefox, Opera 8.0+, Safari
+ xmlHttp=new XMLHttpRequest();
+ }
+catch (e)
+ {
+ //Internet Explorer
+ try
+  {
+  xmlHttp=new ActiveXObject("Msxml2.XMLHTTP");
+  }
+ catch (e)
+  {
+  xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+ }
+return xmlHttp;
+}
+
+
+
+
+function add(){
+	var add =document.getElementById('add')
+	add.style.display='block';
+	add.style.opacity='0.2';
+	move(add,{'opacity':100,'top':114},5);
+	document.body.scrollTop =0;
+
+}
+function hadd(){
+	var add =document.getElementById('add')
+	if(add.style.display=='block'){
+	move(add,{'opacity':0,'top':214},5);
+	add.style.display='none';
+	}
+
+}
+function submit(){
+ document.getElementById('add').submit();
+}
+function submit2(){
+ document.getElementById('search').submit();
+}
+window.onload=function()
+{
+	var li=document.getElementById("item").getElementsByTagName("li");
+	for(var i=0;i<li.length;i++){
+			li[i].style.top='30px';
+			li[i].style.opacity='0.2';
+			move(li[i],{'opacity':100,'top':0},8);
+			var fdiv=li[i].firstChild;
+			if(fdiv.innerHTML=='senting'){
+				fdiv.innerHTML='&#xf000c;'
+			}else if(fdiv.innerHTML=='bad'){
+				fdiv.innerHTML='&#xf014e;'
+			}else{
+				fdiv.innerHTML='&#xe62c;'
+			}
+	}
+	
+}
+
+
+
+	function move(obj,json,sv,fnEnd){function getStyle(obj,attr){if(obj.currentStyle){return obj.currentStyle[attr]}else{return getComputedStyle(obj,false)[attr]}};clearInterval(obj.timer);obj.timer=setInterval(function(){var isAllCompleted=true;for(attr in json){var attrValue=0;switch(attr){case'opacity':attrValue=Math.round(parseFloat(getStyle(obj,attr))*100);break;default:attrValue=parseInt(getStyle(obj,attr))};var speed=(json[attr]-attrValue)/(sv||4);speed=speed>0?Math.ceil(speed):Math.floor(speed);if(attrValue!=json[attr])isAllCompleted=false;switch(attr){case'opacity':{obj.style.filter="alpha(opacity="+(attrValue+speed)+")";obj.style.opacity=(attrValue+speed)/100};break;default:obj.style[attr]=attrValue+speed+'px'}};if(isAllCompleted){clearInterval(obj.timer);if(fnEnd)fnEnd()}},30)}
+
+</script>
+</body>
+</html>

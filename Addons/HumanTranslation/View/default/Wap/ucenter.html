@@ -1,0 +1,59 @@
+<include file="Public/mobile_head"/>
+<include file="header"/>
+<link rel="stylesheet" href="__STATIC__/mui.3.5.0/css/mui.min.css?v={:SITE_VERSION}">
+<link href="{:ADDON_PUBLIC_PATH}/css.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+<body >
+    <div  class="mui-content">
+    	<div class="center_header">
+    		<notempty name='follow.headimgurl'>
+    		<img src="{$follow.headimgurl}"/>
+    		<else />
+        	<img src="{:ADDON_PUBLIC_PATH}/center.png"/>
+        	</notempty>
+           <notempty name='follow.nickname'>
+    		{$follow.nickname}
+    		<else />
+        	本地用户
+        	</notempty>
+        </div>		
+    <!--    <div class="center_nav">
+        	<a href="{$ordersUrl}">全部订单</a>
+            <a href="{$unPayUrl}">待付款</a>
+            <a href="{:U('shippingOrder')}">配送中</a>
+        </div>-->
+        <div class="block">
+            <a class="block_a custom-font-blue" href="{:U('myOrder',array('shop_id'=>$shop_id))}">我的订单<em class="arrow_right">&nbsp;</em></a>
+            <a class="block_a custom-font-blue" href="{:U('myInfo',array('shop_id'=>$shop_id))}">我的消息<em class="arrow_right">&nbsp;</em></a>
+        	<!--<a class="block_a" href="{{:U('contact',array('shop_id'=>$shop_id))}}">我的积分<em class="arrow_right">&nbsp;</em></a>-->
+            <a class="block_a custom-font-blue" href="{:U('myTask',array('shop_id'=>$shop_id))}">我的翻译<em class="arrow_right">&nbsp;</em></a>
+            <a class="block_a custom-font-blue" href="{:U('addAuthor',array('shop_id'=>$shop_id))}">成为翻译<em class="arrow_right">&nbsp;</em></a>
+            <a class="block_a custom-font-blue block_last" href="{:U('contact',array('shop_id'=>$shop_id))}">联系我们<em class="arrow_right">&nbsp;</em></a>
+        </div>
+    </div>	
+    <!-- 底部导航 -->
+    <include file="_footer"/>
+    <script src="__STATIC__/mui.3.5.0/js/mui.min.js?v={:SITE_VERSION}"></script>
+<script>
+    /*公共底部菜单js*/
+    mui(".bottom_menu").on('tap','.list-page-bottom',function(){
+        //获取id
+        var from = this.getAttribute("data");
+        if(from==1){
+            var url = "{:addons_url('HumanTranslation://Wap/index', array('token'=>$token))}";
+        }else if(from==2){
+            var url = "{:addons_url('HumanTranslation://Wap/translate', array('token'=>$token))}";
+        }else{
+            var url = "{:addons_url('HumanTranslation://Wap/ucenter', array('token'=>$token))}";
+        }
+        mui.openWindow({
+            url: url,
+        })
+    })
+    $(function(){
+        $("a[data=3]").addClass("current");
+        $("a[data=1]").removeClass("current");
+        $("a[data=2]").removeClass("current");
+    })
+</script>
+</body>
+</html>

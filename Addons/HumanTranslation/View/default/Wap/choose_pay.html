@@ -1,0 +1,81 @@
+<include file="Public/mobile_head"/>
+<include file="header"/>
+<link rel="stylesheet" href="__STATIC__/mui.3.5.0/css/mui.min.css?v={:SITE_VERSION}">
+<link href="{:ADDON_PUBLIC_PATH}/css.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+<body>
+<div  class="mui-content">
+    <div class="mui-card">
+        <!--页眉，放置标题-->
+        <div class="mui-card-header">
+            需要支付
+            <span class="">{$price}&nbsp;&nbsp;&nbsp;&nbsp;元</span>
+        </div>
+        <!--内容区-->
+        <div class="mui-card-content">
+            <div class="height10px"></div>
+            <div class="height10px"></div>
+                <div class="choose_pay_type">
+                    <notempty name="config.isopenwx">
+                            <a href="#" type="button" data-paytype='0' class=""><em class="wxpay">&nbsp;</em>微信支付</a>
+                    </notempty>
+                    <!-- <notempty name="config.isopenshop">
+                         <li class="mui-table-view-cell">
+                         <a href="#" data-paytype='10'><em class="rechpay">&nbsp;</em>到店自提</a>
+                         </li>
+                     </notempty>-->
+                </div>
+            <div class="height10px"></div>
+            <div class="height10px"></div>
+        </div>
+    </div>
+
+
+<!-- 选择支付-->
+
+<!-- 支付成功 -->
+<div class="container" style="display:none">
+    <div class="pay_header_success">
+    </div>
+    <div class="pay_result">
+        支付成功
+    </div>
+    <a class="pay_ok_back" href="#">查看订单</a>
+</div>
+<!-- 支付失败 -->
+<div class="container" style="display:none">
+    <div class="pay_header_fail">
+    </div>
+    <div class="pay_result">
+        支付失败
+    </div>
+    <a class="pay_ok_back" href="#">重新支付</a>
+</div>
+</div>
+</body>
+</html>
+<script src="__STATIC__/mui.3.5.0/js/mui.min.js?v={:SITE_VERSION}"></script>
+<script type="text/javascript">
+    $('.choose_pay_type a').each(function() {
+        $(this).click(function() {
+            var paytype = $(this).attr('data-paytype');
+            //alert(paytype);
+            var url = "{:addons_url('Payment://Weixin/pay', array('from' => 'Payment:__Weixin_payTranslateSuccess', 'paymentId' => $order_id, 'orderName' => $orderName, 'price' => $price, 'wecha_id' => $openid, 'orderNumber' => $orderNumber,'fromType' =>1))}&&paytype="+paytype;
+            $(this).attr('href',url);
+        });
+    });
+    /*公共底部菜单js*/
+    mui(".bottom_menu").on('tap','.list-page-bottom',function(){
+        //获取id
+        var from = this.getAttribute("data");
+        if(from==1){
+            var url = "{:addons_url('HumanTranslation://Wap/index', array('token'=>$token))}";
+        }else if(from==2){
+            var url = "{:addons_url('HumanTranslation://Wap/translate', array('token'=>$token))}";
+        }else{
+            var url = "{:addons_url('HumanTranslation://Wap/ucenter', array('token'=>$token))}";
+        }
+        mui.openWindow({
+            url: url,
+        })
+    })
+</script>
