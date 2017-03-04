@@ -1,0 +1,18 @@
+    <!-- 统计代码-->
+<div id="site_analytics_code" style="display:none;"> {$site.site_analytics_code|base64_decode} </div>
+<eq name='site.site_online_count' value='1'> 
+  <script src="{:SITE_URL}/online_check.php?uid={$mid}&uname={$user.uname}&mod={:MODULE_NAME}&app={:APP_NAME}&act={:ACTION_NAME}&action=trace&city={:session('city')}"></script> 
+</eq>
+ <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+	 <script type="text/javascript" src="__STATIC__/jquery-2.0.3.min.js"></script>
+     <script type="text/javascript" src="__JS__/m/mobile_module.js"></script>
+  <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+  	<script type="text/javascript" src="minify.php?f=__JS__/prefixfree.min.js,__JS__/m/dialog.js,__JS__/m/flipsnap.min.js,__JS__/m/mobile_module.js"></script>
+</body>
+</html>

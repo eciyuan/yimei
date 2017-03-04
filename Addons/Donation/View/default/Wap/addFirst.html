@@ -1,0 +1,44 @@
+<include file="headerjs"/>
+  <!-- CSS -->
+        <link rel="stylesheet" href="{:ADDON_PUBLIC_PATH}/css/reg/css/style.css">
+       </head>
+<body id="" class="">
+        <div class="container">
+                 		   <div class="row">
+		                        <div class="col-md-12">
+		                       	 <div class=" form-top panel panel-danger text-center">
+		                       			<h2>发布援助<i class="fa fa-user"></i></h2>
+				                   </div>
+		                        </div>
+		                        </div>
+                         <div class="row">
+	                        <div class="col-md-12">
+	                        <div class="alert alert-danger  alert-dismissible" role="alert">
+	                         <strong>温馨提示！</strong>请警惕冒充伊媒公益员工，进行各种诈骗活动！我们不会因为推广向您收取费用！
+	                         <button type="button" class="close" data-dismiss="alert">
+	                         <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+	                         </button>
+							</div>
+	                        </div>
+                        </div>
+                             <div class="row">
+		                        <div class="col-md-12">
+		                        	<ul data-role="listview">
+					                   		 <volist name="categoryRe" id="vo">
+												<li>
+												<a href="{:addons_url('Donation://add',array('id'=>$vo['id'],'from'=>1))}">
+														<h3>{$vo.name}</h3> 
+														<p>{$vo.intro}</p> 
+												</a>
+												</li>
+												</volist>
+											</ul>
+											</div>
+											</div>
+                    </div>
+   <!-- Javascript -->
+        <script src="{:ADDON_PUBLIC_PATH}/css/reg/js/jquery-1.11.1.min.js"></script>
+        <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> 
+         <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</html>

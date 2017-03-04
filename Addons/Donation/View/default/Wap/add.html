@@ -1,0 +1,186 @@
+<include file="headerjs"/>
+  <!-- CSS -->
+        <link rel="stylesheet" href="{:ADDON_PUBLIC_PATH}/css/reg/css/style.css">
+       </head>
+<body id="page-top" class="">
+        <div class="container">
+                 		   <div class="row">
+                        <div class="col-md-12">
+                       	 <div class=" form-top panel panel-danger text-center">
+                       			<h2>发布援助<i class="fa fa-user"></i></h2>
+		                   </div>
+                        </div>
+                        </div>
+                         <div class="row">
+	                        <div class="col-md-12">
+	                        <div class="alert alert-danger  alert-dismissible" role="alert">
+	                         <strong>温馨提示！</strong>请警惕冒充伊媒公益员工，进行各种诈骗活动！我们不会因为推广向您收取费用！
+	                         <button type="button" class="close" data-dismiss="alert">
+	                         <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+	                         </button>
+							</div>
+	                        </div>
+                        </div>
+                       
+                    <div class="row">
+                        <div class="col-md-12">
+                        	<form  id="reg-form" role="form" action="{:addons_url('Donation://Wap/add')}" method="post" class="registration-form">
+                        	 <!-- 第一部分开始 -->
+                           <if condition="empty($cateid)">
+                             <div class="row">
+                     			   <div class="col-md-12">
+					                   		 <ul data-role="listview">
+					                   		 <volist name="categoryRe" id="vo">
+												<li>
+												<a data-ajax="false" href="{:addons_url('Donation://Wap/add',array('id'=>$vo['id'],'from'=>1))}">
+														<h3>{$vo.name}</h3> 
+														<p>{$vo.intro}</p> 
+												</a>
+												</li>
+												</volist>
+											</ul>
+											</div>
+											</div>
+							<else/>
+										<fieldset >
+				                    	<div class="form-group">
+				                    		<label class="sr-only" for="form-name">筹集金额</label>
+				                        	<input type="text" name="summoney" placeholder="筹集金额(元)" class="form-control required" id="summoney">
+				                        </div>
+				                    	<div class="form-group">
+												     <input type="datetime" name="end_time" class="text time" value="{$data['end_time']|time_format}" placeholder="请选择时间" />
+												<!--   <input type="range" name="points" id="points"  data-show-value="true" value="10" min="5" max="30"> -->
+				                        </div>
+				                    	<div class="form-group">
+				                    		<label class="sr-only" for="form-name">填写筹款标题</label>
+				                        	<input type="text" name="title" placeholder="填写筹款标题" class="form-control required" id="title">
+				                        </div>
+				                        	<div class="intro-textarea text-center">
+												 <div class="alert alert-success" role="alert"> <i class="glyphicon glyphicon-globe"></i>建议描述下具体的情况</div>
+							                              <div   class="input-group">
+																   <textarea id="content" style="min-width:640px;min-height:250px;" class="required" name="content" ></textarea>
+																   <span class="help-block">包括资金用途，银行卡，手机号码，座机号码，微信号，支付宝账户等信息</span>
+																    </div>
+				                  			     		 </div>
+				                  			       <!--  <div class="form-group ">
+				                  			        
+														   <span class="help-block">伊媒公益专注于穆斯林团体中的个人救助活动，建议上传救助资金相关的照片，各种证明等，提高项目的可信度！</span>
+													    </div> -->
+				                        	   <div class="form-group inline">
+				                        <button type="button" class="btn btn-info btn-next">下一步</button>
+				                    </div>
+			                    </fieldset>
+			                    <fieldset>
+		                            <div class="form-bottom">
+								 			 <!--注册协议  -->  
+					                        <div class="box">
+					                            <div class="box-header panel-heading bg-warning text-center" role="tab" id="headingThree">
+					                             <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#choukuan" aria-expanded="false" aria-controls="collapseThree">
+					      												<span>伊媒公益筹款说明</span>
+					      												 </a>
+					                            </div>
+					                            <div id="choukuan" class=" box-body panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
+					                                <!-- 注册协议 -->
+														<div class="reg_protocol">
+															<div>
+															1. 伊媒微时代暂未授权任何机构进行代理招商服务，入驻申请流程说明均以官方招商页面为准。不收取任何费用；
+														2. 伊媒微时代有权根据包括但不仅限于品牌需求、公司经营状况、服务水平等其他因素退回客户申请；同时伊媒微时代网有权在申请入驻及后续经营阶段要求客户提供其他资质；
+																伊媒微时代网将结合各行业发展动态、国家相关规定及消费者购买需求，不定期更新招商标准。
+														3. 请务必确保您申请入驻及后续经营阶段提供的相关资质的真实性（若您提供的相关资质为第三方提供，如商标注册证、授权书等，请务必先行核实文件的真实有效性），
+															一旦发现虚假资质，您的公司将被列入非诚信客户名单，伊媒微时代网将不再与您进行合作。
+															</div>
+														</div>
+					                            </div>
+					                             <div class="box-header panel-heading bg-warning text-center" role="tab" id="headingThree">
+					                               <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#projectTerm" aria-expanded="false" aria-controls="collapseThree">
+					      												<span>伊媒公益项目发起条款</span>
+					      												 </a>
+					                             </div>
+					                            <div id="projectTerm" class=" box-body panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
+					                                <!-- 注册协议 -->
+														<div class="reg_protocol">
+															<div>
+															1. 伊媒微时代暂未授权任何机构进行代理招商服务，入驻申请流程说明均以官方招商页面为准。不收取任何费用；
+														2. 伊媒微时代有权根据包括但不仅限于品牌需求、公司经营状况、服务水平等其他因素退回客户申请；同时伊媒微时代网有权在申请入驻及后续经营阶段要求客户提供其他资质；
+																伊媒微时代网将结合各行业发展动态、国家相关规定及消费者购买需求，不定期更新招商标准。
+														3. 请务必确保您申请入驻及后续经营阶段提供的相关资质的真实性（若您提供的相关资质为第三方提供，如商标注册证、授权书等，请务必先行核实文件的真实有效性），
+															一旦发现虚假资质，您的公司将被列入非诚信客户名单，伊媒微时代网将不再与您进行合作。
+															</div>
+					                            </div>
+					                            </div> 
+					                              <div class="box-header panel-heading bg-warning text-center" role="tab" id="headingThree">
+					                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#xieyi" aria-expanded="false" aria-controls="collapseThree">
+					      												<span>发起人条款</span>
+					      												 </a>
+					      												 </div>
+					                            <div id="xieyi" class=" box-body panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
+					                                <!-- 注册协议 -->
+														<div class="reg_protocol">
+															<div>
+															1. 伊媒微时代暂未授权任何机构进行代理招商服务，入驻申请流程说明均以官方招商页面为准。不收取任何费用；
+														2. 伊媒微时代有权根据包括但不仅限于品牌需求、公司经营状况、服务水平等其他因素退回客户申请；同时伊媒微时代网有权在申请入驻及后续经营阶段要求客户提供其他资质；
+																伊媒微时代网将结合各行业发展动态、国家相关规定及消费者购买需求，不定期更新招商标准。
+														3. 请务必确保您申请入驻及后续经营阶段提供的相关资质的真实性（若您提供的相关资质为第三方提供，如商标注册证、授权书等，请务必先行核实文件的真实有效性），
+															一旦发现虚假资质，您的公司将被列入非诚信客户名单，伊媒微时代网将不再与您进行合作。
+															</div>
+														</div>
+														<div class="btn btn-block btn-large btn-info">
+															  <input type="checkbox" value="1" checked="checked" id="agreement" name="agreement"><span>同意接收来自伊媒微时代信息</span>
+														</div>											     
+					                            </div>
+					                        </div>
+					                           <input type="hidden" name="cateid"  value="{$cateid}" />
+				                        <button type="button" class="btn btn-info btn-previous">上一步</button>
+				                        <button type="submit" class="btn btn-info">提交发布</button>
+				                    </div>
+			                      </fieldset>
+		                    </form>
+                        </div>
+                    </div>
+                      </if>
+			</div>
+   <!-- Javascript -->
+        <script src="{:ADDON_PUBLIC_PATH}/css/reg/js/jquery-1.11.1.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+        <script src="{:ADDON_PUBLIC_PATH}/css/reg/js/scripts.js"></script>
+       <script src="{:ADDON_PUBLIC_PATH}/css/reg/js/jquery.backstretch.min.js"></script>
+     <script src="{:ADDON_PUBLIC_PATH}/css/reg/js/retina-1.1.0.min.js"></script> 
+                 <!--[if lt IE 10]>
+            <script src="{:ADDON_PUBLIC_PATH}/css/reg/js/placeholder.js"></script>
+        <![endif]-->
+         <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> 
+         <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+         <link href="__STATIC__/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+    <link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css" rel="stylesheet" type="text/css">
+  <link href="__STATIC__/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+  <script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script> 
+  <script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script> 
+   <script type="text/javascript">
+  $(function(){
+   $('.time').datetimepicker({
+        format: 'yyyy-mm-dd hh:ii',
+        language:"zh-CN",
+        minView:0,
+        autoclose:true
+    });
+    $('.date').datetimepicker({
+        format: 'yyyy-mm-dd',
+        language:"zh-CN",
+        minView:2,
+        autoclose:true
+    });	
+    
+    var UploadFileExts = "{$UploadFileExts}";
+	//初始化上传图片插件
+	initUploadImg();
+	if(UploadFileExts!=""){
+		initUploadFile(function(){},UploadFileExts);
+	}else{
+		initUploadFile();
+	}
+    showTab();
+	
+	
+});
+  </script>
+</html>

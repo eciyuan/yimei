@@ -1,0 +1,257 @@
+@charset "utf-8";
+*{ padding:0; margin:0;}
+li,ul{ list-style:none}
+img{ border:none}
+li,ul{ list-style:none}
+img{ border:none}
+.row .thumbnail{
+	width:250px;
+	height:150px;
+}
+body{ font-family: "微软雅黑","Microsoft Yahei",Tahoma, Geneva, sans-serif; font-size:12px; }
+.container,.row{
+	padding:0px;
+	margin:0px;
+}
+.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12{
+	padding:0px;
+	margin:0px;
+}
+.clear{ clear:both;}
+/* head */
+#header {
+	position:absolute;
+	top:0; left:0;
+	width:100%;
+	height:45px;
+	line-height:45px;
+	background-image:-webkit-gradient(linear, 0 0, 0 100%, color-stop(0, #fe96c9), color-stop(0.05, #d51875), color-stop(1, #7b0a2e));
+	background-image:-moz-linear-gradient(top, #fe96c9, #d51875 5%, #7b0a2e);
+	background-image:-o-linear-gradient(top, #fe96c9, #d51875 5%, #7b0a2e);
+	padding:0;
+	color:#eee;
+	font-size:20px;
+	text-align:center;
+}
+
+#header a {
+	color:#f3f3f3;
+	text-decoration:none;
+	font-weight:bold;
+	text-shadow:0 -1px 0 rgba(0,0,0,0.5);
+}
+/* 幻灯片 */
+.banner {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    margin: 0;
+}
+.banner ul {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 10;
+}
+.banner ul li {
+    float: left;
+    display: table-cell;
+    position: relative;
+}
+.banner li a {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+img {
+    border: none;
+    max-width: 100%;
+}
+.banner li .title {
+    background-color: RGBA(0,0,0,.5);
+    height: 30px;
+    color: #fff;
+    line-height: 30px;
+    padding-left: 10px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000;
+}
+.identify em {
+    display: inline-block;
+    margin: 10px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    margin-left: 5px;
+    width: 12px;
+    height: 12px;
+    background: #fff;
+}
+ .identify {
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 100;
+    height: 30px;
+} 
+.identify em.cur {
+    background-color: #090;
+}
+/* 爱心 */
+.love-heart{
+	font-size:8px;
+}
+.love-heart span{
+	color:red;
+	margin-right:5px;
+}
+#sumHeart{
+	color:red;
+	margin-right:5px;
+	margin-left:5px;
+}
+/* 公益类型 */
+/* 公益信息 */
+.donation-money-detail  li:first-child{
+	float:left;
+}
+.donation-money-detail  li:last-child{
+	float:right;
+}
+#add-donation{
+	position:absolute;
+	bottom:0; left:0;
+	width:100%;
+	height:45px;
+	line-height:45px;
+	background-image:-webkit-gradient(linear, 0 0, 0 100%, color-stop(0, #fe96c9), color-stop(0.05, #d51875), color-stop(1, #7b0a2e));
+	background-image:-moz-linear-gradient(top, #fe96c9, #d51875 5%, #7b0a2e);
+	background-image:-o-linear-gradient(top, #fe96c9, #d51875 5%, #7b0a2e);
+	padding:0;
+	color:#eee;
+	font-size:20px;
+	text-align:center;
+	border-top:1px solid #444;
+}
+#add-donation a {
+	color:#f3f3f3;
+	text-decoration:none;
+	font-weight:bold;
+	text-shadow:0 -1px 0 rgba(0,0,0,0.5);
+}
+/* 版权信息 */
+.copyright {
+    text-align: center;
+    font-size: 12px;
+    color: #888;
+}
+.copyright p{
+	margin:0px;
+}
+.footer{
+	    width: 100%;
+    padding: 20px 0 20px;
+    color: #fff;
+    background: none;
+    text-align: center;
+}
+/* 项目列表 */
+/**
+ *
+ * 下拉样式 Pull down styles
+ *
+ */
+#scroller {
+	position:relative;
+/*	-webkit-touch-callout:none;*/
+	-webkit-tap-highlight-color:rgba(0,0,0,0);
+
+	float:left;
+	width:100%;
+	padding:0;
+}
+
+#scroller ul {
+	position:relative;
+	list-style:none;
+	padding:0;
+	margin:0;
+	width:100%;
+	text-align:left;
+}
+
+#scroller li {
+	padding:0 10px;
+	height:40px;
+	line-height:40px;
+	border-bottom:1px solid #ccc;
+	border-top:1px solid #fff;
+	background-color:#fafafa;
+	font-size:14px;
+}
+
+#scroller li > a {
+	display:block;
+}
+#pullDown, #pullUp {
+	background:#fff;
+	height:40px;
+	line-height:40px;
+	padding:5px 10px;
+	border-bottom:1px solid #ccc;
+	font-weight:bold;
+	font-size:14px;
+	color:#888;
+}
+#pullDown .pullDownIcon, #pullUp .pullUpIcon  {
+	display:block; float:left;
+	width:40px; height:40px;
+	background:url(pull-icon@2x.png) 0 0 no-repeat;
+	-webkit-background-size:40px 80px; background-size:40px 80px;
+	-webkit-transition-property:-webkit-transform;
+	-webkit-transition-duration:250ms;	
+}
+#pullDown .pullDownIcon {
+	-webkit-transform:rotate(0deg) translateZ(0);
+}
+#pullUp .pullUpIcon  {
+	-webkit-transform:rotate(-180deg) translateZ(0);
+}
+
+#pullDown.flip .pullDownIcon {
+	-webkit-transform:rotate(-180deg) translateZ(0);
+}
+
+#pullUp.flip .pullUpIcon {
+	-webkit-transform:rotate(0deg) translateZ(0);
+}
+
+#pullDown.loading .pullDownIcon, #pullUp.loading .pullUpIcon {
+	background-position:0 100%;
+	-webkit-transform:rotate(0deg) translateZ(0);
+	-webkit-transition-duration:0ms;
+
+	-webkit-animation-name:loading;
+	-webkit-animation-duration:2s;
+	-webkit-animation-iteration-count:infinite;
+	-webkit-animation-timing-function:linear;
+}
+
+@-webkit-keyframes loading {
+	from { -webkit-transform:rotate(0deg) translateZ(0); }
+	to { -webkit-transform:rotate(360deg) translateZ(0); }
+}
+/* 公益详情页面 */
+.money-title li{
+	width:50%;
+	float:left;
+}
+/*时间轴  */
+.about4_main{position:relative;padding-left:20px;overflow:hidden;}
+.line{width:1px;height:100%;background-color:#999;position:absolute;left:26px;z-index:-1;}
+.about4_main ul li{padding-left:25px;font-size:14px;color:#333333;line-height:30px;margin-bottom:30px;background:url(../images/about4_icon.png) left center no-repeat;}
+.about4_main ul li:last-child{margin-bottom:0px;}

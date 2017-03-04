@@ -1,0 +1,31 @@
+<html>
+<head>
+<meta charset="utf-8">
+    <title><php>echo empty($page_title) ? C('WEB_SITE_TITLE') : $page_title;</php></title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+	<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+    <meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+    <meta content="no-cache" http-equiv="pragma">
+    <meta content="0" http-equiv="expires">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><!--  从 CDN 引用 jQuery Mobile-->
+ <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+<!-- 新 Bootstrap 核心 CSS 文件 -->
+<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="{:ADDON_PUBLIC_PATH}/css/wapStyle.css">
+ <link rel="stylesheet" href="__STATIC__/font-awesome/css/font-awesome.min.css">
+<!-- 网页自身 -->
+ <script type="text/javascript">
+		//静态变量
+		var IMG_PATH = "__IMG__";
+		var STATIC_PATH = "__STATIC__";
+		var SITE_URL = "{:SITE_URL}";
+		var WX_APPID = "{$jsapiParams.appId}";
+		var	WXJS_TIMESTAMP='{$jsapiParams.timestamp}'; 
+		var NONCESTR= '{$jsapiParams.nonceStr}'; 
+		var SIGNATURE= '{$jsapiParams.signature}';
+	</script>
+	 <link rel="stylesheet" type="text/css" href="__CSS__/mobile_module.css" media="all">
+<link href="__CSS__/main.css" rel="stylesheet" type="text/css">
