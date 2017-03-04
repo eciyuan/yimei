@@ -1,0 +1,63 @@
+<include file="Public:headjs" />
+<body id="page-top">
+<include file="Public:header" />
+	<div class="container">
+							 <!-- 表单反馈 开始-->
+			<section id="formFeedback" class="container">
+                        <!-- CONTACT HEADING -->
+                        <div class="row text-center">
+                           <label for="" class="col-md-12 control-label ">请输入您的建议与意见</label>
+                        </div>
+                        <!-- END CONTACT HEADING -->
+                        <div class="row">
+                            <!-- CONTACT FORM -->
+                            <form name="sentMessage" id="feedback"  method="post" action="{:U('Feedback/add')}">
+                                <div class="row text-center">
+                                  <div class="text-center">
+							    <label for="" class="col-md-2 control-label"></label>
+							    <div class="col-md-10">
+							    <div class="input-group">
+							      <span class="input-group-addon">
+	                                        <i class="glyphicon glyphicon-user"></i>
+	                                   </span>
+							      <input type="text" name="name" required=""class="form-control" id="name" placeholder="您的称呼">
+							    </div>
+							    <span class="msg"></span>
+							    </div>
+						  </div>
+						  <div class=" ">
+							    <label for="" class="col-md-2 control-label"></label>
+							    <div class="col-md-10">
+							    <div class="input-group">
+							      <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-envelope"></i>
+                                   </span>
+						       <input type="email" class="form-control" placeholder="你的邮箱地址,方便后续的沟通" name="email"id="email"  data-validation-required-message="邮箱也是必须要填写的哦" aria-invalid="false">
+                                </div>
+						    </div>
+					  </div>
+                            <div class="intro-textarea text-center">
+							 <label for="" class="col-md-2 control-label">
+							  <i class="glyphicon glyphicon-globe"></i>留下您宝贵的意见与建议
+							  </label>
+		                            <div class="col-md-10 "> 
+		                            <textarea style="min-width:300px;min-height:250px;"  placeholder="我想针对于伊媒微时代下的XX模块，提出以下的意见……"  id="content"name="content" ></textarea>
+		                            </div>
+                    		    </div>
+                    		        <div class="col-md-10 "> 
+                                    <div class="text-center">
+                                     <input type="hidden" name="type"  value="1">
+                                        <button type="submit" id="feedbackSubmit" class="btn btn-primary btn-block btn-center" >立即发送</button>
+                                    </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <!-- END CONTACT FORM -->
+                        </div>
+     		   </section>
+                    </div>
+			 	 <!-- 表单反馈结束 -->
+ <include file="Public:footer" />
+<!-- jQuery -->
+</body>
+</html>

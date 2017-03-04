@@ -1,0 +1,78 @@
+<include file="Public/mobile_head"/>	
+<!-- 新 Bootstrap 核心 CSS 文件 -->
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+   <link type="text/css" href="__STATIC__/jquery-ui-bootstrap/css/custom-theme/jquery-ui-1.10.0.custom.css" rel="stylesheet" />
+    <link rel="stylesheet" href="__STATIC__/font-awesome/css/font-awesome.min.css">
+<!-- 可选的Bootstrap主题文件（一般不用引入） -->
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+<!--[if lt IE 9]>
+      	<script src="__MOBILE__/Js/html5shiv.js"></script>
+	      <script src="__MOBILE__/Js/respond.js"></script>
+	<![endif]-->
+            <!--[if IE 7]>
+            <link rel="stylesheet" href="__STATIC__/jquery-ui-bootstrap/assets/css/font-awesome-ie7.min.css">
+            <![endif]-->
+            <!--[if lt IE 9]>
+            <link rel="stylesheet" type="text/css" href="__STATIC__/jquery-ui-bootstrap/css/custom-theme/jquery.ui.1.10.0.ie.css"/>
+            <![endif]-->
+            <link href="__STATIC__/jquery-ui-bootstrap/assets/css/google-code-prettify/prettify.css" rel="stylesheet">
+            
+<link href="{:CUSTOM_TEMPLATE_PATH}Index/ColorV1/main.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+   <link href="__PUBLIC__/Home/css/style.css" rel="stylesheet"><!--自定义  -->
+<style>
+body{
+	background:#eee url({$config.background}) no-repeat; background-size:100% 100%
+}
+</style>
+<body id="page-top">
+		<div class="container">
+			   <div class="panel panel-default">
+			    <div class="panel-heading" role="tab" id="headingOne">
+			      <h4 class="panel-title text-center">
+			        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#qrcode" aria-expanded="true" aria-controls="collapseOne">
+			       		 <i class="glyphicon glyphicon-qrcode"></i>
+						<span class="card-title">{$name}二维码</span>
+			        </a>
+			      </h4>
+			    </div>
+			    <div id="addMoqueQrcode" class="panel-collapse collapse in " role="tabpanel" aria-labelledby="headingOne">
+				      <div class="panel-body text-center">
+				      		<ul class="list-group">
+								 	<li class="list-group-item mosqueqrcode">
+								 			<p class="text-info btn-center"><img alt=""   src="__ROOT__/{$filename}"></p>
+								 	</li>
+								 	<li class="list-group-item list-group-item-warning center-block">
+								 			<p class="text-info btn-center">关注伊媒微时代--伊媒生活--清真寺，以后相关的资讯和通知通过该平台发布</p>
+								 			<a href="javascript:;" onclick="DownLoadReportIMG('__ROOT__/."{$filename}"');" class="btn btn-primary  btn-center" >截图保存二维码并在微信扫描</a>
+								 			<p class="text-muted btn-center">扫描方法：扫一扫界面->点相册->选择二维码图片</p>
+								 	</li>
+							</ul>	
+								<div class="pull-right ">
+									<a href="{:addons_url('WeiSite://Mosque/indexCenter')}" class="button-returnList"><span class="glyphicon glyphicon-forward"></span>进入主页</a>
+								</div>
+				      </div>
+			    </div>
+			  </div>
+			  
+		</div>
+  <include file="Public:footer"/>
+  <script type="text/javascript">
+  function DownLoadReportIMG(imgPathURL) {  
+      
+      //如果隐藏IFRAME不存在，则添加  
+      if (!document.getElementById("IframeReportImg"))  
+          $('<iframe style="display:none;" id="IframeReportImg" name="IframeReportImg" onload="DoSaveAsIMG();" width="0" height="0" src="about:blank"></iframe>').appendTo("body");  
+      if (document.all.IframeReportImg.src != imgPathURL) {  
+          //加载图片  
+          document.all.IframeReportImg.src = imgPathURL;  
+      }  
+      else {  
+          //图片直接另存为  
+          DoSaveAsIMG();    
+      }  
+  }  
+  function DoSaveAsIMG() {  
+      if (document.all.IframeReportImg.src != "about:blank")  
+          document.frames("IframeReportImg").document.execCommand("SaveAs");          
+  }  
+  </script>

@@ -1,0 +1,96 @@
+<include file="Public/mobile_head"/>	
+<include file="header"/>
+<link rel="stylesheet" href="__STATIC__/mui.3.5.0/css/mui.min.css?v={:SITE_VERSION}">
+<link href="{:ADDON_PUBLIC_PATH}/css.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+<body>
+	<div  class="mui-content">
+        <div class="mui-card" >
+            <div class="mui-card-header">
+                订单状态 <span class="mui-badge mui-badge-danger mui-badge-inverted">
+                  <if condition="$detail.pay_status eq 0">
+                      待支付
+                      <elseif condition="$detail.pay_status eq 1"/>
+                      已经支付，等待评价
+                      <else/>
+                      交易完成
+                  </if>
+                </span>
+            </div>
+            <div class="mui-card-content">
+                <ul class="mui-table-view">
+                    <li class="mui-table-view-cell">订单编号
+                        <span class="mui-badge mui-badge-primary mui-badge-inverted">{$detail.order_number}</span>
+                    </li>
+                    <li class="mui-table-view-cell">翻译类型
+                        <span class="mui-badge mui-badge-primary mui-badge-inverted">
+                            <if condition="$detail.translation_type eq 0">
+                                文本
+                                <else/>
+                                图片
+                                </if>
+                    </span>
+                    </li>
+                    <if condition="$detail.translation_type eq 0">
+                        <else/>
+                        <li class="mui-table-view-cell">字数统计
+                            <span class="mui-badge mui-badge-primary mui-badge-inverted">{$detail.count_str}</span>
+                        </li>
+                    </if>
+                    <li class="mui-table-view-cell">翻译语言
+                        <span class="mui-badge mui-badge-warning mui-badge-inverted">
+                            {$detail.select_language_id.name}
+                            <i class="mui-icon mui-icon-arrowthinright"></i>
+                              {$detail.goal_language_id.name}
+                        </span>
+                    </li>
+                    <li class="mui-table-view-cell">价格统计<span class="mui-badge mui-badge-primary mui-badge-inverted">{$detail.total_price}</span></li>
+                    <li class="mui-table-view-cell">下单时间<span class="mui-badge mui-badge-primary mui-badge-inverted">{$detail.cTime | date="Y-m-d H:m:i",###}</span></li>
+                    <li class="mui-table-view-cell"> 原文
+                        <if condition="$detail.translation_type eq 0">
+                            <div class="mui-card-content translate-content">
+                                {$detail.content}
+                            </div>
+                            <else/>
+                            <div class="mui-card-content">
+                                <img class="mui-media-object" src="../images/shuijiao.jpg">
+                            </div>
+                        </if>
+                    </li>
+                    <li class="mui-table-view-cell">
+                         译文
+                            <div class="mui-card-content translate-content">
+                                <empty name="$detail.after_content">
+                                    正在努力翻译中哟……，提高悬赏有助于翻译速度。
+                                    <else/>
+                                    {$detail.after_content}
+                                </empty>
+
+                            </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="mui-card-footer"></div>
+         </div>
+    </div>
+    <!-- 底部导航 -->
+    <include file="_footer"/>
+    <script src="__STATIC__/mui.3.5.0/js/mui.min.js?v={:SITE_VERSION}"></script>
+<script>
+    /*公共底部菜单js*/
+    mui(".bottom_menu").on('tap','.list-page-bottom',function(){
+        //获取id
+        var from = this.getAttribute("data");
+        if(from==1){
+            var url = "{:addons_url('HumanTranslation://Wap/index', array('token'=>$token))}";
+        }else if(from==2){
+            var url = "{:addons_url('HumanTranslation://Wap/translate', array('token'=>$token))}";
+        }else{
+            var url = "{:addons_url('HumanTranslation://Wap/ucenter', array('token'=>$token))}";
+        }
+        mui.openWindow({
+            url: url,
+        })
+    })
+</script>
+</body>
+</html>

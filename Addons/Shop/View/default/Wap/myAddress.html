@@ -1,0 +1,36 @@
+<include file="Public/mobile_head"/>
+<link href="{:ADDON_PUBLIC_PATH}/mobile/common.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+<body class="withFoot">
+    <div class="container">
+    	<div class="address_list">
+        	<ul>
+             <volist name="lists" id="vo">
+            	<li>
+                	<span class="address_item" style="padding-left:10px">
+                    	<p>{$vo.city_name} {$vo.address}</p>
+                        <p><b>{$vo.truename}</b>  {$vo.mobile}</p>
+                    </span>
+                    <a class="write_icon" href="{:U('add_address',array('id'=>$vo['id'],'from'=>0))}" title="编辑">&nbsp;</a>
+                    <a class="delete_icon" onClick="confirmDelete('{:U('delete_address',array('id'=>$vo[id]))}');" title="删除">&nbsp;</a>
+                </li>
+                </volist>
+            </ul>
+            <a class="add_address" href="{:addons_url('Shop://Wap/add_address')}"><em class="add_icon">&nbsp;</em>新增收货地址<em class="arrow_right">&nbsp;</em></a>
+        </div>
+    </div>	
+     <!-- 底部导航 -->
+    <include file="_footer"/>
+  <script type="text/javascript">
+  function confirmDelete(url){
+  	$.Dialog.confirmBox('温馨提示','确认删除？',{rightCallback:function(){
+  		$.Dialog.loading();
+  		$.post(url,function(res){
+  			  setTimeout(function(){
+  				 location.reload();	
+  			},1500);  	
+  	    });
+	}});
+  }
+  </script>
+</body>
+</html>

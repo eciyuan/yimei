@@ -1,0 +1,418 @@
+<include file="Public/mobile_head"/>
+<meta charset="UTF-8">
+<meta content="{:C('WEB_SITE_KEYWORD')}" name="keywords"/>
+<meta content="{:C('WEB_SITE_DESCRIPTION')}" name="description"/>
+<link rel="shortcut icon" href="{:SITE_URL}/favicon.ico">
+<title><php>echo empty($page_title) ? C('WEB_SITE_TITLE') : $page_title;</php></title>
+<link href="__CSS__/base.css?v={:SITE_VERSION}" rel="stylesheet">
+<link href="__CSS__/module.css?v={:SITE_VERSION}" rel="stylesheet">
+<link href="__CSS__/weiphp.css?v={:SITE_VERSION}" rel="stylesheet">
+
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+<script src="__STATIC__/bootstrap/js/html5shiv.js?v={:SITE_VERSION}"></script>
+<![endif]-->
+<block name="style"></block>
+<!--[if lt IE 9]>
+<script type="text/javascript" src="__STATIC__/jquery-1.10.2.min.js"></script>
+<![endif]-->
+<!--[if gte IE 9]><!-->
+<script type="text/javascript" src="__STATIC__/jquery-2.0.3.min.js"></script>
+<!--<![endif]-->
+<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+<script type="text/javascript" src="__STATIC__/zclip/ZeroClipboard.min.js?v={:SITE_VERSION}"></script>
+<script type="text/javascript" src="__JS__/dialog.js?v={:SITE_VERSION}"></script>
+<script type="text/javascript" src="__JS__/admin_common.js?v={:SITE_VERSION}"></script>
+<script type="text/javascript" src="__JS__/admin_image.js?v={:SITE_VERSION}"></script>
+<script type="text/javascript" src="__STATIC__/masonry/masonry.pkgd.min.js"></script>
+<script type="text/javascript" src="__STATIC__/jquery.dragsort-0.5.2.min.js"></script> 
+<script type="text/javascript">
+var  IMG_PATH = "__IMG__";
+var  STATIC = "__STATIC__";
+var  ROOT = "__ROOT__";
+var  UPLOAD_PICTURE = "{:U('home/File/uploadPicture',array('session_id'=>session_id()))}";
+var  UPLOAD_FILE = "{:U('File/upload',array('session_id'=>session_id()))}";
+var  UPLOAD_DIALOG_URL = "{:U('home/File/uploadDialog',array('session_id'=>session_id()))}";
+</script>
+<!-- 页面header钩子，一般用于加载插件CSS文件和代码 -->
+{:hook('pageHeader')}
+ <!--Includes 城市选择-->
+    <link href="__STATIC__/data/css/mobiscroll.custom-2.6.2.min.css" rel="stylesheet" type="text/css" />
+    <link href="__STATIC__/data/css/city.custom.css" rel="stylesheet" type="text/css" />
+    <script src="__STATIC__/data/js/mobiscroll.custom-2.6.2.min.js" type="text/javascript"></script>
+    <script src="__STATIC__/data/js/template.js" type="text/javascript"></script>
+    <script src="__STATIC__/data/js/template-syntax.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    $(function() {
+        var opt = {
+            preset: 'list',
+            labels: ['省份', '城市', '区']
+        };
+        $.getJSON("__STATIC__/data/js/city.min.json", function(data) {
+            $("#city_tree_list").html(template("city_tree_list_tmpl", data));
+
+            $('#city_tree_list').scroller($.extend(opt, {
+                theme: "android-ics light",
+                mode: "mixed",
+                display: "bottom",
+                lang: "zh"
+            }));
+        });
+    });
+    </script>
+<style>
+body{
+	background:#eee url({$config.background}) no-repeat; background-size:100% 100%
+}
+
+</style>
+<body >
+				<div class="mainbg" style="background:#7ABDE9;">
+		    <volist name="config.background_arr" id="so">
+		        <input type='hidden' id='bg_{$key}' value="{$so|get_cover_url}">
+		    </volist>
+		</div>
+<section>
+<block name="body">
+  <div class="container text-center">
+  	<div class="row "data-animated="0">
+      <!-- 表单 -->
+       <php> $post_url || $post_url = U('indexAdd?model='.$model['id'], $get_param);</php>
+      <form id="form" action="{$post_url}" method="post" class="form-horizontal form-center">
+      		   <div  class="col-md-12 text-center">
+				      	<label  class="btn btn-info  text-center"><i class="fa fa-user"></i>我要入驻</label>	
+				      	</div>
+        <volist name="fields" id="field">
+						          <if condition="$field['is_show'] == 4">
+						            <input type="hidden" class="text" name="{$field.name}" value="{:I($field[name], $field[value])}">
+						          </if>
+          <if condition="$field['is_show'] == 1 || $field['is_show'] == 2 || ($field['is_show'] == 5 && I($field['name']))">
+            <div class="form-item cf toggle-{$field.name}">
+              <label class="item-label">
+                <notempty name="field.is_must"><span class="need_flag">*</span></notempty>
+                {$field['title']} <span class="check-tips">
+                <notempty name="field['remark']">（{$field['remark']}）</notempty>
+                </span></label>
+              <div class="controls">
+                <switch name="field.type">
+                  <case value="num">
+                    <input type="number" class="form-control" name="{$field.name}" value="{:I($field[name], $field[value])}">
+                  </case><br />
+                  <case value="string">
+                    <input type="text" class="form-control text input-large" name="{$field.name}" value="{:I($field[name], $field[value])}">
+                  </case>
+                  <case value="textarea">
+                    <label class="textarea input-large">
+                      <textarea name="{$field.name}">{:I($field[name], $field[value])}</textarea>
+                    </label>
+                  </case>
+                  <case value="datetime">
+                    <input type="datetime" name="{$field.name}" class="text time" value="{:I($field[name], $field[value])}" placeholder="请选择时间" />
+                  </case>
+                  <case value="date">
+                    <input type="datetime" name="{$field.name}" class="text date" value="{:I($field[name], $field[value])}" placeholder="请选择日期" />
+                  </case>
+                  <case value="bool">
+                    <volist name=":parse_field_attr($field['extra'])" id="vo">
+                      <div class="check-item">
+                        <!--[if !IE]><!-->
+                        <input type="radio" class="regular-radio toggle-data" value="{$key}" name="{$field.name}" id="{$field.name}_{$key}"  toggle-data="{$vo|get_hide_attr}"
+
+                        <eq name="field.value" value="$key">checked</eq>
+
+                         />
+                        <label for="{$field.name}_{$key}"></label>
+
+                        {$vo|clean_hide_attr}
+                        <!--<![endif]-->
+                        <!--[if IE]>
+							       <input type="radio" value="{$key}"
+								   id="{$field.name}_{$key}" name="{$field.name}" class="toggle-data" toggle-data="{$vo|get_hide_attr}"
+								  <eq name="field.value" value="$key">checked="checked"</eq> />
+								  <label for="{$field.name}_{$key}"></label>{$vo|clean_hide_attr}
+							   <![endif]-->
+                      </div>
+                    </volist>
+                  </case>
+                  <case value="select">
+                    <select name="{$field.name}">
+                      <volist name=":parse_field_attr($field['extra'])" id="vo"> <option value="{$key}" class="toggle-data" toggle-data="{$vo|get_hide_attr}"
+
+                        <eq name="field.value" value="$key">selected</eq>
+                        >{$vo|clean_hide_attr}
+
+                        </option>
+                      </volist>
+                    </select>
+                  </case>
+                  <case value="cascade">
+                    <div id="cascade_{$field.name}"></div>
+                    {:hook('cascade', array('name'=>$field['name'],'value'=>$field['value'],'extra'=>$field['extra']))} </case>
+                  <case value="dynamic_select">
+                  <div id="dynamic_select_{$field.name}"></div>
+                  {:hook('dynamic_select', array('name'=>$field['name'],'value'=>$data[$field['name']],'extra'=>$field['extra']))}
+                  </case>
+                  <case value="dynamic_checkbox">
+                  <div id="dynamic_checkbox_{$field.name}"></div>
+                  {:hook('dynamic_checkbox', array('name'=>$field['name'],'value'=>$data[$field['name']],'extra'=>$field['extra']))}
+                  </case>
+                  <case value="material">
+                  <div id="material_{$field.name}"></div>
+                  {:hook('material', array('name'=>$field['name'],'value'=>$data[$field['name']],'extra'=>$field['extra']))}
+                  </case>
+                  <case value="prize">
+                  <div id="prize_{$field.name}"></div>
+                  {:hook('prize', array('name'=>$field['name'],'value'=>$data[$field['name']],'extra'=>$field['extra']))}
+                  </case>                                    
+                  <case value="news">
+                  <div id="news_{$field.name}"></div>
+                  {:hook('news', array('name'=>$field['name'],'value'=>$data[$field['name']],'extra'=>$field['extra']))}
+                  </case>
+                  <case value="image">
+                  <div id="image_{$field.name}"></div>
+                  {:hook('image', array('name'=>$field['name'],'value'=>$data[$field['name']],'extra'=>$field['extra']))}
+                  </case>
+                  <case value="radio">
+                    <volist name=":parse_field_attr($field['extra'])" id="vo">
+                      <div class="check-item">
+                        <!--[if !IE]><!-->
+                        <input type="radio" class="regular-radio toggle-data" value="{$key}" id="{$field.name}_{$key}" name="{$field.name}" toggle-data="{$vo|get_hide_attr}"
+
+                        <eq name="field.value" value="$key">checked</eq>
+                        />
+                        <label for="{$field.name}_{$key}"></label>
+                        {$vo|clean_hide_attr}
+                        <!--<![endif]-->
+                        <!--[if IE]>
+							       <input type="radio" value="{$key}"
+								   id="{$field.name}_{$key}" name="{$field.name}" class="toggle-data" toggle-data="{$vo|get_hide_attr}"
+								  <eq name="field.value" value="$key">checked="checked"</eq> />
+								  <label for="{$field.name}_{$key}"></label>{$vo|clean_hide_attr}
+							   <![endif]-->
+                      </div>
+                    </volist>
+                  </case>
+                  <case value="checkbox">
+                    <volist name=":parse_field_attr($field['extra'])" id="vo">
+                      <div class="check-item"> <input type="checkbox" class="regular-checkbox toggle-data" value="{$key}" id="{$field.name}_{$key}" name="{$field.name}[]" toggle-data="{$vo|get_hide_attr}"
+
+                        <in name="key" value="$field['value']" >checked="checked"</in>
+                        >
+                        <label for="{$field.name}_{$key}"></label>
+                        {$vo|clean_hide_attr} </div>
+                    </volist>
+                  </case>
+                  <case value="editor">
+                    <label class="textarea">
+                      <textarea name="{$field.name}" style="width:405px; height:200px;"></textarea>
+                      {:hook('adminArticleEdit', array('name'=>$field['name'],'value'=>$field['value']))} </label>
+                  </case>
+                  <case value="picture">
+                    <div class="controls uploadrow2"  data-max="1" title="点击修改图片" rel="{$field.name}">
+                      <input type="file" id="upload_picture_{$field.name}">
+                      <input type="hidden" name="{$field.name}" id="cover_id_{$field.name}"/>
+                      <div class="upload-img-box">
+                        <notempty name="data[$field['name']]">
+
+                          <div class="upload-pre-item2"><img width="100" height="100" src="{$data[$field['name']]|get_cover_url}"/></div>
+                          <em class="edit_img_icon">&nbsp;</em>
+                        </notempty>
+
+                      </div>
+                    </div>
+                  </case>
+                  <case value="mult_picture">
+                  	<div class="mult_imgs">
+                    	<div class="upload-img-view" id='mutl_picture_{$field.name}'>
+                          <notempty name="data[$field['name']]">
+                            <volist name="data[$field['name']]" id="vo">
+                            <div class="upload-pre-item22">
+                            <img width="100" height="100" src="{$vo|get_cover_url}"/>
+                            <input type="hidden" name="{$field.name}[]" value="{$vo}"/>
+                            <em>&nbsp;</em>
+                            </div>
+                            </volist>
+                          </notempty>
+                        </div>
+                        <div class="controls uploadrow2" data-max="9" title="点击上传图片" rel="{$field.name}">
+                          <input type="file" id="upload_picture_{$field.name}">
+                        </div>
+                    </div>
+                  </case>
+                  <case value="file">
+                    <div class="controls upload_file">
+                      <input type="file" id="upload_file_{$field.name}" title="点击修改文件">
+                      <input type="hidden" name="{$field.name}" value="{$data[$field['name']]}"/>
+                      <div class="upload-img-box">
+                        <present name="data[$field['name']]">
+                          <div class="upload-pre-file"><span class="upload_icon_all"></span>{$data[$field['name']]}</div>
+                        </present>
+                      </div>
+                    </div>
+                  </case>
+                  <case value="user">
+                    <div class="controls">
+                    	<div id="userList" class="common_add_list fl">
+                            <notempty name="data[$field['name']]">
+                                <div class="item" onClick="$.WeiPHP.selectSingleUser('{:addons_url('UserCenter://UserCenter/lists')}','{$field.name}');">
+                                	<php>
+                                    	$userInfo = getUserInfo($data[$field['name']]);
+                                    </php>
+                                    <img src="{$userInfo['headimgurl']}"/><br/><span>{$userInfo['nickname']}</span>
+                                    <input type="hidden" name="{$field.name}'" value="{$data[$field['name']]}"/>
+                                    <span class="name">{$userInfo['nickname']}</span>
+                                </div>
+                            <else/>
+                            <a href="javascript:;" class="common_add_btn fl" onClick="$.WeiPHP.selectSingleUser('{:addons_url('UserCenter://UserCenter/lists')}','{$field.name}');"></a>
+                            </notempty>
+                       </div>
+                    </div>
+                  </case>
+                  <case value="users">
+                        <div class="controls">
+                            <div id="userList" class="common_add_list fl">
+                                <notempty name="data[$field['name']]">
+                                	<php>
+                                            $userIds = explode(',',$data[$field['name']]);
+
+                                    </php>
+                                	<volist name="userIds" id="uid">
+                                    <php>
+                                            $userInfo = getUserInfo($uid);
+
+                                    </php>
+                                    <div class="item" onClick="$.WeiPHP.selectSingleUser('{:addons_url('UserCenter://UserCenter/lists')}','{$field.name}');">
+                                        <php>
+                                            $userInfo = getUserInfo($data[$field['name']]);
+
+                                        </php>
+                                        <img src="{$userInfo['headimgurl']}"/><br/><span>{$userInfo['nickname']}</span>
+                                        <input type="hidden" name="{$field.name}'[]" value="{$data[$field['name']]}"/>
+                                        <span class="name">{$userInfo['nickname']}</span>
+                                    </div>
+                                    </volist>
+                                </notempty>
+                               <a href="javascript:;" class="common_add_btn fl" onClick="$.WeiPHP.selectMutiUser('{:addons_url('UserCenter://UserCenter/lists')}',9,'{$field.name}');"></a>
+                           </div>
+                        </div>
+                      </case>
+                      <case value="admin">
+                        <div class="controls">
+                            <div id="userList" class="common_add_list fl">
+                                <notempty name="data[$field['name']]">
+                                    <div class="item" onClick="$.WeiPHP.selectSingleUser('{:addons_url('UserCenter://UserCenter/admin_lists')}','{$field.name}');">
+                                        <php>
+                                            $userInfo = getUserInfo($data[$field['name']]);
+
+                                        </php>
+                                        <img src="{$userInfo['headimgurl']}"/><br/><span>{$userInfo['nickname']}</span>
+                                        <input type="hidden" name="{$field.name}'" value="{$data[$field['name']]}"/>
+                                        <span class="name">{$userInfo['nickname']}</span>
+                                    </div>
+                                <else/>
+                                <a href="javascript:;" class="common_add_btn fl" onClick="$.WeiPHP.selectSingleUser('{:addons_url('UserCenter://UserCenter/admin_lists')}','{$field.name}');"></a>
+                                </notempty>
+                           </div>
+                        </div>
+                      </case>
+                  <default/>
+                  <input type="text" class="text input-large" name="{$field.name}" value="{:I($field[name], $field[value])}">
+                </switch>
+              </div><br />
+            </div>
+          </if>
+        </volist>
+	<!-- 	    <div class="col-md-12">
+			    <div class="input-group">
+		                      	<select class="form-control" id="s_province" name="province"></select>
+		                      	</div>
+		                  </div>
+		         <div class="col-md-12">
+			    <div class="input-group">
+			    <select class="form-control" id="s_city" name="city" ></select>
+			    </div></div>
+			    <div class="col-md-12">
+				    <div class="input-group">
+				    <select class="form-control" id="s_county" name="county"></select>
+				    </div>
+			    </div>
+		    <script class="resources library " src="__STATIC__/data/city.js" type="text/javascript"></script>
+		    <script type="text/javascript">_init_area();</script> -->
+     <div class="content">
+        <div data-role="fieldcontain" class="demos fieldcontain" id="demo_tree_list">
+            <ul id="city_tree_list">
+            </ul>
+            <script type="text/html" id="city_tree_list_tmpl">
+                {{each citylist as city i}}
+                <li data-val="{{city.p}}">{{city.p}}
+                    <ul>
+                        {{each city.c as data j}}
+                        <li data-val="{{data.n}}">{{data.n}}
+                            <ul>
+                                {{if data.a == null}}
+                                    <li data-val=" "></li>
+                                {{else}}
+                                    {{each data.a as zone k}}
+                                    <li data-val="{{zone.s}}">{{zone.s}}</li>
+                                    {{/each}}
+                                {{/if}}
+                            </ul>
+                        </li>
+                        {{/each}}
+                    </ul>
+                </li>
+                {{/each}}
+            </script>
+        </div>
+    </div>
+	      <input type="text" name="address" class="form-control" id="address" placeholder="请输入详细地址">
+		 <div  class="col-md-12 text-center">
+          <button class="btn btn-info ajax-post" id="submit" type="submit" target-form="form-horizontal">{$submit_name|default='确 定'}</button>
+        </div>
+      </form>
+      </div>
+      </div>
+      </block>
+  </section>
+  
+<block name="script">
+  <script src="__STATIC__/jquery-ui-bootstrap/assets/js/jquery-ui-1.10.0.custom.min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+$('#submit').click(function(){
+    $('#form').submit();
+});
+$(function(){
+	var UploadFileExts = "{$UploadFileExts}";
+	//初始化上传图片插件
+	initUploadImg();
+	if(UploadFileExts!=""){
+		initUploadFile(function(){},UploadFileExts);
+	}else{
+		initUploadFile();
+	}
+    showTab();
+
+	$('.toggle-data').each(function(){
+		var data = $(this).attr('toggle-data');
+		if(data=='') return true;
+
+	     if($(this).is(":selected") || $(this).is(":checked")){
+			 change_event(this)
+		 }
+	});
+	$('.toggle-data').bind("click",function(){ change_event(this) });
+	$('select').change(function(){
+		$('.toggle-data').each(function(){
+			var data = $(this).attr('toggle-data');
+			if(data=='') return true;
+
+			 if($(this).is(":selected") || $(this).is(":checked")){
+				 change_event(this)
+			 }
+		});
+	});
+});
+</script>
+</block>
+</body>
+</html>

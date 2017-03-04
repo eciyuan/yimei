@@ -1,0 +1,123 @@
+<include file="header" />
+<!-- 新 Bootstrap 核心 CSS 文件 -->
+<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+
+<!-- 可选的Bootstrap主题文件（一般不用引入） -->
+<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
+
+
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<!--跑马灯  -->
+<!-- <script src="http://code.jquery.com/jquery-1.9.1.js"></script> -->
+<!-- <script src="__STATIC__/marquee/jquery.liMarquee.js"></script> -->
+<style type="text/css">
+	body{ background:#f1f1f1}
+.btn1 {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+	</style>
+	<script type="text/javascript">
+	if((_CITY && parseInt(_CITY)==0 )){
+		ui.chooseCity();
+	}
+	function doSearch(){
+		var words = $.trim($('#words').val());
+		var form = document.getElementById("search");
+		alert(form);
+		if(!words){
+			$.ui.showMask("内容不能为空!",true);
+			$('#words').focus();
+		}
+		form.submit();
+		
+	}
+</script>
+<div id="content">
+    <div id="weiba" data-title="伊媒微时代-穆青社区">
+        <header>
+            <div id="header-buttons">
+            	<!--
+                <div id="messageLink" class="header-menu-link"><a href="{:U('w3g/Index/msgbox')}"><i class="num"></i></a></div>
+        		<div id="menuLink" class="header-menu-link"></div>
+                -->
+                <div class="head_left">
+                	<if condition="$weiba_curCityInfo && $weiba_curCityInfo['logo']">
+                    	<a class="head_logo" href="{:addons_url('Weiba://Wap/index')}"><img src="$site.logo"/></a>
+                    <else/>
+                    	<a class="head_logo" href="{:addons_url('Weiba://Wap/index')}"><img src="{:ADDON_PUBLIC_PATH}/sys/logo.png?v={:SITE_VERSION}"/></a>
+                    </if>
+                    <a class="head_city_link" href="{:addons_url('Weiba://Wap/cityList')}">
+                        {$weiba_curCityInfo['city']}<i class="arrow_down"></i>
+                    </a>
+                </div>
+                <div id="otherLink" style="right:0">
+                	 <a id="writeLink" class="header-menu-link" href="{:U('post')}">发帖</a>
+                     <!--
+                     <a id="searchLink" class="header-menu-link" href="{:addons_url('Weiba://Search/post')}">搜索</a>
+                     -->
+                    <div id="headMenu" class="header-menu-link msg_tips_container" href="javascript:;">
+                    	导航<em class="msg"></em>
+                    	<ul class="head_sub_menu">
+                            <a href="{:addons_url('Weiba://Wap/forum')}">版块</a>
+                            <a class="msg_tips_container" href="{:addons_url('Weiba://Wap/my')}">我<em class="msg"></em></a>
+                        </ul>
+                    </div>
+                    <!--
+                    <a id="weibaLink" class="header-menu-link" href="{:U('forum')}">版块</a>
+                    <a id="myLink" class="header-menu-link msg_tips_container" href="{:U('my')}">我<em class="msg"></em></a>
+                    -->
+                </div>
+            </div>
+        </header>
+		<if condition="!empty($slideshow)">
+			   <section class="banner"  id="banner">
+			   		<ul>
+			       <volist name="slideshow" id="vo">
+			       	<li>
+			           	<a href="{$vo.url}"><img src="{$vo.img}"/></a>
+			      <!--      	<span class="title" >{$vo.title}</span> -->
+			           </li>
+			        </volist>
+			       </ul>
+			       <span class="identify">
+			       <volist name="slideshow" id="vo">
+			       	<em></em>
+			        </volist>        
+			       </span>
+			   </section>
+			      <else />
+			      </if>
+  <!--搜索  -->
+       <div class="row mt8">
+       <form class="form-inline" name="search" action="{:addons_url('Weiba://Wap/search')}" id="search" method="post" onsubmit="doSearch();return false;" role="form">
+		  <div class="col-lg-12">
+		    <div class="input-group">
+		      <input type="text" name="words" id="words" placeholder="请输入有关话题或者版块" class="form-control">
+		      <span class="input-group-btn">
+		        <button class="btn1 btn-info" type="submit">搜搜</button>
+ 		      </span>
+		    </div><!-- /input-group -->
+		  </div><!-- /.col-lg-6 -->
+  		</form>
+</div><!-- /.row -->
+</div>
+</div>

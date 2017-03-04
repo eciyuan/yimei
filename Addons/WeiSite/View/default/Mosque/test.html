@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <title><php>echo empty($page_title) ? C('WEB_SITE_TITLE') : $page_title;</php></title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+	<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+    <meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+    <meta content="no-cache" http-equiv="pragma">
+    <meta content="0" http-equiv="expires">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" type="text/css" href="__CSS__/mobile_module.css?v={:SITE_VERSION}" media="all">
+    <script type="text/javascript">
+		//静态变量
+		var SITE_URL = "{:SITE_URL}";
+		var IMG_PATH = "__IMG__";
+		var STATIC_PATH = "__STATIC__";
+		var WX_APPID = "{$jsapiParams.appId}";
+		var	WXJS_TIMESTAMP='{$jsapiParams.timestamp}'; 
+		var NONCESTR= '{$jsapiParams.nonceStr}'; 
+		var SIGNATURE= '{$jsapiParams.signature}';
+	</script>
+
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+<script src="__STATIC__/bootstrap/js/html5shiv.js?v={:SITE_VERSION}"></script>
+<![endif]-->
+<block name="style"></block>
+<!--[if lt IE 9]>
+<script type="text/javascript" src="__STATIC__/jquery-1.10.2.min.js"></script>
+<![endif]-->
+<!--[if gte IE 9]><!-->
+<script type="text/javascript" src="__STATIC__/jquery-2.0.3.min.js"></script><!--幻灯片不可少  -->
+<!--<![endif]-->
+<!-- <script type="text/javascript" src="__STATIC__/bootstrap/js/bootstrap.min.js"></script>
+ -->
+<!--  <script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+ -->
+ <!-- <script type="text/javascript" src="__STATIC__/zclip/ZeroClipboard.min.js?v={:SITE_VERSION}"></script>
+<script type="text/javascript" src="__JS__/dialog.js?v={:SITE_VERSION}"></script> -->
+	<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script type="text/javascript" src="minify.php?f=__JS__/prefixfree.min.js,__JS__/m/dialog.js,__JS__/m/flipsnap.min.js,__JS__/m/mobile_module.js&v={:SITE_VERSION}"></script>
+</head>
+   <link type="text/css" href="__STATIC__/jquery-ui-bootstrap/css/custom-theme/jquery-ui-1.10.0.custom.css" rel="stylesheet" />
+    <link rel="stylesheet" href="__STATIC__/font-awesome/css/font-awesome.min.css">
+   <!--  <link rel="stylesheet" href="__STATIC__/bootstrap/css/bootstrap.min.css"> -->
+<!-- 可选的Bootstrap主题文件（一般不用引入） -->
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+<link href="{:CUSTOM_TEMPLATE_PATH}Index/ColorV1/main.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+<style>
+body{
+	background:#eee url({$config.background}) no-repeat; background-size:100% 100%
+}
+</style>
+<body id="weisite">
+<div class="container">
+		    <if condition="empty($slideshow)">
+		    <p>&nbsp;</p><p>&nbsp;</p>
+		    <p>管理员还没有配置幻灯片数据，请先等配置后再看</p>
+		    <else />
+		    <if condition="!empty($slideshow)">
+		    <section class="banner"  id="banner">
+		    	<ul>
+		        <volist name="slideshow" id="vo">
+		        	<li>
+		            	<a href="{$vo.url}"><img src="{$vo.img}"/></a>
+		            	<span class="title">{$vo.title}</span>
+		            </li>
+		         </volist>
+		        </ul>
+		        <span class="identify">
+		        <volist name="slideshow" id="vo">
+		        	<em></em>
+		         </volist>        
+		        </span>
+		    </section>
+		    </if>
+			    <div class="mainbg" style="background:#7ABDE9;">
+			    <volist name="config.background_arr" id="so">
+			        <input type='hidden' id='bg_{$key}' value="{$so|get_cover_url}">
+			    </volist>
+			</div>
+		    <section>
+			<div class="" >
+					<div class="col-md-12">
+						<div class="mosque">
+							<div id="City" class="" >
+								<volist name="city" id="vo">
+								  <a href="{:addons_url('WeiSite://Mosque/indexCityDetail',array('city'=>$vo['province'],'type'=>1))}" charset="utf-8">
+									  <span class="label label-primary">
+									  	 {$vo.province}
+									 </span>
+								 	</a>
+							   </volist>
+							</div>
+							</div>
+						<!-- 	<div id="myTabContent" class="">
+									   <div class="tab-pane fade in active" id="tab-mosque-content">
+									    <volist name="mosque" id="vo">
+									      <p><a href="__URL__/perMosque?id={$vo.id}" id="mosqueName" target="_blank" >{$vo.name}</a></p>
+									   </volist>
+									   </div>
+							</div> -->
+						</div>
+				<div class="col-md-12">
+				<p class="bg-info">点击城市即可进入该城市下的清真寺列表哟！</p>
+				</div>
+			</div>
+			<div class="row" data-animated="0">
+				<div class="col-md-12">
+					<div id="addMosque">
+						<cate id="1">
+						<a href="{:addons_url('WeiSite://Mosque/indexAdd')}" class="btn btn-primary btn-block btn-center">我要入驻</a>
+						</cate>
+					</div>
+				</div>
+			</div>
+			<div class="row" data-animated="0">
+				<div class="col-md-12">
+					<div id="notice">
+						<cate id="1">
+						<a href="{:addons_url('WeiSite://MosqueNotice/indexAddNotice')}" class="btn btn-primary  btn-block btn-center">我要通知</a>
+						</cate>
+					</div>
+				</div>
+			</div>
+		    </section>
+</div>
+<!-- 底部导航 -->
+{$footer_html}
+<!-- 统计代码 -->
+<notempty name="config.code">
+<p class="hide bdtongji">
+{$config.code}
+</p>
+<else />
+<p class="hide bdtongji">
+{$tongji_code}
+</p>
+</notempty>
+</body>
+<script type="text/javascript">
+$(function(){
+  $.WeiPHP.initBanner('#banner',true,5000);
+	$.WeiPHP.setRandomColor('.random_color');
+	var h=$(window).height();
+	$('#weisite').css('min-height',h);
+	
+	var count = $('.mainbg input').length;
+	var i=0;
+	 var imgurl='';
+	 setInterval(function(){
+		imgurl=$('#bg_'+i).val();
+// 		 $('.mainbg img').attr('src', imgurl).fadeTo('3000',1);
+		$('#weisite').css('background-image',"url("+imgurl+")");
+		 i++;
+		 if(i==count){
+			 i=0;
+		 }
+	 },3500);
+	 
+})
+
+</script>
+</html>

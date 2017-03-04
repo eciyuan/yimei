@@ -1,0 +1,316 @@
+<include file="Public/mobile_head"/>	
+<!-- 新 Bootstrap 核心 CSS 文件 -->
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+   <link type="text/css" href="__STATIC__/jquery-ui-bootstrap/css/custom-theme/jquery-ui-1.10.0.custom.css" rel="stylesheet" />
+    <link rel="stylesheet" href="__STATIC__/font-awesome/css/font-awesome.min.css">
+<!-- 可选的Bootstrap主题文件（一般不用引入） -->
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+<!--[if lt IE 9]>
+      	<script src="__MOBILE__/Js/html5shiv.js"></script>
+	      <script src="__MOBILE__/Js/respond.js"></script>
+	<![endif]-->
+            <!--[if IE 7]>
+            <link rel="stylesheet" href="__STATIC__/jquery-ui-bootstrap/assets/css/font-awesome-ie7.min.css">
+            <![endif]-->
+            <!--[if lt IE 9]>
+            <link rel="stylesheet" type="text/css" href="__STATIC__/jquery-ui-bootstrap/css/custom-theme/jquery.ui.1.10.0.ie.css"/>
+            <![endif]-->
+            <link href="__STATIC__/jquery-ui-bootstrap/assets/css/google-code-prettify/prettify.css" rel="stylesheet">
+            
+<link href="{:CUSTOM_TEMPLATE_PATH}Index/ColorV1/main.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+   <link href="__PUBLIC__/Home/css/style.css" rel="stylesheet"><!--自定义  -->
+<style>
+body{
+	background:#eee url({$config.background}) no-repeat; background-size:100% 100%
+}
+</style>
+<body id="weisite">
+<nav class="m-top-title-nav">
+	<!-- <div class="pull-left ">
+		<a href="__APP__/Mobile/Mosque/index" class="button-returnList"><span class="glyphicon glyphicon-backward"></span>返回</a>
+	</div> -->
+	<if condition="$Think.cookie.mosqueName eq '' ">
+					<else/>
+	<div class=" pull-right ">
+		<a href="{:U('User/logout')}" class="button-returnList"><span class="glyphicon glyphicon-log-out"></span>退出</a>
+	</div>
+	</if>
+	<div class="top-title  text-center"><h4><span class="glyphicon glyphicon-user"></span>{$detail.name}主页</h4></div>
+</nav>
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+			<div class="panel panel-default">
+			    <div class="panel-heading" role="tab" id="headingThree">
+			      <h4 class="panel-title">
+			        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#basicInfo" aria-expanded="false" aria-controls="collapseThree">
+					        <i class="glyphicon glyphicon-th-list"></i>
+							<span class="card-title">基本信息</span>
+			        </a>
+			      </h4>
+			    </div>
+			    <div id="basicInfo" class="panel-collapse collapse  in" role="tabpanel" aria-labelledby="headingThree">
+			      <div class="panel-body">
+			    	  <div class="info-item">
+						<div class="name"><span class="key">名称</span><span class="val">{$detail.name}</span></div>
+						<div class="linkman"><span class="key">主持</span><span class="val">{$detail.linkman}</span></div>
+						<div class="address"><span class="key">地址</span><span class="val">{$detail.s_province}{$detail.s_county}{$detail.s_city}{$detail.address}</span></div>
+						</div>
+					 </div>
+			    </div>
+			  </div>
+			  <div class="panel panel-default">
+			    <div class="panel-heading" role="tab" id="headingOne">
+			      <h4 class="panel-title">
+			        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#qrcode" aria-expanded="true" aria-controls="collapseOne">
+			       		 <i class="glyphicon glyphicon-qrcode"></i>
+						<span class="card-title">{$detail.name}主页二维码</span>
+			        </a>
+			      </h4>
+			    </div>
+			    <div id="qrcode" class="panel-collapse collapse in " role="tabpanel" aria-labelledby="headingOne">
+			      <div class="panel-body">
+			      		<ul class="list-group">
+							 	<li class="list-group-item qrcode">
+							 		<if condition="$Think.cookie.mosqueName eq '{$detail.name}' ">
+							 		<p class="text-info btn-center">
+							 			<img alt="{$detail.name}主页二维码" id=qrcode_img  src="__ROOT__/{$detail.qrcode}">	
+							 			</p>
+							 			<else/>
+							 		<p class="text-info btn-center"><a href="{:addons_url('WeiSite://Mosque/indexQrcode',array('from'=>1))}">刷新重新生成二维码</a></p>
+										</if>
+							 	</li>
+							 	<li class="list-group-item list-group-item-warning center-block">
+							 			<p class="text-info btn-center">关注伊媒微时代--伊媒生活--清真寺，以后相关的资讯和通知通过该平台发布</p>
+							 			<a href="" class="btn btn-primary  btn-block btn-center">截图保存二维码并在微信扫描</a>
+							 			<p class="text-muted btn-center">扫描方法：扫一扫界面->点相册->选择二维码图片</p>
+							 	</li>
+						</ul>
+			      </div>
+			    </div>
+			  </div>
+			  <!--联系方式开始  -->
+			 <!--  <div class="panel panel-default">
+			    <div class="panel-heading" role="tab" id="headingThree">
+			      <h4 class="panel-title">
+			        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#basicInfo" aria-expanded="false" aria-controls="collapseThree">
+					        <i class="glyphicon glyphicon-th-list"></i>
+							<span class="card-title">联系方式</span>
+			        </a>
+			      </h4>
+			    </div>
+			    <div id="basicInfo" class="panel-collapse collapse  in" role="tabpanel" aria-labelledby="headingThree">
+			      <div class="panel-body">
+			    	  <div class="info-item">
+						<div class="name"><span class="key">乡老</span><span class="val">{$detail.name}</span></div>
+						<div class="linkman"><span class="key">主持</span><span class="val">{$detail.linkman}</span></div>
+						<div class="address"><span class="key">地址</span><span class="val">{$detail.s_province}{$detail.s_county}{$detail.s_city}{$detail.address}</span></div>
+						<div class="intro text-center">
+								<div class="blog-post-title">基本介绍</div>
+								<div class="blog-content">{$detail.intro}</div>
+						</div>
+						</div>
+					 </div>
+			    </div>
+			  </div> -->
+			  <!--联系方式结束 -->
+			  <div class="panel panel-default">
+			    <div class="panel-heading" role="tab" id="headingOne">
+			      <h4 class="panel-title">
+			        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#notice" aria-expanded="true" aria-controls="collapseOne">
+			       		 <i class="glyphicon glyphicon-envelope"></i>
+						<span class="card-title">相关通知</span>
+			        </a>
+			      </h4>
+			    </div>
+			    <div id="notice" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingOne">
+			      <div class="panel-body">
+			      		<ul class="list-group">
+			      		<volist name="notice" id="vo" mod="2">
+							  <!--  <a href="{:U('Mosque/noticeDetail',array('id'=>$vo['id'],'type'=>1))}"> -->
+							 		<li  id="t{$vo.id}" class="list-group-item list-group-item-info">
+							 		<!-- <img  id="blog-img" alt="Responsive image" class="img-responsive img-polaroid thumbnail" alt="项目图片展示" src="__MOBILE__/Img/textLife.jpg"/>
+							 		 -->
+							 		 <p class="">
+							 		 		<h4 class="">{$vo.title}</h4>
+										</p>
+										<if condition="$Think.cookie.mosqueName neq '{$detail.name}' ">
+											<else/>
+											<p>
+										 		 <a href="{:addons_url('WeiSite://MosqueNotice/indexEdit',array('id'=>$vo['id']))}">
+										 			 <i class="fa fa-pencil bigger-100"></i>修改
+										 		 </a>
+										 		 &nbsp;&nbsp;
+										 		 <a href="javascript:void(0);" id= "{$vo.id}" class="delete">
+										 		 <i class=" fa fa-trash-o bigger-100"></i>删除</a>
+											</p>
+											</if>
+							 		 <p class="">{$vo.content}</p>
+							 		 </li>
+						  </volist>
+						</ul>
+			      </div>
+			    </div>
+			  </div>
+		<if condition="$Think.cookie.mosqueName neq '{$detail.name}' ">
+					<else/>
+					   <div class="panel panel-default">
+					    <div class="panel-heading" role="tab" id="headingOne">
+					      <h4 class="panel-title">
+					        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#addNotice" aria-expanded="true" aria-controls="collapseOne">
+					       		 <i class="glyphicon glyphicon-plus"></i>
+								<span class="card-title">我要通知</span>
+					        </a>
+					      </h4>
+					    </div>
+					    <div id="addNotice" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingOne">
+					      <div class="panel-body">
+									 	<div class="container">
+									 	<div class="row "data-animated="0">
+						   <form class="form-horizontal" id="notice" action="{:addons_url('WeiSite://MosqueNotice/indexAdd')}" method="post">
+						       <div  class="col-md-12 text-center"><label  class="control-label ">我要发布信息</label></div>
+						     	  <div class="text-center">
+									    <label for="" class="col-md-2 control-label"></label>
+									    <div class="col-md-10">
+									    <div class="input-group">
+									      <span class="input-group-addon">
+			                                        <i class="glyphicon glyphicon-user"></i>
+			                                   </span>
+									      <input type="text" name="title"class="form-control" id="" placeholder="请输入名称">
+									    </div>
+									    </div>
+								  </div>
+							<div class="intro-textarea text-center">
+							 <label for="" class="col-md-2 control-label"></label>
+		                            <div class="col-md-10"> 
+		                              <div   class="input-group">
+		                              	<span class="input-group-addon"  >
+		                                        <i class="glyphicon glyphicon-globe"></i>
+		                                  </span>
+		                                <textarea   name="content" class="form-control validate[required,maxSize[50]]" rows="3" placeholder="填写您让我们大家知道的消息" name="content"></textarea>
+		                           		 </div>
+		                            </div>
+		                        </div>
+				             <input type="hidden" name="submit"  value="1" />
+						  <div class="text-center ">
+						    <div class="col-md-offset-2 col-md-10">
+						      <button type="submit" class="btn  btn-success btn-sm"><i class="glyphicon glyphicon-registration-mark"></i>提交</button>
+						    </div>
+						  </div>
+						</form>
+					          </div> 	
+					      </div>
+					    </div>
+					  </div>
+					  </div>
+					  </if>
+			<!-- 游客登陆：相关的报道资讯列出来 -->
+			  <div class="panel panel-default">
+			    <div class="panel-heading" role="tab" id="headingTwo">
+			      <h4 class="panel-title">
+			        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#aboutnews" aria-expanded="false" aria-controls="collapseTwo">
+			         <i class="glyphicon glyphicon-list-alt"></i>
+					<span class="card-title" >相关资讯</span>
+			        </a>
+			      </h4>
+			    </div>
+			    <div id="aboutnews" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+			      <div class="panel-body">
+			       <ul class="list-group">
+			       <li class="list-group-item bg-danger text-center">您要是也想丰富自己站点的信息，请将您的资讯信息发送至邮箱292334666@qq.com</li>
+			      		<volist name="article" id="vo">
+			      			<empty name="vo.url">
+			      			  <a href="{:addons_url('WeiSite://MosqueArticle/indexDetail',array('id'=>$vo['id'],'type'=>1))}">
+									 			<li class="list-group-item list-group-item-info">
+									 				<img  id="blog-img"  class="img-responsive img-polaroid thumbnail" alt="{$vo.title}" src="__ROOT__{$vo.thumbnail}"/>
+									 			 <span>{$vo.title|msubstr=0,12,'utf-8',true}</span>
+									 			</li>
+									   </a>
+							   	<else /> 
+									    <a href="{$vo.url}" target="_blank">
+							 				<li class="list-group-item list-group-item-info">
+							 				<img  id="blog-img"  class="img-responsive img-polaroid thumbnail" alt="{$vo.title}" src="__ROOT__{$vo.thumbnail}"/>
+							 				<span>{$vo.title|msubstr=0,12,'utf-8',true}</span></li>
+							   </a>
+								</empty>
+						  </volist>
+						</ul>
+						</div>
+			    </div>
+			  </div>
+	</div>
+	<script type="text/javascript">
+	$(".list-group li:even").addClass("list-group-item-warning"); 
+	jQuery(".list-group a .delete").click(function(){
+        if(confirm("你确定要删除吗？")){
+            var _this=this;
+            var id = jQuery(_this).attr("id");
+            jQuery.ajax({
+                url : '/MosqueNotice/indexDelete?',
+                data : {'id':id},
+                dataType : 'json',
+                success : function(data){
+                    var del = data.del;
+                    if(del == 1){//删除成功
+                        jQuery("#"+id).parents(".list-group-item").slideUp("slow", function(){  
+                            jQuery(this).remove();  
+                      });
+                    }else{
+                    	//删除失败
+                        alert("删除失败");
+                    }
+                }
+            });
+        }
+});
+	</script>
+</body>
+</div>
+<!-- 底部导航 -->
+{$footer_html}
+<!-- 统计代码 -->
+<notempty name="config.code">
+<p class="hide bdtongji">
+{$config.code}
+</p>
+<else />
+<p class="hide bdtongji">
+{$tongji_code}
+</p>
+</notempty>
+</body>
+ <link href="__STATIC__/datetimepicker/css/datetimepicker.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+  <php>if(C('COLOR_STYLE')=='blue_color') echo '
+    <link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+    ';</php>
+  <link href="__STATIC__/datetimepicker/css/dropdown.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+  <script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script> 
+  <script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js?v={:SITE_VERSION}" charset="UTF-8"></script> 
+ 
+<script src="__STATIC__/jquery-ui-bootstrap/assets/js/jquery-ui-1.10.0.custom.min.js" type="text/javascript"></script>
+<script src="__STATIC__/jquery-ui-bootstrap/assets/js/google-code-prettify/prettify.js" type="text/javascript"></script>
+
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+$(function(){
+  $.WeiPHP.initBanner('#banner',true,5000);
+	$.WeiPHP.setRandomColor('.random_color');
+	var h=$(window).height();
+	$('#weisite').css('min-height',h);
+	
+	var count = $('.mainbg input').length;
+	var i=0;
+	 var imgurl='';
+	 setInterval(function(){
+		imgurl=$('#bg_'+i).val();
+// 		 $('.mainbg img').attr('src', imgurl).fadeTo('3000',1);
+		$('#weisite').css('background-image',"url("+imgurl+")");
+		 i++;
+		 if(i==count){
+			 i=0;
+		 }
+	 },3500);
+	 
+})
+
+</script>
+</html>

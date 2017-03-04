@@ -1,0 +1,171 @@
+<include file="Public/mobile_head"/>
+<link href="{:ADDON_PUBLIC_PATH}/mobile/common.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+<link href="{:CUSTOM_TEMPLATE_PATH}Public/mui.min.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+<link href="{:CUSTOM_TEMPLATE_PATH}Public/shop.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+<body class="withFoot">
+<div class="container">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">我的评价</h1>
+		</header>
+		<div class="mui-content">
+				<div class="height10px"></div>
+			<form class="mui-input-group" id="commentForm"  method="post" action="{:U('submitCommentOrder')}" >
+			   <ul class="mui-table-view">
+			    <li class="mui-table-view-cell">
+			        <a class="mui-navigate-right" href="{:U('orderDetail',array('id'=>$goodId,'shop_id'=>$shop_id))}" id="goodsInfo">{$goodTitle}</a>
+			    </li>
+				</ul>
+		    	<div class="" >
+					<textarea id="textarea" rows="5" name="desc" placeholder="请输入评论内容"></textarea>
+				</div>
+		    		<div class="height10px"></div>
+			    <div class="">
+					<div class="mui-card-header">晒图</div>
+					<div class="mui-card-content">
+						<div class="mui-card-content-inner">
+						    <li class="contentItem">
+			                    <div class="upload_img_wrap">
+			                        <div class="controls">
+			                            <div class="upload_row muti_picture_row">
+			                                <notempty name="info['image_url']">
+			                                    <php>
+			                                        echo '<div class="img_item"><em>X</em><input type="hidden" name="image_url" value="'.$info['image_url'].'"/>
+													<img src="'.get_cover_url($info['image_url']).'"/></div>';
+			                                    </php>
+			                                <else />
+			                                <a class="img_item add_btn" href="javascript:;" onClick="$.WeiPHP.wxChooseImg(this,1,'image_url',uploadImg);"><img width="100%" src="__IMG__/add.png"/></a>
+			                                </notempty>
+			                            </div>
+			                        </div>
+			                    </div>
+			                </li>
+						</div>
+					</div>
+				</div>
+					<div class="height10px"></div>
+					<div class="mui-input-row" id="logistic"> 
+						<label>物流评级</label>     
+						<span class="mui-input-clear"data-score="3" id="logistic-raty"></span>
+					</div>     
+						<div class="height10px"></div>
+					<div class="mui-input-row" id="description"> 
+						<label>描述评级</label>     
+						<span class="mui-input-clear"data-score="4" id="description-raty"></span>
+					</div>    
+						<div class="height10px"></div>
+					<div class="mui-input-row" id="server"> 
+						<label>服务评级</label>     
+						<span class="mui-input-clear"data-score="1" id="server-raty"></span>
+					</div>   
+						<div class="height10px"></div>
+						<input type="hidden" name="order_id" id="order_id" value="{$orderID}" />
+						<input type="hidden" name="good_id" id="good_id" value="{$goodId}" />
+					  <div class="mui-button-row">
+				        <button type="button" class="mui-btn mui-btn-success" id="addComment" >确认</button>
+				    </div>
+					
+				</form>
+		</div>
+</div>
+</body>
+<script src="{:CUSTOM_TEMPLATE_PATH}Public/mui.min.js?v={:SITE_VERSION}"></script>
+<script src="__STATIC__/raty-2.5.2/lib/jquery.raty.min.js"></script>
+<script type="text/javascript">
+    mui.init();
+    mui.ready(function() {
+    });
+      function uploadImg(localIds,name,target){
+        var localId = localIds.pop();
+        $.Dialog.loading();
+        wx.uploadImage({
+            localId: localId, // 需要上传的图片的本地ID，由chooseImage接口获得
+            isShowProgressTips: 0, // 默认为1，显示进度提示
+            success: function (res) {
+                $.get(SITE_URL+"/index.php?s=/Home/Weixin/downloadPic/media_id/"+res.serverId+".html",function(data){
+                    $.Dialog.close();
+                    if(data.result=="success"){
+                        var addImg = $('<div class="img_item"><em>X</em><input type="hidden" id="'+name+'" value="'+data.id+'"/><img src="'+data.picUrl+'"/></div>');
+                        addImg.insertBefore($(target));
+                        $(target).hide();
+                        var uploadImgWidth = $('.muti_picture_row .img_item').width()-10;
+                        $('.muti_picture_row .img_item').height(uploadImgWidth).width(uploadImgWidth);
+                        $('em',addImg).click(function(){
+                            $(this).parent().remove();
+                            $(target).show();
+                        });
+                    }else{
+                        $.Dialog.fail('上传图片失败，请通知管理员处理');
+                    }
+                })
+            }
+        });
+    }
+    $(function(){
+    	score='';
+    	 $.fn.raty.defaults.path = '__STATIC__/raty-2.5.2/lib/img';
+	    $('#description-raty').raty({ 
+	    	  score: function() { 
+	    	    return $(this).attr('data-score'); 
+	    	  } 
+	    	}); 
+	    $('#logistic-raty').raty({ 
+	    	  score: function() { 
+	    	    return $(this).attr('data-score'); 
+	    	  } 
+	    	}); 
+	    $('#server-raty').raty({ 
+	    	  score: function() { 
+	    	    return $(this).attr('data-score'); 
+	    	  } 
+	    	}); 
+	    	 $('#description-raty').raty({ 
+	    	   click: function(score, evt) {
+	    	     descriptionScore=score;
+	    	  } 
+	    	}); 
+	    $('#logistic-raty').raty({ 
+	    	 click: function(score, evt) {
+	    	    logisticScore=score;
+	    	  } 
+	    	}); 
+	    $('#server-raty').raty({ 
+	    	  click: function(score, evt) {
+	    	   serverScore=score;
+	    	  } 
+	    	}); 
+    	 $('#addComment').click(function() {
+    	 	if(descriptionScore==null){
+    	 		descriptionScore='';
+    	 	}
+    	 	if(logisticScore==null){
+    	 		logisticScore='';
+    	 	}
+    	 	if(serverScore==null){
+    	 		serverScore='';
+    	 	}
+           var image_url = $('#image_url').val();
+            var good_id = $('#good_id').val();
+            var order_id = $('#order_id').val();
+            var desc = $('#desc').val();
+            var goods_id = $('#goods_id').val();
+               $.Dialog.loading();
+               $.post($('#commentForm').attr('action'), {
+               		good_id:good_id,order_id:order_id,
+                   desc:desc,miao_star:descriptionScore,liu_star:logisticScore,
+                   fuwu_star: serverScore
+               }, function(data){
+				 //  console.log(data);
+                  if(data.status=="success"){
+                       $.Dialog.success('保存成功');
+                       setTimeout(function(){
+                           window.location.reload();
+                       },2000)
+                   }else{
+                       $.Dialog.fail('保存失败');
+                   }
+               },'JSON');
+       });
+    })
+</script>
+</html>

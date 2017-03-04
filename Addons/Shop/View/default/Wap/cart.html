@@ -1,0 +1,91 @@
+<include file="Public/mobile_head"/>
+<link href="{:ADDON_PUBLIC_PATH}/mobile/common.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="{:ADDON_PUBLIC_PATH}/mobile/shop.js?v={:SITE_VERSION}"></script>
+<body>
+<include file="sub_header.html"/>
+<div class="container">
+    <empty name="lists">
+        <div class="cart_empty">
+            <img src="{:ADDON_PUBLIC_PATH}/mobile/cart.png"/>
+            <p>购物车还是空的</p>
+            <p><a href="{:U('lists',array('shop_id'=>$shop_id,'token'=>$token))}">去店里逛逛吧</a></p>
+        </div>
+        <!-- 底部导航 -->
+        <include file="_footer"/>
+    <else />
+        <div class="cart_list_top">
+            <a class="fr orange" href="javascript:void(0);" onClick="deleteCartItem()">删除商品</a>
+        </div>
+        <form action="{:addons_url('Shop://Wap/confirm_order')}" method="post" onSubmit="return checkCartSubmit()">
+            <div class="cart_list">
+                <ul>
+                    <volist name="lists" id="ko">
+                        <p class="title">{$ko.business}</p>
+                        <volist name="ko.child" id="vo">
+                            <li class="cart_item" bid="{$ko.bid}">
+                                <input class="custom_check" id="item_{$vo.id}" rel="{$vo.id}" name="goods_ids[]" type="checkbox"  value="{$vo.goods.id}" checked="checked" />
+                                <label for="item_{$vo.id}"><em>&nbsp;</em></label>
+                                <div class="goods_item">
+                                    <a href="{:U('detail',array('shop_id'=>$shop_id,'id'=>$vo['goods']['id'],'token'=>$token))}">
+                                        <img class="goods_img" src="{$vo.goods.cover|get_cover_url}"/>
+                                    </a>
+                                    <div class="goods_desc">
+                                        <a class="name" href="{:U('detail',array('shop_id'=>$shop_id,'id'=>$vo['goods']['id'],'token'=>$token))}">{$vo.goods.title}</a>
+                                        <p class="info"><span class="colorless">重量:</span><span class="singleWeight">{$vo.goods.weight}</span> Kg</p>
+                                        <p class="info"><span class="colorless">单价:</span><span class="orange">￥<span class="singlePrice">{$vo.goods.price|wp_money_format}</span></span></p>
+                                        <div class="buy_count">
+                                            <a class="reduce" href="javascript:;">-</a>
+                                            <input type="text" name="buyCount[{$vo.goods.id}]" value="{$vo.num|intval}" rel="buyCount"/>
+                                            <a class="add" href="javascript:;">+</a>
+                                        </div>
+                                        <input type="hidden" name="is_oversea" id="is_oversea" value="{$vo['goods']['is_oversea']}"/>
+                                    </div>
+                                </div>
+                            </li>
+                        </volist>
+                    </volist>
+                </ul>
+            </div>
+            <!-- cart_list end -->
+            <div class="cartBottom">
+                <div class="check_all">
+                    <input class="custom_check check_all" id="checkAll" name="checkAll" type="checkbox"  checked="checked"/>
+                    <label for="checkAll"><em>&nbsp;</em>全选</label>
+                </div>
+                <div class="total">
+                    <p>总结：<span class="orange">￥<span id="totalPrice">00.00</span></span></p>
+                    <p class="count">(共<span id="totalCount">12</span>件。不含运费)</p>
+                </div>
+                <button class="settlement" type="submit">去结算</button>
+            </div>
+        </form>
+    </empty>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    $(function(){
+        updatePriceAndCount();
+    });
+    //删除沟通车的商品
+    function deleteCartItem(){
+        if($('input[name="goods_ids[]"]:checked').size()==0){
+            $.Dialog.fail("请选择要删除的购物车物品");
+        }else if(confirm('确认删除？')){
+            var cartIds = "";
+            $('input[name="goods_ids[]"]:checked').each(function(index, element) {
+                cartIds += $(this).attr('rel')+",";
+            });
+            $.Dialog.loading();
+            $.ajax({
+                url:"{:U('delCart',array('shop_id'=>$shop_id,'token'=>$token))}",
+                data:{ids:cartIds},
+                dataType:"json",
+                type:"post",
+                success:function(data){
+                    window.location.reload();
+                }
+            })
+        }
+    }
+</script>

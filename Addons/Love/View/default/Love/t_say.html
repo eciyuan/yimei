@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<!-- saved from url=(0066)http://wxhand.com/o/biaobai/add_express.php?token=judfzt1400477506 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta  name="viewport"  content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+<title>发布表白</title>
+<style>
+input,textarea
+{
+    width:97%;  
+}
+</style>
+<link  href="{:ADDON_PUBLIC_PATH}/style.css?v={:SITE_VERSION}"  rel="stylesheet"  type="text/css">
+
+<script  language="javascript"  type="text/javascript">
+var post = true;
+function cheackbook(){
+    var form = document.form_book;
+    if (form.lover.value.replace(/ /g,"")==""){
+        alert("对象名称不能为空，请认真填写");
+        form.book_title.focus();
+        return false;
+    }
+    if (form.nickname.value.replace(/ /g,"")==""){
+        alert("你的名字不能为空，请重新填写");
+        form.book_name.focus();
+        return false;
+    }
+    if (form.content.value.replace(/ /g,"")==""){
+        alert("表白内容不能为空");
+        form.book_body.focus();
+        return false;
+    }
+    else if (form.content.value.replace(/ /g,"").length < 4){
+        alert("内容太少了，有刷屏的嫌疑!\n\n呵呵，请重新输入你的表白。");
+        form.book_body.focus();
+        return false;
+    }
+    if(!post){
+        return;
+    }
+    post = false;
+    document.form_book.submit();
+}
+</script>
+</head>
+<body>
+    <header>
+        <div  class="logo">
+         <img  src="{:ADDON_PUBLIC_PATH}/whiteheart.png">
+        </div>
+        <div  class="clear"></div>
+    </header>
+    <div  class="content">
+        <article>
+        <form   method="post"  id="form_book"  name="form_book"   class="label-top">
+                    <div>
+                         <input  type="hidden"  name="token"  value="judfzt1400477506">
+                         <input  type="hidden"  name="save"  value="1">
+                         <label  for="book_title">对象名称： <span  class="red">*</span></label>
+                         <input  type="text"  name="lover"  id="name"  tabindex="1">
+                    </div>
+		    <div>
+                         <label  for="phone">对象手机号：<span  class="red">*</span></label>
+                         <input  name="phone"  type="text"  value="15527516882"  tabindex="1">
+                    </div>
+                    <div>
+                         <label  for="book_name">我的姓名：<span  class="red">*</span></label>
+                         <input  name="nickname"  type="text"  value="{$user.nickname}"  tabindex="1">
+                    </div>
+                    <div>
+                        <label  for="book_body">内容： <span  class="red">*</span></label>
+                        <textarea  type="text"  name="content"  tabindex="1"  cols="40"  rows="8"></textarea>
+                    </div>
+                    <div>
+                        <input  name="Submit"  type="submit"   value="发布">
+                    </div>
+                </form>
+        </article>
+    </div>
+    <div  style="font-size: 12px;line-height: 24px;width: 100%;text-align: center;color: #444;margin-top: 10px;">
+       ©2014 艾豆科技
+    </div>
+
+</body></html>

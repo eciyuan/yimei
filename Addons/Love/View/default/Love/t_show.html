@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<!-- saved from url=(0060)http://wxhand.com/o/biaobai/index.php?token=judfzt1400477506 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta  name="viewport"  content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+        <title>We信表白墙</title>
+        <link  href="{:ADDON_PUBLIC_PATH}/style.css?v={:SITE_VERSION}"  rel="stylesheet"  type="text/css">
+        
+    </head>
+<body>
+    <header>
+        <div  class="logo"  style="width:90%; color:white; font-size:10px;text-align:center;">  
+         <img  src="{:ADDON_PUBLIC_PATH}/whiteheart.png"  style="float:left">We信表白墙
+        </div>
+        <nav  class="vertical menu">
+            <ul>
+                <li><a  href="{$jump_url}"  style="font-weight:bold"> 点此处发布表白</a></li>
+                <li  style=" margin:5px 0; text-align:center;">
+                <form  name="search"  method="post">
+                <input  type="hidden"  name="token"  value="judfzt1400477506">
+                <input  type="text"  name="keyword"  value=""  placeholder="搜索我有没有被表白"  style="width:70%;border:none;color:#999;">
+                <input  type="submit"  value="搜索"  style="font-size:16px;margin:0px;padding:0px;">
+                </form>   
+                </li>
+            </ul>
+        </nav> 
+        <div  class="clear"></div>
+    </header>    
+    <div  class="content">
+        <volist name="list_data" id="vo">
+       
+        <article  class="underline">
+    
+            <h2><span  style="color:#78c1e5">TO：&nbsp;{$vo.lover}</span></h2>
+            <p>    {$vo.content}</p>
+            <div  class="date"><span>FROM：{$vo.nickname}</span>状态：<if condition="$vo['state'] eq 0">表白失败<elseif condition="$vo['state'] eq 1"/>表白成功<else />表白ing</if></div>
+            
+    </article>
+	</volist>
+          
+  </div>  
+    {$page}
+    <article  class="underline"  style="text-align:center">
+        <form  name="location"  method="get"  action="#">
+     页次：1/412页,共3289条<br><br><a  href="">首页</a>&nbsp;<a  href="">上一页</a>&nbsp;            <input  type="hidden"  name="keyword"  value="">
+            <input  type="hidden"  name="token"  value="judfzt1400477506">
+            <input  type="text"  name="pageid"  value="1"  placeholder="页码..."  style="width:80px;border:1px solid #999;color:#999;">
+            <input  type="submit"  value="跳转">
+            
+    <a  href="">下一页</a>&nbsp;<a  href="">尾页</a>       </form>
+    </article>
+   
+<div  class="clear"></div>
+    <div  style="font-size: 12px;line-height: 24px;width: 100%;text-align: center;color: #444;margin-top: 10px;">
+        ©2014 艾豆科技
+    </div>
+
+</body></html>

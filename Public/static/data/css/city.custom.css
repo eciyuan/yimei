@@ -1,0 +1,33 @@
+.android-ics .dwhl {
+    padding: 1px 0px;
+}
+
+.dw-i {
+    font-size: 13px;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+}
+
+.android-ics .dw .dwwol {
+    border-top: 1px solid #31b6e7;
+    border-bottom: 1px solid #31b6e7;
+}
+
+@media only screen and (max-width:370px){
+    .area {
+        width:95px;
+    }
+}
+
+@media only screen and (min-width:370px) and (max-width:480px){
+    .area {
+        width:110px;
+    }
+}
+
+@media only screen and (min-width:480px){
+    .area {
+        width:150px;
+    }
+}

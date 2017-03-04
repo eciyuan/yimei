@@ -1,0 +1,1 @@
+wap控制器443行----session ( 'post_before_url',$_SERVER ["HTTP_REFERER"]);取消t；

@@ -1,0 +1,158 @@
+<include file="Public/mobile_head"/>
+<link href="{:ADDON_PUBLIC_PATH}/mobile/common.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+<link href="{:CUSTOM_TEMPLATE_PATH}Public/mui.min.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+<link href="{:CUSTOM_TEMPLATE_PATH}Public/shop.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+<body class="withFoot">
+<div class="container">
+    <!-- banner -->
+    <div id="banner" class="banner">
+        <ul>
+            <volist name="slideshow_list" id="vo">
+                <li>
+                    <a href="{$vo.url}"><img src="{$vo.img|get_cover_url}"/></a>
+                </li>
+            </volist>
+        </ul>
+        <span class="identify">
+            <volist name="slideshow_list" id="vo">
+               <em></em>
+             </volist>
+        </span>
+    </div>
+    <!-- 搜索 -->
+    <form class="search_form" action="{:U('lists',array('shop_id'=>$shop_id))}" method="get">
+        <a href="javascript:void(0);" class="cate_icon" onClick="showPopCategory()">&nbsp;</a>
+        <input type="text" placeholder="输入关键字搜索商品" value="{:I('search_key')}" id="search_key" name="search_key"/>
+        <button type="button" id="search" url="{:U('lists',array('shop_id'=>$shop_id))}">搜索</button>
+    </form>
+    <!-- 推荐类目 -->
+    <notempty name="recommend_cate">
+        <div class="recommend_cate">
+            <div id="Gallery" class="mui-slider">
+                <div class="mui-slider-group">
+                    <div class="mui-slider-item">
+                        <ul class="mui-table-view mui-grid-view mui-grid-9">
+                            <volist name="recommend_cate" key="k" id="cate">
+                            <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+                                <a href="{:U('goodsListsByCategory',array('shop_id'=>$shop_id,'cid0'=>$cate[id],'token'=>$token))}">
+                                    <img src="{$cate.icon|get_cover_url}"/>
+                                    <div class="mui-media-body">{$cate.title}</div>
+                                </a>
+                            </li>
+                            <eq name="k%8" value="0">
+                                </ul>
+                            </div>
+                            <div class="mui-slider-item">
+                                <ul class="mui-table-view mui-grid-view mui-grid-9">
+                            </eq>
+                            </volist>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mui-slider-indicator">
+                    <!--判断大于8的状态显示样式-->
+                    <if condition="$recommend_cate_count gt 8">
+                        <div class="mui-indicator mui-active"></div>
+                        <volist name="recommend_cate" key="k" id="cate">
+                            <eq name="k%8" value="0"><div class="mui-indicator"></div></eq>
+                        </volist>
+                        <else/>
+                        <volist name="recommend_cate" key="k" id="cate">
+                            <eq name="k%8" value="0"><div class="mui-indicator"></div></eq>
+                        </volist>
+                    </if>
+
+                </div>
+            </div>
+        </div>
+    </notempty>
+    <!-- 推荐商品 -->
+    <notempty name="recommend_list">
+        <div class="recommend_list">
+            <h6 class="cate_title">商城推荐</h6>
+            <div class="product_list">
+                <ul>
+                    <volist name="recommend_list" id="vo">
+                        <li>
+                            <a href="{:U('detail',array('shop_id'=>$shop_id,'id'=>$vo['id'],'token'=>$token))}">
+                                <img src="{$vo.cover|get_cover_url}"/>
+                                <div class="desc">
+                                    <p class="name">{$vo.title}</p>
+                                    <p class="price">￥{$vo.price|wp_money_format}</p>
+                                </div>
+                            </a>
+                        </li>
+                    </volist>
+                </ul>
+            </div>
+        </div>
+    </notempty>
+    <!-- 推荐商品 -->
+    <div class="all_list">
+        <h6 class="cate_title">所有商品</h6>
+        <div class="product_list">
+            <ul>
+                <volist name="goods_list" id="vo">
+                    <li>
+                        <a href="{:U('detail',array('shop_id'=>$shop_id,'id'=>$vo['id'],'token'=>$token))}">
+                            <img src="{$vo.cover|get_cover_url}"/>
+                            <div class="desc">
+                                <p class="name">{$vo.title}</p>
+                                <p class="price">￥{$vo.price|wp_money_format}</p>
+                            </div>
+                        </a>
+                    </li>
+                </volist>
+            </ul>
+        </div>
+        <a class="list_bottom_btn" href="{:U('lists',array('shop_id'=>$shop_id,'token'=>$token))}">查看所有商品&gt;</a>
+    </div>
+</div>
+<!-- 分类目录 -->
+<include file="_category"/>
+<!-- 底部导航 -->
+<include file="_footer"/>
+<script src="{:CUSTOM_TEMPLATE_PATH}Public/mui.min.js?v={:SITE_VERSION}"></script>
+<script type="text/javascript">
+    mui.init();
+    mui.ready(function() {
+        var slider = document.getElementById('Gallery');
+        var group = slider.querySelector('.mui-slider-group');
+        var items = mui('.mui-slider-item', group);
+        //克隆第一个节点
+        var first = items[0].cloneNode(true);
+        first.classList.add('mui-slider-item-duplicate');
+        //克隆最后一个节点
+        var last = items[items.length - 1].cloneNode(true);
+        last.classList.add('mui-slider-item-duplicate');
+        //处理是否循环逻辑，若支持循环，需支持两点：
+        //1、在.mui-slider-group节点上增加.mui-slider-loop类
+        //2、重复增加2个循环节点，图片顺序变为：N、1、2...N、1
+        var sliderApi = mui(slider).slider();
+    });
+    $(function(){
+        //通用banner 滑动
+        $.WeiPHP.initBanner('#banner', true, 5000);
+
+        //搜索功能
+        $("#search").click(function(){
+            var url = $(this).attr('url');
+            var query  = $('.search_form').serialize();
+            query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g,'');
+            query = query.replace(/^&/g,'');
+            if( url.indexOf('?')>0 ){
+                url += '&' + query;
+            }else{
+                url += '?' + query;
+            }
+            window.location.href = url;
+        });
+        /* $("#search_key").keydown(function (e) {//当按下按键时  
+            if (e.which == 13) {//.which属性判断按下的是哪个键，回车键的键位序号为13  
+                $("#search").trigger("click");//触发搜索按钮的点击事件  
+            }  
+        }); */
+    })
+</script>
+</body>
+</html>

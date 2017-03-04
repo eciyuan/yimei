@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Wexin Love</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0">
+		
+		<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+		<script src="http://cdn.bootcss.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		<style>
+			body{padding-top: 50px;padding-bottom: 20px;}
+			.love{padding-bottom: 20px;border-bottom: 1px solid #ccc;}
+			.love h4{font-size: 20px;color:#08a5e0;}
+			.love h4 span{font-size:12px}
+			.love p{font-size: 12px;line-height: 24px}
+			.love span{height: 30px;min-width:60px;}
+			.love .pull-right{height: 30px;line-height: 30px;}
+			.jumbotron{padding:10px;}
+			.jumbotron a{width:100%;}
+			.row{margin:0 auto;}
+			.navbar-brand{color:#30C109 !important}
+		</style>
+	</head>
+	<body>
+		<div class="navbar navbar-inverse navbar-fixed-top" rol="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="sr-only">Toggle Navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="{$index}">Wexin Love</a>
+				</div>
+				<div class="navbar-collapse collapse">
+					
+					<form class="navbar-form navbar-right" method="post" action="#">
+						<div class="form-group">
+							<input type="text" name="keyword" class="text form-control" placeholder="Has somebody say love to me?">
+							
+						</div>
+						<button type="submit" class="btn btn-success">Search</button>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div class="jumbotron">
+			<div class="container">
+				<a href="{$jump_url}" class="btn btn-success">I want to say love to somebody...</a>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="row">
+				
+
+				<volist name="list_data" id="vo">
+				<div class="col-md-3 love">
+					<h4>To:{$vo.lover}<span class="pull-right">{$vo.cTime|time_format}</span></h4>
+					<p>{$vo.content}</p>
+					<span class="btn btn-primary">From:{$vo.nickname}</span>
+					<span class="pull-right"><if condition="$vo['state'] eq 0">say love failed<elseif condition="$vo['state'] eq 1"/><a href="#" data-toggle="modal" data-target="#myModal{$vo.id}">say love successed</a><else />say love ing</if></span>
+					<div class="modal fade" id="myModal{$vo.id}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">my lover's reply</h4>
+      </div>
+      <div class="modal-body">
+       {$vo.reply}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">I see</button>
+      </div>
+    </div>
+  </div>
+</div>
+				</div>
+				</volist>
+
+				
+
+				
+			</div>
+			<div class="row" style="font-size:18px;padding:20px 0;">
+				{$page}
+			</div>
+
+		</div>
+
+
+	</body>
+</html>
