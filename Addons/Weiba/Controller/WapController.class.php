@@ -605,9 +605,18 @@ class WapController extends BaseController {
 	                }
 	            }
 	        }
+			if (isSubmitLocked ()) {
+				$return ['status'] = 0;
+				$return ['data'] = '发布内容过于频繁，请稍后再试！';
+				exit ( json_encode ( $return ) );
+			}
 	        $res = D ( 'weiba_post' )->add ( $data );
 	        if ($res) {
+				// 锁定发布
+				lockSubmit ();
 	            D ( 'weiba' )->where ( 'id=' . $data ['weiba_id'] )->setInc ( 'thread_count' );
+				// 解锁
+				unlockSubmit ();
 	            $this->success ( '发布成功', addons_url ( 'Weiba://Wap/postDetail', array (
 	                'post_id' => intval ( $res )
 	            ) ) );

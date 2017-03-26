@@ -231,6 +231,7 @@ class WapController extends AddonsController {
 		$map ['uid'] = $this->mid;
 		$map ['is_send'] = 1;
 		$unPayOrders = D ( 'Addons://Shop/Order' )->getOrderList ( $map );
+		//dump($unPayOrders);
 		// dump('--配送中--');
 		$this->assign ( 'shippingClass', 'current' );
 		$this->assign ( 'orderList', $unPayOrders );
@@ -240,7 +241,7 @@ class WapController extends AddonsController {
 	function waitCommentOrder() {
 		$map ['uid'] = $this->mid;
 		//$map ['is_send'] = 2;
-		$map ['status_code'] = '5';
+		$map ['status_code'] = '6';
 		$unPayOrders = D ( 'Addons://Shop/Order' )->getOrderList ( $map );
 		// dump($unPayOrders);
 		$this->assign ( 'waitClass', 'current' );
@@ -261,17 +262,35 @@ class WapController extends AddonsController {
 		$this->assign ( 'goodId', $obj[0]['id'] );
 		$this->assign ( 'orderID', I ( 'id' ));
 		$this->assign ( 'shop_id',$obj[0]['shop_id']);
-		$this->display ( 'order_list' );
+		$this->display ();
 	}
 	//立即评价 提交操作
 	function submitCommentOrder() {
 		$data=$_POST;
-		$data['image_url'] = I ( 'post.image_url' );
+		$data['add_time']=time();
+		$data ['desc'] =safe ( $_POST ['desc'] );
+		$data ['token'] = get_token();
+		$data ['order_id'] =  $_POST ['order_id'] ;
+		$imgIds = explode ( ',', $_POST ['imageIds'] );
+		foreach ( $imgIds as $imgId ) {
+			$imgId = intval ( $imgId );
+			if ($imgId > 0) {
+				$imgsrc = get_cover_url ( $imgId );
+				if ($imgsrc) {
+					$data ['desc'] .= '<p class="content-mobile-img"><img  src="' . $imgsrc . '" /></p>';
+				}
+			}
+		}
 		$data ['uid'] = $this->mid;
 		$result = M ( 'shop_comment' )->add($data);
-		//echo json_encode($result);
+		$url = addons_url ( 'Shop://Wap/myOrder', array (
+			'token' =>get_token(),
+			'invite_uid' => $data ['uid']
+		) );
 		if($result){
-			   $this->success( '评价成功！' );
+			 D ( 'Addons://Shop/Order' )->setStatusCode ( $data ['order_id'], 7 );//设置评价成功
+			   $this->success( '评价成功！', $url);
+
 		}else{
 			   $this->error( '评价失败！' );
 		}

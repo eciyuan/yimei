@@ -83,9 +83,18 @@ class TranslationOrderModel extends Model {
 		}
 		return $list;
 	}
+	/*获取全部译文*/
+	function getTaskList($map,$start,$limit) {
+		$list = M ( 'translation_task' )->where ( $map )->limit($start,$limit)->order ( 'id desc' )->select ();
+		foreach ( $list as &$v ) {
+			$v ['orderContent'] =$this->fromTaskGetOrderDetail($v ['order_id']);
+		}
+		return $list;
+	}
 	/*
 	 * 订单
 	 * 详细操作
+	 * 用订单id附带关联译文
 	 */
 	function getOrderDetail($id) {
 		$where['id']=$id;
@@ -97,6 +106,23 @@ class TranslationOrderModel extends Model {
 			$list ['goal_language_id'] =$this->get_order_name($list ['goal_language_id']);
 		}
 		$list ['countSecondContent'] =$this->get_task_count($list ['id']);
+		$list ['SecondContent'] =$this->get_task_detail($list ['id']);
+		return $list;
+	}
+	/*
+	 * 订单
+	 * 详细操作
+	 * 用译文order_id关联订单详细
+	 */
+	function fromTaskGetOrderDetail($id) {
+		$where['id']=$id;
+		$list = M ( 'translation_order' )->where ( $where )->find ();
+		if($list ['select_language_id']){
+			$list ['select_language_id'] =$this->get_order_name($list ['select_language_id']);
+		}
+		if($list ['goal_language_id']){
+			$list ['goal_language_id'] =$this->get_order_name($list ['goal_language_id']);
+		}
 		return $list;
 	}
 	/*
@@ -117,6 +143,15 @@ class TranslationOrderModel extends Model {
 		//$cate = M ( 'translation_task' )->where ( $where )->select();
 		$count = M ( 'translation_task' )->where ( $where )->count();
 		return  $count;
+	}
+	/*
+	 * 译文详情
+	 *
+	 */
+	function get_task_detail($id){
+		$where['order_id']=$id;
+		$detail = M ( 'translation_task' )->where ( $where )->select();
+		return  $detail;
 	}
 	function update($id, $save) {
 		$map ['id'] = $id;

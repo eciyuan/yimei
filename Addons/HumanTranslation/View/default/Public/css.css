@@ -18,6 +18,10 @@
     clear: both;
     height:10px;
 }
+.mui-badge-custom {
+    color: #fff;
+    background-color: #489ebf;
+}
 header{z-index: 100;}
 .current-btn{border:1px solid #1d98d6;color:#1d98d6;}
 /* 底部 */
@@ -56,6 +60,10 @@ header{z-index: 100;}
     line-height: 1;
     color: #007aff;
     background-color: transparent;
+}
+.confirm-result{
+    display: inline;
+    position: static;
 }
 /*翻译列表*/
 .translate{
@@ -128,28 +136,7 @@ header{z-index: 100;}
     line-height: 29px;
     font-weight: 400;
 }
-/*大图相册的效果*/
-.device {
-    display:none;position: absolute;top: 0px; bottom:44px;left: 0px;width: 100%;height: 100%;background-color: #333;z-index: 10009;
-}
-.device .showImg{position: relative;}
-.device .showImg_t{height: 38px;line-height: 38px;text-align: center;background-color: #000;color: #fff;font-size: 14px;padding: 0 20px;}
-.device .showImg_close{position: absolute;right: 20px;top: 10px; color: #fff;}
-.device .swiper-container {
-    width: 100%;
-}
-.device .content-slide {
-    padding: 20px;  color: #fff;
-}
-.device .title {
-    font-size: 25px;  margin-bottom: 10px;
-}
-.device .pagination {
-    position: absolute; left: 0;  text-align: center; bottom: 50px;  width: 100%;  z-index: 99999;
-}
-.swiper-slide{display: box; display: -webkit-box; -webkit-box-pack:center; -webkit-box-align:center;}
-.device .swiper-pagination-switch {
-    display: inline-block;  width: 12px;  height: 12px; border-radius:6px; background: #ccc; margin: 0 3px;  cursor: pointer;}
-.device .swiper-active-switch {
-    background: #09b092;
+.content-mobile-img{display: inline;margin: 5px;}
+.content_imgs img{
+    height:20%;width: 20%;display: inline;
 }

@@ -4,7 +4,7 @@
 <body id="body_box" style="position: static;">
 <include file="header"/>
 <!--下拉刷新容器-->
-    <div id="pullrefresh"  class=" mui-content mui-scroll-wrapper" >
+    <div id="pullrefresh"  class="mui-content mui-scroll-wrapper" >
          <div class="mui-scroll">
                 <div class="mui-card" style="margin:0px;">
                      <div class="mui-row">
@@ -31,17 +31,17 @@
                                                 <div class=" mui-col-xs-5" style="float: left;font-size: 6px;">{{item.title}}</div>
                                                 <div class=" mui-col-xs-2" style="float: left;font-size: 6px;">
                                                         <span v-if="item.pay_status == '0'" class="mui-badge mui-badge-danger mui-badge-inverted">待支付</span>
-                                                         <!-- 已经支付-->
+                                                         <!-- 已经支付,进行各种操作-->
                                                         <span v-if="item.pay_status == '1'" class="mui-badge mui-badge-danger mui-badge-inverted">进行中</span>
                                                         <span v-if="item.pay_status == '2'" class="mui-badge mui-badge-danger mui-badge-inverted">评价</span>
                                                         <span v-if="item.pay_status == '3'" class="mui-badge mui-badge-success mui-badge-inverted">成功</span>
                                                 </div>
                                             </a>
                                             <div class="mui-collapse-content">
-                                                <p v-on:click="show_order_detail(item.id)"> <a ><span class="mui-badge  mui-badge-warning mui-badge-inverted">查看详情</span></a></p>
-                                                <p v-on:click="del_order(item.id)" data=""><a><span class="mui-badge  mui-badge-warning mui-badge-inverted">删除</span></a></p>
-                                                    <p v-if="item.pay_status == '0'" v-on:click="edit_order(item.id)" > <a  ><span class="mui-badge  mui-badge-warning mui-badge-inverted">编辑</span></a></p>
-                                                    <p v-if="item.pay_status == '0'" v-on:click="to_pay_order(item.id,item.uid)"  ><a id="toPay" data="{{item.id}}"><span class="mui-badge  mui-badge-warning mui-badge-inverted">前去支付</span></a></p>
+                                                <p v-on:click="show_order_detail(item.id)" data-id="{{item.id}}" from="1"  price="{{item.price}}" class="click-change"> <a ><span class="mui-badge  mui-badge-warning mui-badge-inverted">查看详情</span></a></p>
+                                                <p v-on:click="del_order(item.id)" data-id="{{item.id}}" from="2"  price="{{item.price}}" class="click-change"><a><span class="mui-badge  mui-badge-warning mui-badge-inverted">删除</span></a></p>
+                                                    <p v-if="item.pay_status == '0'" data-id="{{item.id}}" from="3"  price="{{item.price}}" class="click-change"> <a><span class="mui-badge  mui-badge-warning mui-badge-inverted">提高悬赏</span></a></p>
+                                                    <p v-if="item.pay_status == '0'" data-id="{{item.id}}" from="4" price="{{item.price}}" class="click-change"><a id="toPay" data="{{item.id}}"><span class="mui-badge  mui-badge-warning mui-badge-inverted">前去支付</span></a></p>
                                             </div>
                                         </li>
                                     </template>
@@ -123,57 +123,6 @@
             el: '#body_box',
             data: {
                 companylist: null,
-            },
-            methods: {
-                del_order: function (msg1) {
-                    delOrder(msg1);
-                },
-                edit_order: function (msg1) {
-                    var url = "{:addons_url('HumanTranslation://Wap/editIndex')}&id="+msg1;
-                    mui.openWindow({
-                        url: url,
-                        id: msg1,
-                        styles: {
-                         /*   top: newpage - top - position, //新页面顶部位置
-                            bottom: newage - bottom - position, //新页面底部位置
-                            width: newpage - width, //新页面宽度，默认为100%
-                            height: newpage - height, //新页面高度，默认为100%*/
-                         },
-                    extras: {
-                        //自定义扩展参数，可以用来处理页面间传值;微信和手机浏览器不支持
-                        id: msg1
-                    },
-                    show: {
-                       /*autoShow: true, //页面loaded事件发生后自动显示，默认为true
-                        aniShow: animationType, //页面显示动画，默认为”slide-in-right“；
-                        duration: animationTime //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；*/
-                    },
-                    waiting: {
-                        autoShow: true, //自动显示等待框，默认为true
-                            title: '正在加载...', //等待对话框上显示的提示内容
-                            options: {
-                              /*  width: waiting - dialog - widht, //等待框背景区域宽度，默认根据内容自动计算合适宽度
-                                height: waiting - dialog - height, //等待框背景区域高度，默认根据内容自动计算合适高度*/
-                          }
-                    }
-                })
-
-                },
-                show_order_detail: function (msg1) {
-                    var url = "{:addons_url('HumanTranslation://Wap/orderDetail')}&id="+msg1;
-                    mui.openWindow({
-                        url: url,
-                        id: msg1,
-                    })
-                },
-                to_pay_order: function (msg1, uid) {
-                    var url = "{:addons_url('HumanTranslation://Wap/choose_pay')}&id="+msg1+"&invite_uid="+uid;
-                    mui.openWindow({
-                        url: url,
-                        id: msg1,
-                    })
-                },
-                //method  结束
             },
             created: function() {
             }
@@ -264,6 +213,62 @@
             mui.openWindow({
                 url: url,
             })
+        })
+        mui(".mui-content").on('tap','.click-change',function(){
+            //获取id
+            var id = this.getAttribute("data-id");
+            var from = this.getAttribute("from");
+            var price = this.getAttribute("price");
+            if(from==1){
+                //查看详情
+                var url = "{:addons_url('HumanTranslation://Wap/orderDetail')}&id="+id;
+                mui.openWindow({
+                    url: url,
+                    id: id,
+                })
+            }else if(from==2){
+                //删除
+                delOrder(id);
+            }else if(from==3){
+                //提高悬赏
+                var url = "{:addons_url('HumanTranslation://Wap/editIndex')}&id="+id;
+                var html='<div class="mui-input-row"><input class="mui-numbox-input" name="price"  id="price" type="number" /></div><span id="error">&nbsp</span>';
+                mui.confirm(html, '请输入要增加价格', null, function(event) {
+                    var index = event.index;
+                    console.log(event);
+                    if(index === 1) {
+                        price = $('#price').val();
+                        if (price == null || price == '' || price == undefined) {
+                            $("#error").html('价格不能为空');
+                            return false;
+                        }
+                        mui.post(url, {
+                            price: price,
+                            id: id
+                            }, function (data) {
+                                if(data.status==1){
+                                    $.Dialog.success(data.info);
+                                }else{
+                                    $.Dialog.fail(data.info);
+                                }
+                                if(data.url!=""&&data.url!=undefined){
+                                    setTimeout(function(){
+                                        window.location.href=data.url;
+                                    },2000);
+                                }
+                            }, 'json'
+                        );
+                    }
+                });
+                return false;
+            }else{
+                //前去支付
+                var url = "{:addons_url('HumanTranslation://Wap/choose_pay')}&id="+id+"&price="+price+"&invite_uid="+{$uid};
+                mui.openWindow({
+                    url: url,
+                    id: id,
+                })
+            }
         })
     </script>
 </body>

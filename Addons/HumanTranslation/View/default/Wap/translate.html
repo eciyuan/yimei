@@ -1,65 +1,17 @@
 <include file="Public/mobile_head"/>
 <link rel="stylesheet" href="__STATIC__/mui.3.5.0/css/mui.min.css?v={:SITE_VERSION}">
 <link href="{:ADDON_PUBLIC_PATH}/css.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
-<script src="{:ADDON_PUBLIC_PATH}/swiper/dist/idangerous.swiper.min.js"></script>
-<script src="{:ADDON_PUBLIC_PATH}/swiper/dist/idangerous.swiper.min.js"></script>
-<script type="text/javascript">
-    var mySwiper
-    function showBigImgBox(obj){
-        $('.pagination').html('');
-        $('.swiper-slide-duplicate').remove('');
-        $('#content_img_list').html("");
-        var old_src = $(obj).attr('src');
-        var imgArr = new Array();
-        var index = 0;
-        $(obj).closest('.content_imgs').find('img').each(function(i, e) {
-            var src = $(this).attr('src');
-            if(src!=""){
-                if(src==old_src){
-                    index = i;
-                }
-                src = src.replace(/_250_250./,".");
-                src = src.replace(/_200_200./,".");
-                imgArr.push(src);
-                var html = "<div class=\"swiper-slide\"><img src=\""+src+"\" width=\"100%\" /></div>";
-                $('#content_img_list').append(html);
-            }
-        });
-        $('.device').show();
-        mySwiper = new Swiper('.swiper-container',{
-            pagination: '.pagination',
-            loop:true,
-            grabCursor: true,
-            paginationClickable: true,
-            calculateHeight: true,
-            initialSlide:index
-        })
-        //location.hash="anchor";
-        $("body,html").animate({scrollTop: 0}, 0);
+<style type="text/css">
+    #error {
+        color: red;
     }
-    function closeBox(){
-        mySwiper.destroy();
-        $('.device').hide();
-    }
-</script>
+</style>
+<!--<link rel="stylesheet" href="{:ADDON_PUBLIC_PATH}/swiper/dist/idangerous.swiper.css">
+<script src="{:ADDON_PUBLIC_PATH}/swiper/dist/idangerous.swiper.min.js"></script>
+<script src="{:ADDON_PUBLIC_PATH}/swiper/dist/idangerous.swiper.min.js"></script>-->
 <body  id="body_box" style="position: static;">
 <include file="header"/>
 <div class="mui-content">
-    <div class="device">
-        <div class="showImg">
-            <a class="showImg_close" href="javascript:void(0)" onClick="closeBox()">关闭</a>
-            <h1 class="showImg_t">图片浏览</h1>
-            <div class="swiper-container">
-                <div class="swiper-wrapper" id="content_img_list">
-                    <!--        <div class="swiper-slide">
-                        <img src="{$vo.img_url}" alt="{$vo.ad_name}" width="100%" height="198" />
-                      </div>-->
-
-                </div>
-            </div>
-            <div class="pagination"></div>
-        </div>
-    </div>
     <div  id="pullrefresh" class="mui-scroll-wrapper">
             <div class="mui-scroll">
               <div class="translate">
@@ -99,15 +51,9 @@
                         </div>
                          <div class="mui-card-content">
                             <div class="docs-sub-content">
-                                <div id="detail_content_img" class="page-description content_imgs">
-                                    {{item.content|htmlCode}}
+                                <div v-html="item.content" id="detail_content_img" class="page-description content_imgs">
+                                    {{item.content}}
                                 </div>
-                                 <!--  <if condition="item.translation_type eq 1">
-                                       <volist name="img_url" id="vo">
-                                            <img class="mui-media-object mui-pull-left" src="{{item.img_url|get_cover_url}}">
-                                       </volist>
-                                        <else />
-                                    </if>-->
                                 <p><span>{{item.countSecondContent}}</span>个译文&nbsp;&nbsp;&nbsp;&nbsp;<span>{{item.click}}<i class="mui-icon mui-icon-person"></i></span></p>
                             </div>
                          </div>
@@ -115,18 +61,18 @@
                             <div class="mui-row">
                                     <if condition="item.order_status eq 0">
                                         <div  class="mui-col-xs-6">
-                                            <a style="border:1px solid red;" class="mui-btn current-btn" v-on:click="addTranslateTask(item.id)"><span><i class="mui-icon  mui-icon-compose"></i></span>我要翻译</a>
+                                            <a from="1" class="mui-btn current-btn" id="{{item.id}}" order_number="{{item.order_number}}"><span><i class="mui-icon  mui-icon-compose"></i></span>我要翻译</a>
                                         </div>
                                         <div class=" mui-col-xs-6">
-                                        <a  v-on:click="shareAuthor(item.id)"class="mui-btn"><i class="mui-icon mui-icon-plusempty"></i>邀请翻译</a>
+                                        <a  class="mui-btn" from="2" id="{{item.id}}"><i class="mui-icon mui-icon-email"></i>查看详情</a>
                                             </div>
                                         <elseif condition="item.order_status eq 1"/>
                                         <div class=" mui-col-xs-6">
-                                        <a class="mui-btn"><span><i class="mui-icon mui-icon-help"></i></span>正在翻译</a>
+                                        <a class="mui-btn" from="3" id="{{item.id}}"><span><i class="mui-icon mui-icon-help"></i></span>正在翻译</a>
                                             </div>
                                         <else/>
                                         <div class=" mui-col-xs-6">
-                                        <a v-on:click="detailTranslate(item.id)"  class="mui-btn"><span><i class="mui-icon mui-icon-help"></i></span>查看译文</a>
+                                        <a class="mui-btn" from="4" id="{{item.id}}"><span><i class="mui-icon mui-icon-help"></i></span>查看译文</a>
                                         </div>
                                     </if>
                                 </div>
@@ -142,7 +88,6 @@
 
             </div>
          </div>
-        <div id="addTranslate" class="box mui-popover mui-popover-action mui-popover-bottom"></div>
         <!-- 底部导航 -->
         <include file="_footer"/>
      </div>
@@ -154,10 +99,10 @@
         /*分享{$weiba_detail.intro}*/
         wx.ready(function(){
             var shareData = {
-                title: '{$weiba_name}', // 分享标题
-                desc:"<php> echo  DeleteHtml($weiba_detail['intro']);</php>", // 分享描述
-                link: "{:U( 'detail',array('weiba_id'=>$weiba_detail['id'],'token'=>get_token()))}", //分享的链接地址
-                imgUrl: "{$weiba_detail.logo|get_cover_url}", // 分享图标
+                title: '帮助别人翻译一句话也能赚钱了啊', // 分享标题
+                desc:"只要你掌握一门语言，这里就能给你发红包了", // 分享描述
+                link: "{:U( 'translate',array('token'=>get_token()))}", //分享的链接地址
+                imgUrl: "{:ADDON_PUBLIC_PATH}/icon.jpg", // 分享图标
                 type: 'link', // 分享类型,music、video或link，不填默认为link
                 dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
                 success: function () {
@@ -174,36 +119,6 @@
             wx.onMenuShareQQ(shareData);
             wx.onMenuShareWeibo(shareData);
         });
-    //function addTranslateTask(id){
-        //我要翻译
-      /*  $.Dialog.loading();
-        $.ajax({
-            url:"{:addons_url('HumanTranslation://Wap/addTranslateTask')}",
-            type:'post',
-            data:{id:id},
-            dataType:'json',
-            success:function(json){
-                console.log(json);
-                //$.Dialog.close();
-                if(json.status==1){
-                    $.Dialog.success(json.info);
-                    //alert('2');
-                }else{
-                    $.Dialog.fail(json.info);
-                    //alert('3');
-                }
-                if(json.url!=""){
-                    setTimeout(function(){
-                        window.location.href=json.url;
-                    },2000);
-                }
-            },
-            error:function(){
-                $.Dialog.close();
-                //$.Dialog.fail();
-            }
-        });*/
-  //  }
         var url_http="{:addons_url('HumanTranslation://Wap/translateAjax')}";
         mui.init({
             pullRefresh : {
@@ -261,22 +176,6 @@
                 toList(data,type);//具体取数据的方法
             }, 100);
         }
-        function HTMLEncode(html)
-        {
-            var temp = document.createElement ("div");
-            (temp.textContent != null) ? (temp.textContent = html) : (temp.innerText = html);
-            var output = temp.innerHTML;
-            temp = null;
-            return output;
-        }
-        function HTMLDecode(text)
-        {
-            var temp = document.createElement("div");
-            temp.innerHTML = text;
-            var output = temp.innerText || temp.textContent;
-            temp = null;
-            return output;
-        }
         /*vue 开始*/
         var vmOrder = new Vue({
             el: '#body_box',
@@ -285,24 +184,18 @@
             },
             methods: {
                 addTranslateTask: function (msg1) {
-                    alert(msg1);
-                },
-                shareAuthor: function (msg1) {
-                    //邀请翻译
-                    $.WeiPHP.showShareFriend();
+                    window.location.href='addTranslateTask.html&id='+msg1;
                 },
                 detailTranslate: function (msg1) {
-                    //邀请翻译
-                    $.WeiPHP.showShareFriend();
+                    //查看译文
+                },
+                 detail: function (msg1) {
+                    //查看原文
+                    window.location.href='detail.html&id='+msg1;
                 },
             },
             created: function() {
             }
-        });
-        /*截取字符串*/
-        Vue.filter('htmlCode', function (value) {
-            return  HTMLDecode(value);
-            //return  HTMLEncode(value);
         });
         var toList = function(data,type) {
             mui.ajax(url_http, {
@@ -325,6 +218,7 @@
                             if(type==1){
                                 //上拉刷新
                                 /*下面这句很关键！*/
+                                //console.log(data.info);
                                 mui('#pullrefresh').pullRefresh().refresh(true);//有重新触发上拉加载的需求（比如当前类别已无更多数据，但切换到另外一个类别后，应支持继续上拉加载）
                                 vmOrder.companylist = data.info;
                                 vmOrder.$set('is_nodata', '1');
@@ -334,6 +228,7 @@
                             if(type==2){
                                 //下拉加载
                                 vmOrder.companylist.push(arr);
+
                                 vmOrder.$set('is_nodata', '1');
                                 vmOrder.$set('demoData', vmOrder.companylist);  //把数据传给页面
                                 vmOrder.$set('start', vmOrder.companylist.length);
@@ -368,6 +263,49 @@
         $("a[data=2]").addClass("current");
         $("a[data=1]").removeClass("current");
         $("a[data=3]").removeClass("current");
+        mui(".translate").on('tap','.mui-btn',function(){
+            //获取id
+            var id = this.getAttribute("id");
+            var from = this.getAttribute("from");
+            if(from==1){
+                //我要翻译
+                var url = "{:addons_url('HumanTranslation://Wap/addTask', array('token'=>$token))}";
+                var html='<div class="mui-input-row"><textarea name="content" class="translation-content" rows="8"></textarea></div><span id="error">&nbsp</span>';
+                    mui.confirm(html, '请输入内容', null, function(event) {
+                            var index = event.index;
+                             console.log(event);
+                        if(index === 1) {
+                            content = $('.translation-content').val();
+                            if (content == null || content == '' || content == undefined) {
+                                $("#error").html('内容不能为空');
+                                return false;
+                            }
+                            mui.post(url, {
+                                        translate_content: content,
+                                        order_id: id
+                                    }, function (data) {
+                                        $.Dialog.success(data.info);
+                                        setTimeout(function(){
+                                            location.reload();
+                                        },2000);
+                                    }, 'json'
+                            );
+                        }
+                    });
+                return false;
+            }else if(from==2){
+                //查看详情
+                var url = "{:addons_url('HumanTranslation://Wap/detail', array('token'=>$token))}";
+            }else if(from==4){
+                //查看译文
+                var url = "{:addons_url('HumanTranslation://Wap/detail', array('token'=>$token))}";
+            }else{
+            }
+            url=url+'&'+'id='+id;
+            //打开页面
+            mui.openWindow({ id:'detail.html', url:url });
+        })
+
     </script>
 </body>
 </html>

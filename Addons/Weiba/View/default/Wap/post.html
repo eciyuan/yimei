@@ -119,9 +119,9 @@ function doWeibaPost(){
 			content : content,
 			imageIds: imageIds
 		}, function(data){
-            alert(data);
-            alert(data.info);
-		/*	if(data.status){
+           /* alert(data);
+            alert(data.info);*/
+			if(data.status){
 				$('#title').val('');
 				$('#post-content').val('');
 				$('#ts-upload-img-box').empty();
@@ -132,7 +132,7 @@ function doWeibaPost(){
 			}else{
 				$.ui.showMask(typeof data=='string'?data:data.info,true);
 			}
-			*/
+
 		},'JSON');
 	}
 }

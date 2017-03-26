@@ -21,7 +21,7 @@
                     <li class="mui-table-view-cell">订单编号
                         <span class="mui-badge mui-badge-primary mui-badge-inverted">{$detail.order_number}</span>
                     </li>
-                    <li class="mui-table-view-cell">翻译类型
+                    <!--<li class="mui-table-view-cell">翻译类型
                         <span class="mui-badge mui-badge-primary mui-badge-inverted">
                             <if condition="$detail.translation_type eq 0">
                                 文本
@@ -29,7 +29,7 @@
                                 图片
                                 </if>
                     </span>
-                    </li>
+                    </li>-->
                     <if condition="$detail.translation_type eq 0">
                         <else/>
                         <li class="mui-table-view-cell">字数统计
@@ -46,26 +46,27 @@
                     <li class="mui-table-view-cell">价格统计<span class="mui-badge mui-badge-primary mui-badge-inverted">{$detail.total_price}</span></li>
                     <li class="mui-table-view-cell">下单时间<span class="mui-badge mui-badge-primary mui-badge-inverted">{$detail.cTime | date="Y-m-d H:m:i",###}</span></li>
                     <li class="mui-table-view-cell"> 原文
-                        <if condition="$detail.translation_type eq 0">
                             <div class="mui-card-content translate-content">
                                 {$detail.content}
                             </div>
-                            <else/>
-                            <div class="mui-card-content">
-                                <img class="mui-media-object" src="../images/shuijiao.jpg">
-                            </div>
-                        </if>
                     </li>
                     <li class="mui-table-view-cell">
                          译文
-                            <div class="mui-card-content translate-content">
-                                <empty name="$detail.after_content">
-                                    正在努力翻译中哟……，提高悬赏有助于翻译速度。
-                                    <else/>
-                                    {$detail.after_content}
-                                </empty>
+                        <div class="mui-card-content translate-content">
+                            <volist name="detail['SecondContent']" id="val">
+                                  <li class="mui-table-view-cell">{$val.translate_content}
+                                    <empty name="detail['after_content']">
+                                        <span after-content-id="{$val.id}"  content-id="{$detail.id}"  class="mui-badge mui-badge-custom confirm-result" style="position: relative;top: 0px;right: 0px;">确认采用</span>
+                                        <else />
+                                        <if condition="$val.is_recommend eq 0">
+                                            <else/>
+                                            <span class="mui-badge mui-badge-success confirm-result" style="position: relative;top: 0px;right: 0px;">中标</span>
+                                        </if>
+                                    </empty>
 
-                            </div>
+                            </li>
+                            </volist>
+                         </div>
                     </li>
                 </ul>
             </div>
@@ -90,6 +91,23 @@
         mui.openWindow({
             url: url,
         })
+    })
+    mui(".mui-content").on('tap','.confirm-result',function(){
+        //获取id
+        var after_content_id = this.getAttribute("after-content-id");
+        var content_id = this.getAttribute("content-id");
+            //采用译文
+            var url = "{:addons_url('HumanTranslation://Wap/changeAfterContent', array('token'=>$token))}";
+                mui.post(url,{
+                    after_content_id:after_content_id,
+                    content_id:content_id
+                        },function(data){
+                            $.Dialog.success(data.info);
+                        setTimeout(function(){
+                            location.reload();
+                        },2000);
+                        },'json'
+                );
     })
 </script>
 </body>

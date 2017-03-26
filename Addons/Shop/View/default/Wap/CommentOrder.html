@@ -13,11 +13,11 @@
 			<form class="mui-input-group" id="commentForm"  method="post" action="{:U('submitCommentOrder')}" >
 			   <ul class="mui-table-view">
 			    <li class="mui-table-view-cell">
-			        <a class="mui-navigate-right" href="{:U('orderDetail',array('id'=>$goodId,'shop_id'=>$shop_id))}" id="goodsInfo">{$goodTitle}</a>
+			        <a class="mui-navigate-right" href="{:U('orderDetail',array('id'=>$goodId,'shop_id'=>$shop_id))}" id="goodsInfo" data="{$goodId}">{$goodTitle}</a>
 			    </li>
 				</ul>
 		    	<div class="" >
-					<textarea id="textarea" rows="5" name="desc" placeholder="请输入评论内容"></textarea>
+					<textarea id="desc" rows="5" name="desc" placeholder="请输入评论内容"></textarea>
 				</div>
 		    		<div class="height10px"></div>
 			    <div class="">
@@ -26,18 +26,19 @@
 						<div class="mui-card-content-inner">
 						    <li class="contentItem">
 			                    <div class="upload_img_wrap">
-			                        <div class="controls">
-			                            <div class="upload_row muti_picture_row">
-			                                <notempty name="info['image_url']">
-			                                    <php>
-			                                        echo '<div class="img_item"><em>X</em><input type="hidden" name="image_url" value="'.$info['image_url'].'"/>
-													<img src="'.get_cover_url($info['image_url']).'"/></div>';
-			                                    </php>
-			                                <else />
-			                                <a class="img_item add_btn" href="javascript:;" onClick="$.WeiPHP.wxChooseImg(this,1,'image_url',uploadImg);"><img width="100%" src="__IMG__/add.png"/></a>
-			                                </notempty>
-			                            </div>
-			                        </div>
+									<div class="controls">
+										<div class="upload_row muti_picture_row">
+											<notempty name="data[$field['name']]">
+												<php>
+													$tempArr = explode(',',$data['img_ids']);
+													for($i=0;$i<count($tempArr);$i++){
+													echo '<div class="img_item"><em>X</em><input type="hidden" name="img_ids[]" multiple value="'.$tempArr[$i].'"/><img src="'.get_cover_url($tempArr[$i]).'"/></div>';
+													}
+												</php>
+											</notempty>
+											<a class="img_item add_btn" href="javascript:;" style="width: 84px;height: 84px;"onClick="$.WeiPHP.wxChooseImg(this,5,'img_ids[]')"><img width="100%" src="__IMG__/add.png"/></a>
+										</div>
+									</div>
 			                    </div>
 			                </li>
 						</div>
@@ -60,7 +61,7 @@
 					</div>   
 						<div class="height10px"></div>
 						<input type="hidden" name="order_id" id="order_id" value="{$orderID}" />
-						<input type="hidden" name="good_id" id="good_id" value="{$goodId}" />
+						<input type="hidden" name="goods_id" id="good_id" value="{$goodId}" />
 					  <div class="mui-button-row">
 				        <button type="button" class="mui-btn mui-btn-success" id="addComment" >确认</button>
 				    </div>
@@ -103,6 +104,9 @@
     }
     $(function(){
     	score='';
+		descriptionScore='';
+		logisticScore='';
+		serverScore='';
     	 $.fn.raty.defaults.path = '__STATIC__/raty-2.5.2/lib/img';
 	    $('#description-raty').raty({ 
 	    	  score: function() { 
@@ -135,34 +139,32 @@
 	    	  } 
 	    	}); 
     	 $('#addComment').click(function() {
-    	 	if(descriptionScore==null){
-    	 		descriptionScore='';
-    	 	}
-    	 	if(logisticScore==null){
-    	 		logisticScore='';
-    	 	}
-    	 	if(serverScore==null){
-    	 		serverScore='';
-    	 	}
-           var image_url = $('#image_url').val();
+		 var imageIds = '';
+		 $('.img_item input').each(function(i, el){
+			 imageIds = $(el).val()+','+imageIds;
+		 });
             var good_id = $('#good_id').val();
             var order_id = $('#order_id').val();
             var desc = $('#desc').val();
+			 if (desc==''){
+				 $.Dialog.fail('评价内容需要填写');
+				 return false;
+			 }
             var goods_id = $('#goods_id').val();
                $.Dialog.loading();
                $.post($('#commentForm').attr('action'), {
-               		good_id:good_id,order_id:order_id,
+               		goods_id:good_id,order_id:order_id,imageIds:imageIds,
                    desc:desc,miao_star:descriptionScore,liu_star:logisticScore,
                    fuwu_star: serverScore
                }, function(data){
 				 //  console.log(data);
-                  if(data.status=="success"){
-                       $.Dialog.success('保存成功');
-                       setTimeout(function(){
-                           window.location.reload();
+                  if(data.status==1){
+                       $.Dialog.success('评价成功');
+                      setTimeout(function(){
+						   window.location.href=data.url;
                        },2000)
                    }else{
-                       $.Dialog.fail('保存失败');
+                       $.Dialog.fail('评价失败');
                    }
                },'JSON');
        });

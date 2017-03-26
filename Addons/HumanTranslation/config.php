@@ -11,10 +11,10 @@ return array (
 		'tip'=>''
 	),
 	'translateResult' => array (
-		'title' => '翻译结果通知',
+		'title' => '翻译订单通知',
 		'type' => 'text',
 		'value' => '',
-		'tip'=>'获得翻译结果通知 模板 编号 TM00483'
+		'tip'=>'获得翻译通知 模板 编号 TM00483'
 	),
 	'fangxian' => array (
 		'title' => '返现到账通知 模板ID',

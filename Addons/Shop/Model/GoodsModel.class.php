@@ -24,7 +24,7 @@ class GoodsModel extends Model {
 			}
 			S ( $key, $info );
 		}
-		
+		//dump($info);exit();
 		return $info;
 	}
 	function updateById($id, $data) {
