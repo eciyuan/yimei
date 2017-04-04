@@ -16,12 +16,13 @@ return array (
 		'value' => '',
 		'tip'=>'获得翻译通知 模板 编号 TM00483'
 	),
-	'fangxian' => array (
+	'cashTemplate' => array (
 		'title' => '返现到账通知 模板ID',
 		'type' => 'text',
 		'value' => '',
 		'tip'=>'返现到账通知 模板 编号 OPENTM205223929'
 	),
+	/**/
 	'keywords'=>array(
 		'title'=>'关键词:',
 		'tip'=>'人工翻译 —— 当用户输入该关键词时，将会触发此回复。'
@@ -30,7 +31,8 @@ return array (
 		'title'=>'首页地址:',
 		'tip'=>'http://www.selanyimei.com/index.php?s=/addon/HumanTranslation/Wap/index/publicid/2.html'
 	),
-	'translationName'=>array(          //配置在表单中的键名 ,这个会是config[forumname]
+	'translationName'=>array(
+		//配置在表单中的键名 ,这个会是config[forumname]
 		'title'=>'人工翻译:',//表单的文字
 		'type'=>'text',		 //表单的类型：text、textarea、checkbox、radio、select等
 		'value'=>'亿次元科技官方人工翻译',		 //表单的默认值
@@ -71,6 +73,12 @@ return array (
 		'value'=>'0',			 //表单的默认值
 		'tip'=>''
 	),
+	'mediatorFee'=>array(
+		'title'=>'平台费用百分比:',//表单的文字
+		'type'=>'text',		 //表单的类型：text、textarea、checkbox、radio、select等
+		'value'=>'0.02',			 //表单的默认值
+		'tip'=>'用2位数小数点表示'
+	),
 	'mobile'=>array(
 		'title'=>'联系电话:',//表单的文字
 		'type'=>'text',		 //表单的类型：text、textarea、checkbox、radio、select等
@@ -84,4 +92,3 @@ return array (
 		'tip'=>''
 	),
 );
-					

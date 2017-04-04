@@ -3,7 +3,6 @@
 namespace Addons\HumanTranslation\Controller;
 
 use Home\Controller\AddonsController;
-
 class WapController extends AddonsController {
 	var $id;
 	function _initialize() {
@@ -101,8 +100,10 @@ class WapController extends AddonsController {
 			$where['id']=I('id');
 			$result = M ( 'translation_order')->where($where)->setInc('price',$price);
 			//dump($result);exit();
-			$url = addons_url ( 'HumanTranslation://Wap/translate', array (
+			$url = addons_url ( 'HumanTranslation://Wap/choose_pay', array (
 				'id' => I('id'),
+				'price' => I('price'),
+				'invite_uid' => $uid
 			) );
 			if($result){
 				$this->success ( '提交成功', $url);
@@ -382,7 +383,7 @@ class WapController extends AddonsController {
 	{
 		$id = I('id', 0, 'intval');
 		$where['uid'] = $this->mid;
-		$result = M('translation_task')->where()->setField('is_see', 1);
+		$result = M('translation_task')->where($where)->setField('is_see', 1);
 		return $result;
 	}
 	/*查看详情*/
@@ -456,29 +457,85 @@ class WapController extends AddonsController {
 			if ($config['is_close']==0){
 				D ( 'Common/TemplateMessage' )->replyServerNotice($uid,$title,$order_number,$cTime,$remark,$first,$url,$templateId,$status);
 			}
+		}elseif($from==3){
+			//发送给翻译者信息支付成功
+			$url = U ( 'orderDetail', array (
+				'id' => $order_id,
+				'uid' => $uid
+			) );
+			$config=get_addon_config('HumanTranslation');
+			//dump($config);
+			/*
+			{{first.DATA}}
+			订单：{{order.DATA}}
+			返现金额：{{money.DATA}}
+			{{remark.DATA}}
+			尊敬的XX您好，酒店返现已充入您的现金帐户！
+			订单：12345678
+			返现金额：￥60
+			点击查看现金账户及消费券明细。
+			*/
+			//查询具体信息
+			$Info=D('TranslationOrder')->getOrderDetail($order_id);
+			$order_number=$Info['order_number'];
+			$money= $Info ['price'] -($Info ['price']*$config ['mediatorFee']);
+			$first="您的翻译订单已经被采纳了，收到结算佣金";
+			$templateId=$config['cashTemplate'];
+			$remark="您收到了现金哟，点击查看详情";
+			//dump($Info);
+			if ($config['is_close']==0){
+				D ( 'Common/TemplateMessage' )->replyReturnMoney($uid,$money,$order_number,$remark,$first,$url,$templateId);
+			}
 		}
 
 	}
 	/*采用译文通知*/
 	function changeAfterContent(){
-		$where['id']=$_POST['after_content_id'];//译文自增长id
-		$where1['id']=$_POST['content_id'];//原文订单id
+		$where['id']=$after_content_id=I('after_content_id');//译文自增长id
+		$where1['id']=$content_id=I('content_id');//原文订单id
 		//给原来的订单增加译文
 		$data1['order_status']=2;//结束翻译
-		$data1['after_content']=$_POST['after_content_id'];
-		$result1=M('translation_order')->where($where1)->save($data1);
+		$data1['after_content']=$after_content_id;
+//		$result1=M('translation_order')->where($where1)->save($data1);
+		$result1=1;
 		//设置推荐译文
 		$data['is_recommend']=1;
 		$result=M('translation_task')->where($where)->save($data);
 		if($result1){
 			//给翻译者消息提醒
-			$this->_sendWeixinMail ($_POST['content_id'],$this->mid,2);
+//			$this->_sendWeixinMail ($content_id,$this->mid,2);
 			//发送红包给翻译者
-
-			$this->success ( '确认成功' );
+			$msgData = D ( "Addons://HumanTranslation/TranslationCash" )->getCash ($content_id);
+			dump($msgData);exit();
+			if($msgData['msg_code']==1){
+				//支付成功，发送给翻译者信息
+				$this->_sendWeixinMail ($content_id,$this->mid,3);
+				$this->success ( '确认成功' );
+			}else{
+				$this->error ( $msgData);
+			}
 		} else {
 			$this->error ( '提交失败，请重试' );
 		}
 
 	}
+	/********评价**********/
+	function comment(){
+		$data['order_id'] = I('id', 0, 'intval');
+		$data['desc'] = I('desc');
+		$data ['cTime']= NOW_TIME;
+		$data ['token']= get_token();
+		$result = M ( 'translation_comment')->add($data);
+		//dump($result);exit();
+		if($result){
+			//给原来的订单评价结束标识
+			$data1['order_status']=3;//评价结束
+			$where1['id']=$data['order_id'];
+			M('translation_order')->where($where1)->save($data1);
+			$this->success ( '提交成功');
+		}else{
+			$this->error ( '参数错误！');
+		}
+	}
+
 }

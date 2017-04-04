@@ -47,7 +47,7 @@
                              <div class="mui-card">
                         <div class="mui-card-header">
                            <h5>{{item.title}}</h5>
-                            <span class="ask-wealth"><img class="wealth-icon" src="{:ADDON_PUBLIC_PATH}/money.png"/><em>{{item.total_price}}</em></span>
+                            <span class="ask-wealth"><img class="wealth-icon" src="{:ADDON_PUBLIC_PATH}/money.png"/><em>{{item.price}}</em></span>
                         </div>
                          <div class="mui-card-content">
                             <div class="docs-sub-content">
@@ -270,7 +270,7 @@
             if(from==1){
                 //我要翻译
                 var url = "{:addons_url('HumanTranslation://Wap/addTask', array('token'=>$token))}";
-                var html='<div class="mui-input-row"><textarea name="content" class="translation-content" rows="8"></textarea></div><span id="error">&nbsp</span>';
+                var html='<div class="mui-input-row"><textarea name="content" class="translation-content" rows="12"></textarea></div><span id="error">&nbsp</span>';
                     mui.confirm(html, '请输入内容', null, function(event) {
                             var index = event.index;
                              console.log(event);

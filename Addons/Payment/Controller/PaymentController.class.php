@@ -111,9 +111,10 @@ class PaymentController extends BaseController {
 		if (IS_POST) {
 			$isadd = I ( 'get.isadd', 0, 'intval' );
 			$savetype = I ( 'get.savetype', 0, 'intval' );
-// 			dump($_POST);
-// 			dump(get_file_title($_POST['wx_cert_pem']));
-// 			die;
+ 			/*dump($_POST);
+ 			dump(get_file_title($_POST['wx_root_pem']));
+ 			die;*/
+			/***********返回*出现的位置******************/
 			if (strpos ( $_POST ["id"], "*" ) != false) {
 				unset ( $_POST ["id"] );
 			}
@@ -171,20 +172,28 @@ class PaymentController extends BaseController {
 			if (strpos ( $_POST ["wxmchid"], "*" ) != false) {
 			    unset ( $_POST ["wxmchid"] );
 			}
-			if (strpos ( $_POST ["wx_cert_pem"], "*" ) != false) {
+		/*	if (strpos ( $_POST ["wx_cert_pem"], "*" ) != false) {
 			    unset ( $_POST ["wx_cert_pem"] );
 			}
 			if (strpos ( $_POST ["wx_key_pem"], "*" ) != false) {
 			    unset ( $_POST ["wx_key_pem"] );
 			}
-			
-// 			if ($_POST['wx_cert_pem']){
-// 			    $this->uploadCert($_POST['wx_cert_pem']);
-// 			}
+			if (strpos ( $_POST ["wx_root_pem"], "*" ) != false) {
+			    unset ( $_POST ["wx_root_pem"] );
+			}*/
+			/*上传证书*/
+ 			/*if ($_POST['wx_cert_pem']){
+ 			    $this->uploadCert($_POST['wx_cert_pem']);
+ 			}if ($_POST['wx_key_pem']){
+				$this->uploadCert($_POST['wx_key_pem']);
+			}if ($_POST['wx_root_pem']){
+				$this->uploadCert($_POST['wx_root_pem']);
+			}*/
 			
 			
 			$Model = D ( parse_name ( get_table_name ( $this->model ['id'] ), 1 ) );
 			if ($isadd == 1) {
+				/************************新增**************/
 				// 自动补充token
 				$_POST ['token'] = $token;
 				
@@ -215,6 +224,7 @@ class PaymentController extends BaseController {
 					$this->error ( $Model->getError () );
 				}
 			} else {
+				//编辑操作
 				// 获取模型的字段信息
 				$Model = $this->checkAttr ( $Model, $this->model ['id'] );
 				if ($Model->create () && $Model->save ()) {
@@ -246,12 +256,18 @@ class PaymentController extends BaseController {
 			$fields = get_model_attribute ( $this->model ['id'] );
 			// 获取数据
 			$data = M ( get_table_name ( $this->model ['id'] ) )->find ( $id );
-			if ($data['wx_cert_pem'] && $data['wx_key_pem']){
+//			dump($data);
+			if ($data['wx_cert_pem'] && $data['wx_key_pem'] && $data['wx_root_pem']){
 			    $certFile = M ( 'file' )->where(array('id'=>$data['wx_cert_pem']))->getfield('name');
 			    $keyFile = M ( 'file' )->where(array('id'=>$data['wx_key_pem']))->getfield('name');
+			    $rootFile = M ( 'file' )->where(array('id'=>$data['wx_root_pem']))->getfield('name');
 			    $this->assign('certfile',$certFile);
 			    $this->assign('keyfile',$keyFile);
+			    $this->assign('rootfile',$rootFile);
 			}
+//			dump($certFile);
+//			dump($keyFile);
+//			dump($rootFile);exit();
 			// 是否新增
 			$isadd = 0;
 			if (empty ( $data )) {
@@ -281,6 +297,7 @@ class PaymentController extends BaseController {
 					unset ( $fields ["wxmchid"] );
 					unset($fields["wx_cert_pem"]);
 					unset($fields["wx_key_pem"]);
+					unset($fields["wx_root_pem"]);
 					unset ( $fields ["partnerid"] );
 					unset ( $fields ["partnerkey"] );
 					unset ( $fields ["wappartnerid"] );
@@ -301,6 +318,7 @@ class PaymentController extends BaseController {
 					unset ( $fields ["wxmchid"] );
 					unset($fields["wx_cert_pem"]);
 					unset($fields["wx_key_pem"]);
+					unset($fields["wx_root_pem"]);
 					unset ( $fields ["zfbname"] );
 					unset ( $fields ["wappartnerid"] );
 					unset ( $fields ["wappartnerkey"] );
@@ -320,6 +338,7 @@ class PaymentController extends BaseController {
 					unset ( $fields ["wxmchid"] );
 					unset($fields["wx_cert_pem"]);
 					unset($fields["wx_key_pem"]);
+					unset($fields["wx_root_pem"]);
 					unset ( $fields ["zfbname"] );
 					unset ( $fields ["partnerid"] );
 					unset ( $fields ["partnerkey"] );
@@ -339,6 +358,7 @@ class PaymentController extends BaseController {
 					unset ( $fields ["wxmchid"] );
 					unset($fields["wx_cert_pem"]);
 					unset($fields["wx_key_pem"]);
+					unset($fields["wx_root_pem"]);
 					unset ( $fields ["zfbname"] );
 					unset ( $fields ["wappartnerid"] );
 					unset ( $fields ["wappartnerkey"] );
@@ -357,6 +377,7 @@ class PaymentController extends BaseController {
 					unset ( $fields ["wxmchid"] );
 					unset($fields["wx_cert_pem"]);
 					unset($fields["wx_key_pem"]);
+					unset($fields["wx_root_pem"]);
 					unset ( $fields ["zfbname"] );
 					unset ( $fields ["wappartnerid"] );
 					unset ( $fields ["wappartnerkey"] );

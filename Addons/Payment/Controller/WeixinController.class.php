@@ -156,24 +156,22 @@ class WeixinController extends AddonsController
         //echo"asdf";
         $isPay = I('ispay');
         $paymentId = I('paymentId');
-       /* echo $paymentId;
-        echo"ok";
-        echo $isPay;*/
         if ($isPay) {
             $paymentDao = D('Addons://Payment/PaymentOrder');
-            //dump($paymentDao);exit();
             $res = $paymentDao->where(array(
                 'id' => $paymentId
-            ))->setField('status', $isPay);
-           // echo $res;
+            ))->setField('status', $isPay);//改变支付插件的支付状态
             if ($res) {
                 $info = $paymentDao->getInfo($paymentId, true);
                 $map['order_number'] = $info['single_orderid'];
                 $orderDao = D('Addons://HumanTranslation/TranslationOrder');
-                //dump($orderDao);exit();
-                $orderDao->where($map)->setField(array('pay_status'=>$isPay,'pay_type'=>$info['paytype']));//改变支付状态
-                $orderid = $orderDao->where($map)->getField('id');
-                $orderDao->setStatusCode ( $orderid, 1 );
+               //echo $isPay;exit();
+                $changePayData['pay_status']=$isPay;
+                $changePayData['pay_type']=$info['paytype'];
+                $result=D('TranslationOrder')->where($map)->save($changePayData);//改变支付状态
+                //echo $result;exit();
+                $orderid = $orderDao->where($map)->getField('id');//查询翻译订单的id
+                $orderDao->setStatusCode ( $orderid, 1 );//1:已经支付  增加翻译订单支付日志记录
                 $url = addons_url('HumanTranslation://Wap/orderDetail',array('id'=>$orderid,'send'=>1));
                 $this->success('支付成功', $url);
             }
@@ -265,6 +263,38 @@ class WeixinController extends AddonsController
             } else {
                 $this->error ( error_msg ( $js ) );
             }
+        }
+    }
+    /**
+     * 企业付款测试
+     */
+    public function rebate()
+    {
+        require_once ('Weixinpay/WxMchPay.class.php');
+        $mchPay = new \WxMchPay();
+        // 用户openid
+        $mchPay->setParameter('openid', 'oy2lbszXkgvlEKThrzqEziKEBzqU');
+        // 商户订单号
+        $mchPay->setParameter('partner_trade_no', 'test-'.time());
+        // 校验用户姓名选项
+        $mchPay->setParameter('check_name', 'NO_CHECK');
+        // 企业付款金额  单位为分
+        $mchPay->setParameter('amount', 100);
+        // 企业付款描述信息
+        $mchPay->setParameter('desc', '开发测试');
+        // 调用接口的机器IP地址  自定义
+        $mchPay->setParameter('spbill_create_ip', '127.0.0.1'); # getClientIp()
+        // 收款用户姓名
+        // $mchPay->setParameter('re_user_name', 'Max wen');
+        // 设备信息
+        // $mchPay->setParameter('device_info', 'dev_server');
+
+        $response = $mchPay->postXmlSSL();
+        if( !empty($response) ) {
+            $data = simplexml_load_string($response, null, LIBXML_NOCDATA);
+            echo json_encode($data);
+        }else{
+            echo json_encode( array('return_code' => 'FAIL', 'return_msg' => 'transfers_接口出错', 'return_ext' => array()) );
         }
     }
 }

@@ -10,7 +10,7 @@
                   <if condition="$detail.pay_status eq 0">
                       待支付
                       <elseif condition="$detail.pay_status eq 1"/>
-                      已经支付，等待评价
+                      已经支付，正在招标
                       <else/>
                       交易完成
                   </if>
@@ -43,7 +43,7 @@
                               {$detail.goal_language_id.name}
                         </span>
                     </li>
-                    <li class="mui-table-view-cell">价格统计<span class="mui-badge mui-badge-primary mui-badge-inverted">{$detail.total_price}</span></li>
+                    <li class="mui-table-view-cell">悬赏价格<span class="mui-badge mui-badge-primary mui-badge-inverted">{$detail.price}</span></li>
                     <li class="mui-table-view-cell">下单时间<span class="mui-badge mui-badge-primary mui-badge-inverted">{$detail.cTime | date="Y-m-d H:m:i",###}</span></li>
                     <li class="mui-table-view-cell"> 原文
                             <div class="mui-card-content translate-content">
@@ -56,11 +56,11 @@
                             <volist name="detail['SecondContent']" id="val">
                                   <li class="mui-table-view-cell">{$val.translate_content}
                                     <empty name="detail['after_content']">
-                                        <span after-content-id="{$val.id}"  content-id="{$detail.id}"  class="mui-badge mui-badge-custom confirm-result" style="position: relative;top: 0px;right: 0px;">确认采用</span>
+                                        <span after-content-id="{$val.id}"  content-id="{$detail.id}"  class="mui-badge mui-badge-custom confirm-result" style=" display: inline;position: relative;top: 0px;right: 0px;">确认采用</span>
                                         <else />
                                         <if condition="$val.is_recommend eq 0">
                                             <else/>
-                                            <span class="mui-badge mui-badge-success confirm-result" style="position: relative;top: 0px;right: 0px;">中标</span>
+                                            <span class="mui-badge mui-badge-success" style=" display: inline;position: relative;top: 0px;right: 0px;">中标</span>
                                         </if>
                                     </empty>
 
@@ -98,6 +98,10 @@
         var content_id = this.getAttribute("content-id");
             //采用译文
             var url = "{:addons_url('HumanTranslation://Wap/changeAfterContent', array('token'=>$token))}";
+                url=url+'&'+'after_content_id='+after_content_id+'&'+'content_id='+content_id;
+                //打开页面
+                mui.openWindow({ id:'changeAfterContent.html', url:url });
+         /*   $(this).attr('href',url);
                 mui.post(url,{
                     after_content_id:after_content_id,
                     content_id:content_id
@@ -107,7 +111,7 @@
                             location.reload();
                         },2000);
                         },'json'
-                );
+                );*/
     })
 </script>
 </body>

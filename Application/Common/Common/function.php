@@ -1468,16 +1468,16 @@ function getOpenidByUid($uid, $token = '') {
  */
 function getPaymentOpenid($appId = "", $serect = "") {
 	if (empty ( $appId ) || empty ( $serect )) {
-		
 		$openid = get_openid ();
 		return $openid;
 		exit ();
 	}
+	$appId=trim($appId);
+	$serect=trim($serect);
+//	echo $appId.':'.$serect;
 	$callback = GetCurUrl ();
-	
 	$param = $appId . ':' . $serect;
 	$openid = OAuthWeixin ( $callback, $param, true );
-	
 	return $openid;
 }
 // 获取当前用户的Token

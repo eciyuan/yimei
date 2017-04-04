@@ -10,9 +10,11 @@ use Think\Model;
 class RedBagModel extends Model {
 	protected $tableName = 'redbag';
 	function getInfo($id, $update = false, $data = array()) {
+		header('Content-type: text/html; charset=UTF8');
 		$key = 'RedBag_getInfo_' . $id;
 		$info = S ( $key );
 		if ($info === false || $update) {
+			//获取这个订单相关的具体信息
 			$info = ( array ) (empty ( $data ) ? $this->find ( $id ) : $data);
 			S ( $key, $info, 86400 );
 		}
@@ -51,7 +53,6 @@ class RedBagModel extends Model {
 	// 获取红包共用方法
 	function getRedBag($id) {
 		$config = getAddonConfig ( 'RedBag' );
-		//dump($config);exit();
 		$info = $this->getInfo ( $id, true );
 		//dump($info);exit();
 		$left_num = $info ['total_num'] - $info ['collect_count'];
@@ -66,7 +67,6 @@ class RedBagModel extends Model {
 		$recode ['redbag_id'] = $id;
 		$recode ['openid'] = getPaymentOpenid ( $config ['wxappid'], $config ['wxappsecret'] );//接受收红包的用户id
 
-		//dump($recode ['openid'] );echo"red";
 		if ($info ['collect_limit'] > 0) {
 			$my_count = M ( 'redbag_follow' )->where ( $recode )->count ();
 			if ($my_count >= $info ['collect_limit']) {
@@ -81,7 +81,7 @@ class RedBagModel extends Model {
 		}
 		
 		$money = rand ( $info ['min_value'], $info ['max_value'] );
-		//echo  $info ['act_name'];exit();
+//		echo  $info ['act_name'];exit();
 		// 商户和公众号信息
 		$data ['mch_id'] = $config ['mch_id']; // 微信支付分配的商户号
 		$data ['mch_billno'] = $config ['mch_id'] . date ( Ymd ) . $this->getRandStr (); // 商户订单号（每个订单号必须唯一）组成： mch_id+yyyymmdd+10位一天内不能重复的数字。接口根据商户订单号支持重入， 如出现超时可再调用。
@@ -94,7 +94,8 @@ class RedBagModel extends Model {
 		$data ['total_num'] = 1;
 		$data ['wishing'] = $info ['wishing'];
 		$data ['client_ip'] = $_SERVER ['SERVER_ADDR'];
-		$data ['act_name'] = $info ['act_name'];
+		$data ['act_name'] ='猜灯谜抢红包活动';
+//		$data ['act_name'] = $info ['act_name'];
 		$data ['remark'] = $info ['act_name'];
 		$data ['sign'] = make_sign ( $data, $config ['partner_key'] );
 		
@@ -116,8 +117,8 @@ class RedBagModel extends Model {
         <remark>{$data ['remark']}</remark>
         <nonce_str>{$data ['nonce_str']}</nonce_str>
         </xml>";
-		// dump ( $data );
-		//dump ( $vars );exit();
+	/*	dump ( $data );
+		dump ( $vars );exit();*/
 		$url = 'https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack';
 		// 获取证书路径
 		$ids [] = $config ['cert_dir'];
@@ -211,8 +212,6 @@ class RedBagModel extends Model {
 		}
 	}
 	function curl_post_ssl($url, $vars, $cert_dir = '', $key_dir = '') {
-		//dump($vars);exit();
-		//dump($url);
 		$ch = curl_init ();
 		// 超时时间
 		curl_setopt ( $ch, CURLOPT_TIMEOUT, 30 );
@@ -240,7 +239,7 @@ class RedBagModel extends Model {
 		curl_setopt ( $ch, CURLOPT_POST, 1 );
 		curl_setopt ( $ch, CURLOPT_POSTFIELDS, $vars );
 		$content = curl_exec ( $ch );
-		//dump($content);exit();
+//		dump($content);exit();
 		if ($content) {
 			$data = new \SimpleXMLElement ( $content );
 			foreach ( $data as $key => $value ) {

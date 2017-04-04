@@ -124,7 +124,10 @@
                                 <div class="upload-img-box">
                                   <present name="data[$field['name']]">
                                     <div class="upload-pre-file"><span class="upload_icon_all"></span>
-                                   <if condition="$field.name eq 'wx_cert_pem'">{$certfile}<elseif condition="$field.name eq 'wx_key_pem'"/>{$keyfile}</if> 
+                                   <if condition="$field.name eq 'wx_cert_pem'">{$certfile}
+                                       <elseif condition="$field.name eq 'wx_key_pem'"/>{$keyfile}
+                                       <elseif condition="$field.name eq 'wx_root_pem'"/>{$rootfile}
+                                   </if>
                                     {$data[$field['name']]|get_table_field=###,'id','name','File'}</div>
                                   </present>
                                 </div>

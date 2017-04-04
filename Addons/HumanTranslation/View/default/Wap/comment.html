@@ -1,0 +1,160 @@
+<include file="Public/mobile_head"/>
+<include file="header"/>
+<script type="text/javascript" src="__STATIC__/qrcode/qrcode.js"></script>
+<script type="text/javascript" src="__STATIC__/qrcode/jquery.qrcode.js"></script>
+<link rel="stylesheet" href="__STATIC__/mui.3.5.0/css/mui.min.css?v={:SITE_VERSION}">
+<link href="{:ADDON_PUBLIC_PATH}/css.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+<body>
+<div  class="mui-content">
+    	<div class="block_content_bg m_10">
+        <!-- 表单 -->
+        <form id="form" action="{:addons_url('HumanTranslation://Wap/add')}" method="post" class="form-horizontal p_10">
+                  <input type="hidden" class="text input-large" name="{$field.name}" value="{:I($field[name], $field[value])}">
+                  <div class="form-item cf">
+                    <div class="controls">
+                        <!--多个数组选择-->
+                        <label class="item-label">选择擅长语言<span class="check-tips"></span></label>
+                        <select name="select_language_id" id="select_language_id">
+                            <option value="" selected >请选择语言</option>
+                            <volist name="select_language_id" id="vo">
+                                <option value="{$vo.id}" >{$vo.name}</option>
+                            </volist>
+                        </select>
+                        <!--输入框-->
+                        <label class="item-label">姓名<span class="check-tips">要与上传的证件等证明文件一致</span></label>
+                          <input type="text" class="text input-medium" name="name" id="name" value="">
+
+                        <div id="text-translation">
+                            <label class="item-label">输入评价内容<span class="check-tips"></span></label>
+                            <label class="textarea">
+                                <textarea name="desc" id="desc"></textarea>
+                            </label>
+                        </div>
+                    </div>
+                  </div>
+                    <div id="top-alert" class="fixed alert alert-error" style="display: none;">
+                    <button class="close fixed" style="margin-top: 4px;">&times;</button>
+                      <div class="alert-content"></div>
+                      </div>
+          	<div class="form-item cf">
+                <button class="home_btn submit-btn mb_10 mt_10 custom-theme-blue" id="submit" type="button" target-form="form-horizontal">提交资料</button>
+            </div>
+        </form>
+      </div>
+       <p class="copyright">{$system_copy_right}</p>
+  </div>
+    <!-- 底部导航 -->
+    <include file="_footer"/>
+    <script src="__STATIC__/mui.3.5.0/js/mui.min.js?v={:SITE_VERSION}"></script>
+  <include file="Public/mobile_foot"/>
+<script type="text/javascript">
+	$.WeiPHP.initWxShare({
+		title:"{$forms.title}",
+		imgUrl:"{$forms.cover}",
+		desc:"{$forms.intro}",
+		link:window.location.href
+	})
+</script>
+ <block name="script">
+ <link href="{:SITE_URL}/Public/static/datetimepicker/css/datetimepicker.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+  <php>if(C('COLOR_STYLE')=='blue_color') { </php>
+    <link href="{:SITE_URL}/Public/static/datetimepicker/css/datetimepicker_blue.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+  <php> } </php>
+  <link href="{:SITE_URL}/Public/static/datetimepicker/css/dropdown.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+  <script type="text/javascript" src="{:SITE_URL}/Public/static/datetimepicker/js/bootstrap-datetimepicker.min.js"></script> 
+  <script type="text/javascript" src="{:SITE_URL}/Public/static/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js?v={:SITE_VERSION}" charset="UTF-8"></script>
+<script type="text/javascript">
+    function check_subscribe(){
+        //判断是否关注公众号
+        var has_subscribe = "{$has_subscribe}";
+        //var has_subscribe = 1;
+        if(has_subscribe=="0"){
+            $.WeiPHP.showSubscribeTipsHandle({'title':'{$public_info.public_name}','qrcode': '{$qrcode}'});
+            return false;
+        }
+    }
+$('#submit').click(function(){
+   // $('#form').submit();
+    check_subscribe();
+    $.Dialog.loading();
+    var name = $("#name").val();
+    var mobile = $("#mobile").val();
+    var graduate = $("#graduate").val();
+    var major = $("#major").val();
+    var intro = $("#intro").val();
+    console.log(intro);
+    var language_level = $("#language_level").val();
+    var engaged_time = $("#engaged_time").val();
+    var select_language_id = $("#select_language_id").val();
+    var imageIds = '';
+    $('.img_item input').each(function(i, el){
+        imageIds = $(el).val()+','+imageIds;
+    });
+    if(select_language_id==null||select_language_id==''||select_language_id==undefined){
+        $.Dialog.fail('请选择擅长语言！');
+        return false;
+    }
+    if(intro=='' ||intro==undefined){
+        $.Dialog.fail('介绍不能为空');
+        return false;
+    }
+
+    url="{:addons_url('HumanTranslation://Wap/addAuthor')}";
+        $.ajax({
+            url:url,
+            type:'post',
+            data: {
+                name: name,
+                mobile: mobile,
+                major : major,
+                graduate : graduate,
+                select_language_id : select_language_id,
+                intro : intro,
+                language_level : language_level,
+                engaged_time : engaged_time,
+                imageIds: imageIds
+            },
+            dataType:'json',
+            success:function(json){
+                if(json.status==1){
+                    $.Dialog.success(json.info);
+                }else{
+                    $.Dialog.fail(json.info);
+                }
+                if(json.url!=""&&json.url!=undefined){
+                    setTimeout(function(){
+                        window.location.href=json.url;
+                    },2000);
+                }
+            },
+            error:function(){
+                $.Dialog.close();
+            }
+        });
+});
+$(function(){
+    $('.time').datetimepicker({
+        format: 'yyyy-mm-dd hh:ii',
+        language:"zh-CN",
+        minView:0,
+        autoclose:true
+    });
+});
+    /*公共底部菜单js*/
+    mui(".bottom_menu").on('tap','.list-page-bottom',function(){
+        //获取id
+        var from = this.getAttribute("data");
+        if(from==1){
+            var url = "{:addons_url('HumanTranslation://Wap/index', array('token'=>$token))}";
+        }else if(from==2){
+            var url = "{:addons_url('HumanTranslation://Wap/translate', array('token'=>$token))}";
+        }else{
+            var url = "{:addons_url('HumanTranslation://Wap/ucenter', array('token'=>$token))}";
+        }
+        mui.openWindow({
+            url: url,
+        })
+    })
+</script> 
+</body>
+</html>

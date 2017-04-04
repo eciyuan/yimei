@@ -32,16 +32,18 @@
                                                 <div class=" mui-col-xs-2" style="float: left;font-size: 6px;">
                                                         <span v-if="item.pay_status == '0'" class="mui-badge mui-badge-danger mui-badge-inverted">待支付</span>
                                                          <!-- 已经支付,进行各种操作-->
-                                                        <span v-if="item.pay_status == '1'" class="mui-badge mui-badge-danger mui-badge-inverted">进行中</span>
-                                                        <span v-if="item.pay_status == '2'" class="mui-badge mui-badge-danger mui-badge-inverted">评价</span>
-                                                        <span v-if="item.pay_status == '3'" class="mui-badge mui-badge-success mui-badge-inverted">成功</span>
+                                                        <span v-if="item.pay_status == '1' && item.order_status == '0'" class="mui-badge mui-badge-danger mui-badge-inverted">进行中</span>
+                                                        <span v-if="item.pay_status == '1' && item.order_status == '1'" class="mui-badge mui-badge-danger mui-badge-inverted">进行中</span>
+                                                        <span v-if="item.pay_status == '1' && item.order_status == '2'" class="mui-badge mui-badge-danger mui-badge-inverted">评价</span>
+                                                        <span v-if="item.pay_status == '1' &&  item.order_status == '3'" class="mui-badge mui-badge-success mui-badge-inverted">成功</span>
                                                 </div>
                                             </a>
                                             <div class="mui-collapse-content">
-                                                <p v-on:click="show_order_detail(item.id)" data-id="{{item.id}}" from="1"  price="{{item.price}}" class="click-change"> <a ><span class="mui-badge  mui-badge-warning mui-badge-inverted">查看详情</span></a></p>
+                                                <p v-on:click="show_order_detail(item.id)" data-id="{{item.id}}" from="1"  price="{{item.price}}" class="click-change"><a><span class="mui-badge  mui-badge-warning mui-badge-inverted">查看详情</span></a></p>
                                                 <p v-on:click="del_order(item.id)" data-id="{{item.id}}" from="2"  price="{{item.price}}" class="click-change"><a><span class="mui-badge  mui-badge-warning mui-badge-inverted">删除</span></a></p>
                                                     <p v-if="item.pay_status == '0'" data-id="{{item.id}}" from="3"  price="{{item.price}}" class="click-change"> <a><span class="mui-badge  mui-badge-warning mui-badge-inverted">提高悬赏</span></a></p>
                                                     <p v-if="item.pay_status == '0'" data-id="{{item.id}}" from="4" price="{{item.price}}" class="click-change"><a id="toPay" data="{{item.id}}"><span class="mui-badge  mui-badge-warning mui-badge-inverted">前去支付</span></a></p>
+                                                    <p v-if="item.pay_status == '1' && item.order_status == '2'" data-id="{{item.id}}" from="5" price="{{item.price}}" class="click-change"><a id="" data="{{item.id}}"><span class="mui-badge  mui-badge-warning mui-badge-inverted">前去评价</span></a></p>
                                             </div>
                                         </li>
                                     </template>
@@ -261,8 +263,35 @@
                     }
                 });
                 return false;
+            }else if(from==5){
+                //评价页面显示
+                var url = "{:addons_url('HumanTranslation://Wap/comment')}&id="+id;
+                var html='<div class="mui-input-row"><textarea class="textarea" name="desc"  id="desc" rows="4" ></textarea></div><span id="error">&nbsp</span>';
+                mui.confirm(html, '请输入要评价内容', null, function(event) {
+                    var index = event.index;
+                    console.log(event);
+                    if(index === 1) {
+                        desc = $('#desc').val();
+                        if (desc == null || desc == '' || desc == undefined) {
+                            $("#error").html('价格不能为空');
+                            return false;
+                        }
+                        mui.post(url, {
+                            desc: desc,
+                            id: id
+                                }, function (data) {
+                                    if(data.status==1){
+                                        $.Dialog.success(data.info);
+                                    }else{
+                                        $.Dialog.fail(data.info);
+                                    }
+                                }, 'json'
+                        );
+                    }
+                });
+                return false;
             }else{
-                //前去支付
+                //前去支付 from=4
                 var url = "{:addons_url('HumanTranslation://Wap/choose_pay')}&id="+id+"&price="+price+"&invite_uid="+{$uid};
                 mui.openWindow({
                     url: url,
