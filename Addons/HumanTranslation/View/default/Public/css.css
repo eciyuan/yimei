@@ -18,14 +18,9 @@
     clear: both;
     height:10px;
 }
-.mui-badge-custom {
-    color: #fff;
-    background-color: #489ebf;
-}
-header{z-index: 100;}
 .current-btn{border:1px solid #1d98d6;color:#1d98d6;}
 /* 底部 */
-.bottom_menu{ height:50px; padding:0 10px; position:fixed;z-index: 1; right:0; left:0; bottom:0; background:#fff; border-top:1px solid #ddd; display:-webkit-box;}
+.bottom_menu{ height:50px; padding:0 10px; position:fixed; right:0; left:0; bottom:0; background:#fff; border-top:1px solid #ddd; display:-webkit-box;}
 .bottom_menu a{ display:block; -webkit-box-flex:1;text-align:center; color:#888; font-size:12px;padding-top: 2px;}
 .bottom_menu .current{color:#489ebf;}
 .bottom_menu a .title{
@@ -61,13 +56,9 @@ header{z-index: 100;}
     color: #007aff;
     background-color: transparent;
 }
-.confirm-result{
-    display: inline;
-    position: static;
-}
 /*翻译列表*/
 .translate{
-    margin-top: 49px;
+    margin-top: 10px;
 }
 #translate-tag .mui-col-xs-2{
     padding-left: 87px;
@@ -75,14 +66,13 @@ header{z-index: 100;}
 }
 .docs-sub-content{
     text-align: left;
-    font-size: 16px;
 }
 .docs-sub-content .page-title {
     margin-bottom: 5px;
-    font-size: 16px;
+    font-size: 24px;
 }
 .docs-sub-content .page-description {
-    font-size: 13px;
+    font-size: 17px;
     color: #000;
     opacity: .7;
 }
@@ -135,8 +125,4 @@ header{z-index: 100;}
     font-size: 14px;
     line-height: 29px;
     font-weight: 400;
-}
-.content-mobile-img{display: inline;margin: 5px;}
-.content_imgs img{
-    height:20%;width: 20%;display: inline;
 }

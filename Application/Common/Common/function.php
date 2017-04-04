@@ -2109,7 +2109,6 @@ function code_decode($text) {
 	return think_decrypt ( $text, $key );
 }
 function outExcel($dataArr, $fileName = '', $sheet = false) {
-	//dump($dataArr);exit();
 	require_once VENDOR_PATH . 'download-xlsx.php';
 	export_csv ( $dataArr, $fileName, $sheet );
 	unset ( $sheet );

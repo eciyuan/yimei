@@ -23,7 +23,7 @@ a{ text-decoration:none; color:#fff;}
 .v_nav .item{ height:46px; line-height:46px; border-bottom:1px solid #ddd; display:block; color:#333; padding:0 50px 0 20px; position:relative}
 .v_nav .item em{ position:absolute; right:10px; top:14px; height:24px; width:24px; background:url(arw.png) no-repeat; background-size:18px 18px;}
 .v_nav a{ color:#888}
-.v_nav .single_address{ line-height:24px; padding:10px 70px 10px 20px; color:#888;height: 93px;}
+.v_nav .single_address{ line-height:24px; padding:10px 70px 10px 20px; color:#888}
 .v_nav .single_address .title{ font-size:16px; color:#444;}
 .v_nav .single_address em{ width:60px; height:40px; background:url(phone.png) center center no-repeat; background-size:40px 40px; border-left:1px solid #ccc;}
-.v_nav .single_address a{/*   white-space: nowrap;overflow: hidden;*/display: block;text-overflow: ellipsis;font-size:13px;}
+.v_nav .single_address a{   white-space: nowrap;overflow: hidden;display: block;text-overflow: ellipsis;font-size:13px;}

@@ -440,13 +440,10 @@ class WapController extends BaseController {
 	 * @return void
 	 */
 	public function post() {
-		//echo $_SERVER ["HTTP_REFERER"];
 		if (! session ( 'post_before_url' )) {
-			session ( 'post_before_url',$_SERVER ["HTTP_REFERER"]);
-			//session ( 'post_before_url',t($_SERVER ["HTTP_REFERER"]));
+			session ( 'post_before_url', t ( $_SERVER ["HTTP_REFERER"] ) );
 		}
-		//echo "<br>";
-		//echo session ( 'post_before_url');exit();
+		
 		$weiba_id = intval ( $_GET ['weiba_id'] );
 		$weiba = D ( 'weiba' )->where ( 'id=' . $weiba_id )->find ();
 		
@@ -595,6 +592,7 @@ class WapController extends BaseController {
 	        $data ['last_reply_uid'] = $this->mid;
 	        $data ['last_reply_time'] = $data ['post_time'];
 	        $data ['tag_id'] = $tag_id;
+	
 	        $imgIds = explode ( ',', $_POST ['imageIds'] );
 	        foreach ( $imgIds as $imgId ) {
 	            $imgId = intval ( $imgId );
@@ -605,18 +603,10 @@ class WapController extends BaseController {
 	                }
 	            }
 	        }
-			if (isSubmitLocked ()) {
-				$return ['status'] = 0;
-				$return ['data'] = '发布内容过于频繁，请稍后再试！';
-				exit ( json_encode ( $return ) );
-			}
+	
 	        $res = D ( 'weiba_post' )->add ( $data );
 	        if ($res) {
-				// 锁定发布
-				lockSubmit ();
 	            D ( 'weiba' )->where ( 'id=' . $data ['weiba_id'] )->setInc ( 'thread_count' );
-				// 解锁
-				unlockSubmit ();
 	            $this->success ( '发布成功', addons_url ( 'Weiba://Wap/postDetail', array (
 	                'post_id' => intval ( $res )
 	            ) ) );

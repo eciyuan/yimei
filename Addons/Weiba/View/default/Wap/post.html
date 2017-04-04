@@ -99,7 +99,9 @@ function doWeibaPost(){
 	var imageIds = '';
 	$('.img_item input').each(function(i, el){
 		imageIds = $(el).val()+','+imageIds;
+		
 	});
+
 	if(!weiba_id || weiba_id=='0'){
 		$.ui.showMask("请选择版块",true);
 	}else if(!title){
@@ -119,8 +121,6 @@ function doWeibaPost(){
 			content : content,
 			imageIds: imageIds
 		}, function(data){
-           /* alert(data);
-            alert(data.info);*/
 			if(data.status){
 				$('#title').val('');
 				$('#post-content').val('');
@@ -132,7 +132,7 @@ function doWeibaPost(){
 			}else{
 				$.ui.showMask(typeof data=='string'?data:data.info,true);
 			}
-
+			
 		},'JSON');
 	}
 }

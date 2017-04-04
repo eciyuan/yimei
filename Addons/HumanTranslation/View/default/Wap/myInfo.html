@@ -67,21 +67,6 @@
             }
         });
     }
-    /*公共底部菜单js*/
-    mui(".bottom_menu").on('tap','.list-page-bottom',function(){
-        //获取id
-        var from = this.getAttribute("data");
-        if(from==1){
-            var url = "{:addons_url('HumanTranslation://Wap/index', array('token'=>$token))}";
-        }else if(from==2){
-            var url = "{:addons_url('HumanTranslation://Wap/translate', array('token'=>$token))}";
-        }else{
-            var url = "{:addons_url('HumanTranslation://Wap/ucenter', array('token'=>$token))}";
-        }
-        mui.openWindow({
-            url: url,
-        })
-    })
 </script>
 </body>
 </html>

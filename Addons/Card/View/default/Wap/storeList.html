@@ -50,27 +50,32 @@
     	<ul class="v_nav">
     	<notempty name='coupon_shop'>
     		<volist name='coupon_shop' id='vo'>
-    		<li class="item single_address" style="padding-bottom: 50px;border-top: 1px solid  rgba(119, 113, 116, 0.47);width:90%;">
-    			<p calss='addrimg' style="height: 80px;width:28%;float: left"><img src="{$vo.img|get_cover_url}" width='100px' height='80px' /></p>
-                <div style="height: 80px;width:70%;float: right">
-                <p class="" style="">{$vo.name}</p>
-                <span class="" style="">
-                    <notempty name="vo.gps">
-                        <a style="width:100%;display: inline;" href="http://apis.map.qq.com/tools/poimarker?marker=coord:{$vo.gps};title:{$vo.name};addr:{$vo.address}&referer=myapp&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77">地址：{$vo.address}</a>
-                    <else />
-                        <a style="width:100%;display: inline;"  href="http://api.map.baidu.com/geocoder?address={$vo.address}&output=html&src={$vo.name}|{$vo.address}">地址：{$vo.address}</a>
-                    </notempty>
+    		<li class="item single_address" style="padding-bottom: 50px;border-top: 1px solid  rgba(119, 113, 116, 0.47);">
+    			<span calss='addrimg'><img src="{$vo.img|get_cover_url}" width='100px' height='80px' /></span>
+                <span class="title">
+                {$vo.name}</span>
+                <span class="addra">
+                <notempty name="vo.gps">
+                    <a href="http://apis.map.qq.com/tools/poimarker?marker=coord:{$vo.gps};title:{$vo.name};addr:{$vo.address}&referer=myapp&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77">地址：{$vo.address}</a>
+               				
+                <else />
+                    <a href="http://api.map.baidu.com/geocoder?address={$vo.address}&output=html&src={$vo.name}|{$vo.address}">地址：{$vo.address}</a>
+                </notempty>
                  </span>
-                <span style="font-size: 12px;"><img src="{:ADDON_PUBLIC_PATH}/location.png" width="15px" height="15px" style="vertical-align:middle;"/>{$vo.juli}</span>
-                </div>
+                <span style="position: absolute;left:130px;top:60px;">{$vo.juli}</span>
+               
+               
+<!--                 <em></em> -->
             </li>
            <div  class='daohan'><div class='tel'> <a href="tel:{$vo.phone}"><img src="{:ADDON_PUBLIC_PATH}/tel.png" width="30px" height="30px" style="vertical-align:middle;"/> 电话</a></div>
             <div style="line-height: 40px;"> 
+            	 
             	<notempty name="vo.gps">
                     <a href="http://apis.map.qq.com/tools/poimarker?marker=coord:{$vo.gps};title:{$vo.name};addr:{$vo.address}&referer=myapp&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77"><img src="{:ADDON_PUBLIC_PATH}/navi.png" width="30px" height="30px" style="vertical-align:middle;"/> 导航</a>
                 <else />
                     <a href="http://api.map.baidu.com/geocoder?address={$vo.address}&output=html&src={$vo.name}|{$vo.address}"><img src="{:ADDON_PUBLIC_PATH}/navi.png" width="30px" height="30px" style="vertical-align:middle;"/> 导航</a>
                 </notempty>
+            
             </div>
             </div> 
             </li>

@@ -48,9 +48,10 @@ class WapController extends AddonsController {
 		
 		// recommend_cate
 		$recommend_cate = D ( 'Category' )->getRecommendList ( $this->shop_id );
+		//echo $recommend_cate_count;exit();
 		$this->assign ( 'recommend_cate', $recommend_cate );
 		$this->assign ( 'recommend_cate_count', count($recommend_cate));
-		//dump($recommend_cate);exit();
+
 		// 推荐商品
 		$recommend_list = D ( 'Goods' )->getRecommendList ( $this->shop_id );
 		// dump($recommend_list);
@@ -77,7 +78,7 @@ class WapController extends AddonsController {
         }
 
 		$goods_list = D ( 'Goods' )->getList ( $this->shop_id, $search_key, $order );
-		// dump($goods_list);exit();
+		// dump($goods_list);
 		$this->assign ( 'goods_list', $goods_list );
         $this->assign ( 'order_key', $order_key );
         $this->assign ( 'order_type', $order_type );
@@ -111,7 +112,6 @@ class WapController extends AddonsController {
 	function product_model() {
 		$count = I ( 'count', 10, 'intval' );
         $pageIds = I ( 'pageIds' );
-		//dump($pageIds);exit();
         $search_key = I ( 'search_key' );
         $order_key = I ( 'order_key', 'id' );
         $order_type = I ( 'order_type', 'desc' );
@@ -231,7 +231,6 @@ class WapController extends AddonsController {
 		$map ['uid'] = $this->mid;
 		$map ['is_send'] = 1;
 		$unPayOrders = D ( 'Addons://Shop/Order' )->getOrderList ( $map );
-		//dump($unPayOrders);
 		// dump('--配送中--');
 		$this->assign ( 'shippingClass', 'current' );
 		$this->assign ( 'orderList', $unPayOrders );
@@ -241,7 +240,7 @@ class WapController extends AddonsController {
 	function waitCommentOrder() {
 		$map ['uid'] = $this->mid;
 		//$map ['is_send'] = 2;
-		$map ['status_code'] = '6';
+		$map ['status_code'] = '5';
 		$unPayOrders = D ( 'Addons://Shop/Order' )->getOrderList ( $map );
 		// dump($unPayOrders);
 		$this->assign ( 'waitClass', 'current' );
@@ -262,35 +261,17 @@ class WapController extends AddonsController {
 		$this->assign ( 'goodId', $obj[0]['id'] );
 		$this->assign ( 'orderID', I ( 'id' ));
 		$this->assign ( 'shop_id',$obj[0]['shop_id']);
-		$this->display ();
+		$this->display ( 'order_list' );
 	}
 	//立即评价 提交操作
 	function submitCommentOrder() {
 		$data=$_POST;
-		$data['add_time']=time();
-		$data ['desc'] =safe ( $_POST ['desc'] );
-		$data ['token'] = get_token();
-		$data ['order_id'] =  $_POST ['order_id'] ;
-		$imgIds = explode ( ',', $_POST ['imageIds'] );
-		foreach ( $imgIds as $imgId ) {
-			$imgId = intval ( $imgId );
-			if ($imgId > 0) {
-				$imgsrc = get_cover_url ( $imgId );
-				if ($imgsrc) {
-					$data ['desc'] .= '<p class="content-mobile-img"><img  src="' . $imgsrc . '" /></p>';
-				}
-			}
-		}
+		$data['image_url'] = I ( 'post.image_url' );
 		$data ['uid'] = $this->mid;
 		$result = M ( 'shop_comment' )->add($data);
-		$url = addons_url ( 'Shop://Wap/myOrder', array (
-			'token' =>get_token(),
-			'invite_uid' => $data ['uid']
-		) );
+		//echo json_encode($result);
 		if($result){
-			 D ( 'Addons://Shop/Order' )->setStatusCode ( $data ['order_id'], 7 );//设置评价成功
-			   $this->success( '评价成功！', $url);
-
+			   $this->success( '评价成功！' );
 		}else{
 			   $this->error( '评价失败！' );
 		}

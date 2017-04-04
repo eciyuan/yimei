@@ -1,4 +1,6 @@
+
     </div><!--content-->
+
         <script>
             (function(){
                 TS.cache.profile = {
@@ -183,4 +185,33 @@
   <script src="{:SITE_URL}/online_check.php?uid={$mid}&uname={$user.uname}&mod={:MODULE_NAME}&app={:APP_NAME}&act={:ACTION_NAME}&action=trace&city={:session('city')}"></script> 
 </eq>
 </body>
+    <!--
+            底部导航栏
+            -->
+    <footer style="z-index:2;" id="navbuttom" class="temp-reply-hide" data-current="footer-index-icon">
+        <ul class="bz">
+            <li class="footer-index-icon">
+                <a href="{:addons_url('Weiba://Wap/index')}"><i></i><span>首页</span></a>
+            </li>
+            <li class="bk footer-section-icon off" id="liAtypes" style="cursor: pointer;">
+                <div class="arrow" style="left: 328px;"></div>
+                <a href="{:addons_url('Weiba://Wap/forum')}"><i></i><span>版块</span></a>
+
+            </li>
+            <li class="footer-post-icon off">
+                <a style="color:#949494;display:inline-block;width:100%;" href="{:addons_url('Weiba://Wap/post',array('weiba_id'=>$weiba_detail['id']))}">
+                    <i></i>
+                    <span>发帖</span>
+                </a>
+            </li>
+            <li class="footer-me-icon off" style="cursor:pointer;">
+                <a style="color:#949494;display:inline-block;width:100%;" href="{:addons_url('Weiba://Wap/my')}">
+                    <i class="rel">
+                        <span class="abs new-reddot" id="chat-usermsg" style="display:none;color:#FFF;"></span>
+                    </i>
+                    <span>我的</span>
+                </a>
+            </li>
+        </ul>
+    </footer>
 </html>

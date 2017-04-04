@@ -24,7 +24,7 @@ class GoodsModel extends Model {
 			}
 			S ( $key, $info );
 		}
-		//dump($info);exit();
+		
 		return $info;
 	}
 	function updateById($id, $data) {
@@ -50,7 +50,6 @@ class GoodsModel extends Model {
 		return $list;
 	}
 	function getList($shop_id, $search_key = '', $order = 'id desc', $pageIds = '', $count = 10) {
-		//dump($order);
 		$map ['shop_id'] = $shop_id;
 		$map ['is_show'] = 1;
 		if ( $search_key ) {

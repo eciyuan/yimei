@@ -1,0 +1,64 @@
+[ 2017-02-07T14:12:11+08:00 ] ::1 /yimei/index.php?s=/addon/HumanTranslation/Wap/delOrder.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000040s ]
+INFO: Run Common\Behavior\InitHookBehavior [ RunTime:0.002823s ]
+INFO: [ app_init ] --END-- [ RunTime:0.003597s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000969s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001149s ]
+NOTIC: [2048] Declaration of Addons\HumanTranslation\Controller\WapController::lists() should be compatible with Home\Controller\AddonsController::lists($model = NULL, $page = 0) D:\wamp\www\yimei\Addons\HumanTranslation\Controller\WapController.class.php 第 7 行.
+NOTIC: [8] Undefined index: uid D:\wamp\www\yimei\ThinkPHP\Library\Think\Controller.class.php 第 524 行.
+NOTIC: [8] Undefined index: query D:\wamp\www\yimei\ThinkPHP\Common\functions.php 第 1002 行.
+ERR: Think\Controller:delOrder方法不存在！
+
+[ 2017-02-07T14:16:45+08:00 ] ::1 /yimei/index.php?s=/addon/HumanTranslation/Wap/delOrder.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000050s ]
+INFO: Run Common\Behavior\InitHookBehavior [ RunTime:0.003905s ]
+INFO: [ app_init ] --END-- [ RunTime:0.005017s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000829s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001002s ]
+NOTIC: [2048] Declaration of Addons\HumanTranslation\Controller\WapController::lists() should be compatible with Home\Controller\AddonsController::lists($model = NULL, $page = 0) D:\wamp\www\yimei\Addons\HumanTranslation\Controller\WapController.class.php 第 7 行.
+NOTIC: [8] Undefined index: uid D:\wamp\www\yimei\ThinkPHP\Library\Think\Controller.class.php 第 524 行.
+NOTIC: [8] Undefined index: query D:\wamp\www\yimei\ThinkPHP\Common\functions.php 第 1002 行.
+ERR: 参数错误或者未定义:id
+
+[ 2017-02-07T14:18:27+08:00 ] ::1 /yimei/index.php?s=/addon/HumanTranslation/Wap/delOrder.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000046s ]
+INFO: Run Common\Behavior\InitHookBehavior [ RunTime:0.004621s ]
+INFO: [ app_init ] --END-- [ RunTime:0.006063s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001515s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001717s ]
+NOTIC: [2048] Declaration of Addons\HumanTranslation\Controller\WapController::lists() should be compatible with Home\Controller\AddonsController::lists($model = NULL, $page = 0) D:\wamp\www\yimei\Addons\HumanTranslation\Controller\WapController.class.php 第 7 行.
+NOTIC: [8] Undefined index: uid D:\wamp\www\yimei\ThinkPHP\Library\Think\Controller.class.php 第 524 行.
+NOTIC: [8] Undefined index: query D:\wamp\www\yimei\ThinkPHP\Common\functions.php 第 1002 行.
+ERR: 参数错误或者未定义:id
+
+[ 2017-02-07T14:22:05+08:00 ] ::1 /yimei/index.php?s=/addon/HumanTranslation/Wap/delOrder.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000053s ]
+INFO: Run Common\Behavior\InitHookBehavior [ RunTime:0.006563s ]
+INFO: [ app_init ] --END-- [ RunTime:0.008080s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001047s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001289s ]
+NOTIC: [2048] Declaration of Addons\HumanTranslation\Controller\WapController::lists() should be compatible with Home\Controller\AddonsController::lists($model = NULL, $page = 0) D:\wamp\www\yimei\Addons\HumanTranslation\Controller\WapController.class.php 第 7 行.
+NOTIC: [8] Undefined index: uid D:\wamp\www\yimei\ThinkPHP\Library\Think\Controller.class.php 第 524 行.
+NOTIC: [8] Undefined index: query D:\wamp\www\yimei\ThinkPHP\Common\functions.php 第 1002 行.
+ERR: 参数错误或者未定义:id
+
+[ 2017-02-07T14:28:22+08:00 ] ::1 /yimei/index.php?s=/addon/HumanTranslation/Wap/delOrder.html
+ERR: 参数错误或者未定义:id
+
+[ 2017-02-07T14:46:51+08:00 ] ::1 /yimei/index.php?s=/addon/HumanTranslation/Wap/delOrder.html
+ERR: 参数错误或者未定义:id
+
+[ 2017-02-07T14:46:59+08:00 ] ::1 /yimei/index.php?s=/addon/HumanTranslation/Wap/orderDetail/id/Arrayid.html
+ERR: 模板不存在:./Application/Home/View/default/Addons/orderDetail.html
+
+[ 2017-02-07T14:51:46+08:00 ] ::1 /yimei/index.php?s=/addon/HumanTranslation/Wap/user_center.html
+ERR: Think\Controller:user_center方法不存在！
+

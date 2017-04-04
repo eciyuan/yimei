@@ -7,6 +7,9 @@
 <body>
 <div  class="mui-content">
     	<div class="block_content_bg m_10">
+            <div class="block_content_top_min custom-theme-blue">
+                <center>请填写以下信息</center>
+            </div>
         <!-- 表单 -->
         <form id="form" action="{:addons_url('HumanTranslation://Wap/add')}" method="post" class="form-horizontal p_10">
                   <input type="hidden" class="text input-large" name="{$field.name}" value="{:I($field[name], $field[value])}">
@@ -20,32 +23,33 @@
                                 <option value="{$vo.id}" >{$vo.name}</option>
                             </volist>
                         </select>
+
                         <!--输入框-->
                         <label class="item-label">姓名<span class="check-tips">要与上传的证件等证明文件一致</span></label>
-                          <input type="text" class="text input-medium" name="name" id="name" value="">
+                          <input type="text" class="text input-medium" name="name" value="">
 
                         <label class="item-label">手机<span class="check-tips">方便联系</span></label>
-                        <input type="text" class="text input-medium" name="mobile" id="mobile" value="">
+                        <input type="text" class="text input-medium" name="mobile" value="">
 
                         <label class="item-label">毕业学校<span class="check-tips"></span></label>
-                        <input type="text" class="text input-medium" name="graduate" id="graduate" value="">
+                        <input type="text" class="text input-medium" name="graduate" value="">
 
                         <label class="item-label">专业<span class="check-tips"></span></label>
-                        <input type="text" class="text input-medium" name="major" id="major" value="">
+                        <input type="text" class="text input-medium" name="major" value="">
 
                         <label class="item-label">外语等级<span class="check-tips"></span></label>
-                        <input type="text" class="text input-medium" name="language_level" id="language_level" value="">
+                        <input type="text" class="text input-medium" name="language_level" value="">
 
                         <label class="item-label">从事翻译时间<span class="check-tips">一年以下 三年以上五年以下 五年以上等</span></label>
-                        <input type="text" class="text input-medium" name="engaged_time" id="engaged_time" value="">
+                        <input type="text" class="text input-medium" name="engaged_time" value="">
 
                         <div id="text-translation">
                             <label class="item-label">基本介绍<span class="check-tips">选填</span></label>
                             <label class="textarea">
-                                <textarea name="intro" id="intro"></textarea>
+                                <textarea id="textarea-content" name="intro"></textarea>
                             </label>
                         </div>
-                        <div id="img-translation">
+                        <div id="img-translation" class="hidden">
                             <label class="item-label">相关证明文件<span class="check-tips">身份证正面，等级证书，奖励证书等</span></label>
                             <div class="controls">
                                 <div class="upload_row muti_picture_row">
@@ -57,8 +61,8 @@
                                             if(!empty($data['id']) && $forms['can_edit']!=1){
                                             echo '<div class="img_item"><input type="hidden" name="img_url[]" value="'.$tempArr[$i].'"/><img src="'.get_cover_url($tempArr[$i]).'"/></div>';
                                             }else{
-                                                echo '<div class="img_item"><em>X</em><input type="hidden" name="img_url[]" value="'.$tempArr[$i].'"/><img src="'.get_cover_url($tempArr[$i]).'"/></div>';
-                                                }
+                                            echo '<div class="img_item"><em>X</em><input type="hidden" name="img_url[]" value="'.$tempArr[$i].'"/><img src="'.get_cover_url($tempArr[$i]).'"/></div>';
+                                            }
                                             }
                                         </php>
                                     </notempty>
@@ -68,6 +72,33 @@
                                 </div>
                             </div>
                         <!--文本编辑器-->
+                       <!--   <label class="textarea input-large">
+                            <textarea name="{$field.name}">{$data[$field['name']]}</textarea>
+                          </label>-->
+                        <!--时间-->
+                          <!--<input type="text" name="{$field.name}" class="text input-large time" value="{$data[$field['name']]|time_format}" placeholder="请选择时间" />-->
+                       <!-- <div id="cascade_{$field.name}"></div>
+                             {:hook('cascade', array('name'=>$field['name'],'value'=>$data[$field['name']],'extra'=>$field['extra']))}
+                        <div id="dynamic_select_{$field.name}"></div>
+                        {:hook('dynamic_select', array('name'=>$field['name'],'value'=>$data[$field['name']],'extra'=>$field['extra']))}-->
+<!--多选框-->
+                        <!--  <volist name=":parse_field_attr($field['extra'])" id="vo">
+                            <label class="checkbox"> <input type="checkbox" value="{$key}" name="{$field.name}[]" 
+                              <in name="key" value="$data[$field['name']]" >checked="checked"</in>
+                              >{$vo} </label>
+                          </volist>-->
+                        <!--文本编辑器-->
+
+                        <!--上传文件-->
+                          <!--<div class="controls">
+                            <input type="file" id="upload_file_{$field.name}">
+                            <input type="hidden" name="{$field.name}" value="{$data[$field['name']]}"/>
+                            <div class="upload-img-box">
+                              <present name="data[$field['name']]">
+                                <div class="upload-pre-file"><span class="upload_icon_all"></span>{$data[$field['name']]|get_table_field=###,'id','name','File'}</div>
+                              </present>
+                            </div>
+                          </div>-->
                           <script type="text/javascript">
 								//上传图片
 							    /* 初始化上传插件 */
@@ -108,6 +139,7 @@
                 <button class="home_btn submit-btn mb_10 mt_10 custom-theme-blue" id="submit" type="button" target-form="form-horizontal">提交资料</button>
             </div>
         </form>
+
       </div>
        <p class="copyright">{$system_copy_right}</p>
   </div>
@@ -141,64 +173,38 @@
             return false;
         }
     }
+
 $('#submit').click(function(){
    // $('#form').submit();
     check_subscribe();
-    $.Dialog.loading();
-    var name = $("#name").val();
-    var mobile = $("#mobile").val();
-    var graduate = $("#graduate").val();
-    var major = $("#major").val();
-    var intro = $("#intro").val();
-    console.log(intro);
-    var language_level = $("#language_level").val();
-    var engaged_time = $("#engaged_time").val();
-    var select_language_id = $("#select_language_id").val();
-    var imageIds = '';
-    $('.img_item input').each(function(i, el){
-        imageIds = $(el).val()+','+imageIds;
-    });
-    if(select_language_id==null||select_language_id==''||select_language_id==undefined){
-        $.Dialog.fail('请选择擅长语言！');
-        return false;
-    }
-    if(intro=='' ||intro==undefined){
-        $.Dialog.fail('介绍不能为空');
-        return false;
-    }
-
-    url="{:addons_url('HumanTranslation://Wap/addAuthor')}";
-        $.ajax({
-            url:url,
-            type:'post',
-            data: {
-                name: name,
-                mobile: mobile,
-                major : major,
-                graduate : graduate,
-                select_language_id : select_language_id,
-                intro : intro,
-                language_level : language_level,
-                engaged_time : engaged_time,
-                imageIds: imageIds
-            },
-            dataType:'json',
-            success:function(json){
-                if(json.status==1){
-                    $.Dialog.success(json.info);
-                }else{
-                    $.Dialog.fail(json.info);
-                }
-                if(json.url!=""&&json.url!=undefined){
-                    setTimeout(function(){
-                        window.location.href=json.url;
-                    },2000);
-                }
-            },
-            error:function(){
-                $.Dialog.close();
-            }
-        });
+   $.Dialog.loading();
+   $.ajax({
+// 	   url:'{:U('add?model='.$model['id'])}',
+	   url:"{:addons_url('HumanTranslation://Wap/index')}",
+	   type:'post',
+	   data:$('#form').serializeArray(),
+	   dataType:'json',
+	   success:function(json){
+           console.log(json);
+		    //$.Dialog.close();
+			if(json.status==1){
+			   		$.Dialog.success(json.info);
+					//alert('2');
+			   }else{
+				   	$.Dialog.fail(json.info);
+					//alert('3');
+			}
+		   if(json.url!=""){
+			   setTimeout(function(){
+				   window.location.href=json.url;
+				   },2000);
+			   }
+   		},
+		error:function(){
+				$.Dialog.close();
+			 //$.Dialog.fail();
+			}
+	   });
 });
 $(function(){
     $('.time').datetimepicker({
@@ -207,22 +213,30 @@ $(function(){
         minView:0,
         autoclose:true
     });
-});
-    /*公共底部菜单js*/
-    mui(".bottom_menu").on('tap','.list-page-bottom',function(){
-        //获取id
-        var from = this.getAttribute("data");
-        if(from==1){
-            var url = "{:addons_url('HumanTranslation://Wap/index', array('token'=>$token))}";
-        }else if(from==2){
-            var url = "{:addons_url('HumanTranslation://Wap/translate', array('token'=>$token))}";
-        }else{
-            var url = "{:addons_url('HumanTranslation://Wap/ucenter', array('token'=>$token))}";
+
+    $('#textarea-content').bind('keypress mouseleave', function(){
+        if($("#goal_language_id").val()==null||$("#goal_language_id").val()==''||$("#goal_language_id").val()==undefined){
+            $.Dialog.fail('请选择翻译语言！');
+            return false;
         }
-        mui.openWindow({
-            url: url,
-        })
-    })
+        var _length = $(this).val().length;
+        var singel_price=$("#singel-price").val();
+        $("#total_price").val(_length*singel_price);
+    });
+    //根据语言取出该类下的单价
+    function loadSingelPrice(goal_language_val){
+        $.ajax({
+            type: 'post',
+            url:"{:addons_url('HumanTranslation://Wap/getSingelPrice')}",
+            data: {id:goal_language_val},
+            dataType: 'json',
+            success: function (result) {
+                //console.log(result.singel_price);
+                $("#singel-price").val(result.singel_price);
+            }
+        });
+    }
+});
 </script> 
 </body>
 </html>

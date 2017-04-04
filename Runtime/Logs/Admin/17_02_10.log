@@ -1,0 +1,261 @@
+[ 2017-02-10T15:59:56+08:00 ] ::1 /yimei/index.php?s=/Admin/Public/login.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000039s ]
+INFO: Run Common\Behavior\InitHookBehavior [ RunTime:0.003139s ]
+INFO: [ app_init ] --END-- [ RunTime:0.003929s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000794s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000943s ]
+NOTIC: [2] Missing argument 2 for post_data(), called in D:\wamp\www\yimei\ThinkPHP\Library\Vendor\jssdk\jssdk.php on line 49 and defined D:\wamp\www\yimei\Application\Common\Common\function.php 第 2798 行.
+NOTIC: [8] Undefined variable: param D:\wamp\www\yimei\Application\Common\Common\function.php 第 2800 行.
+NOTIC: [8] Undefined variable: param D:\wamp\www\yimei\Application\Common\Common\function.php 第 2824 行.
+NOTIC: [8] Undefined index: ticket D:\wamp\www\yimei\ThinkPHP\Library\Vendor\jssdk\jssdk.php 第 50 行.
+NOTIC: [8] Undefined index: expires_in D:\wamp\www\yimei\ThinkPHP\Library\Vendor\jssdk\jssdk.php 第 51 行.
+NOTIC: [2] unlink(./Runtime/Temp/yimei_8de41a6422257785590bacc32a92ee20.php): No such file or directory D:\wamp\www\yimei\ThinkPHP\Library\Think\Cache\Driver\File.class.php 第 157 行.
+NOTIC: [8] Undefined index: uid D:\wamp\www\yimei\ThinkPHP\Library\Think\Controller.class.php 第 524 行.
+SQL: SELECT `uid`,`nickname`,`password`,`truename`,`mobile`,`email`,`sex`,`headimgurl`,`city`,`province`,`country`,`language`,`score`,`experience`,`unionid`,`login_count`,`reg_ip`,`reg_time`,`last_login_ip`,`last_login_time`,`status`,`is_init`,`is_audit`,`subscribe_time`,`remark`,`groupid`,`come_from`,`login_name`,`login_password`,`manager_id`,`level`,`membership`,`idcardobverse`,`idcardfront` FROM `yimei_user` WHERE `login_name` = 'admin' LIMIT 1   [ RunTime:0.0034s ]
+SQL: SELECT * FROM `yimei_action` WHERE `name` = 'admin_login' LIMIT 1   [ RunTime:0.0013s ]
+SQL: INSERT INTO `yimei_action_log` (`action_id`,`user_id`,`action_ip`,`model`,`record_id`,`create_time`,`remark`) VALUES ('12','1','0','user','1','1486713595','admin在2017-02-10 15:59登录了后台') [ RunTime:0.0011s ]
+SQL: UPDATE `yimei_user` SET `login_count`=`login_count`+1,`last_login_time`='1486713595',`last_login_ip`='0' WHERE `uid` = 1 [ RunTime:0.0004s ]
+
+[ 2017-02-10T15:59:59+08:00 ] ::1 /yimei/index.php?s=/Admin/update/getRemoteVersion.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000046s ]
+INFO: Run Common\Behavior\InitHookBehavior [ RunTime:0.004654s ]
+INFO: [ app_init ] --END-- [ RunTime:0.005786s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001613s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001803s ]
+NOTIC: [2] Missing argument 2 for post_data(), called in D:\wamp\www\yimei\ThinkPHP\Library\Vendor\jssdk\jssdk.php on line 49 and defined D:\wamp\www\yimei\Application\Common\Common\function.php 第 2798 行.
+NOTIC: [8] Undefined variable: param D:\wamp\www\yimei\Application\Common\Common\function.php 第 2800 行.
+NOTIC: [8] Undefined variable: param D:\wamp\www\yimei\Application\Common\Common\function.php 第 2824 行.
+NOTIC: [8] Undefined index: ticket D:\wamp\www\yimei\ThinkPHP\Library\Vendor\jssdk\jssdk.php 第 50 行.
+NOTIC: [8] Undefined index: expires_in D:\wamp\www\yimei\ThinkPHP\Library\Vendor\jssdk\jssdk.php 第 51 行.
+NOTIC: [2] unlink(./Runtime/Temp/yimei_8de41a6422257785590bacc32a92ee20.php): No such file or directory D:\wamp\www\yimei\ThinkPHP\Library\Think\Cache\Driver\File.class.php 第 157 行.
+NOTIC: [8] Undefined index: uid D:\wamp\www\yimei\ThinkPHP\Library\Think\Controller.class.php 第 524 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+SQL: SELECT * FROM `yimei_manager_menu` WHERE `uid` = 1 AND `is_hide` = 0 ORDER BY sort asc, id asc  [ RunTime:0.0017s ]
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons D:\wamp\www\yimei\Application\Common\Common\function.php 第 501 行.
+NOTIC: [8] Undefined offset: 14 D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 106 行.
+NOTIC: [8] Undefined offset: 14 D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 116 行.
+NOTIC: [8] Undefined offset: 60 D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 106 行.
+NOTIC: [8] Undefined offset: 60 D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 116 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined index: side D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 179 行.
+NOTIC: [8] Undefined offset: 14 D:\wamp\www\yimei\Application\Common\Model\ManagerMenuModel.class.php 第 185 行.
+SQL: SELECT * FROM `yimei_public_link` WHERE `uid` = 1  [ RunTime:0.0008s ]
+SQL: SELECT `id`,`title` FROM `yimei_addons` WHERE `status` = 1  [ RunTime:0.0009s ]
+SQL: UPDATE `yimei_attribute` SET `extra`='111:帐号配置
+93:互动游戏
+18:欢迎语
+19:微信用户中心
+56:自定义菜单
+101:微信卡券
+39:微官网
+42:微信宣传页
+48:自定义回复
+50:微调研
+91:微邀约
+97:微抢答
+100:通用表单
+106:微信红包
+107:竞猜
+108:微贺卡
+110:实物奖励
+126:开发者工具箱
+128:微名片
+130:自动回复
+133:支付通
+134:投票
+137:评论互动
+140:没回答的回复
+141:工作授权
+142:优惠券
+143:帮拆礼包
+144:会员卡
+145:签到
+146:微预约
+151:短信服务
+152:微考试
+153:微测试
+162:微社区
+163:扫码管理
+156:比赛抽奖
+164:一键绑定公众号
+168:微场景
+173:表白墙
+174:伊媒公益
+175:伊媒生活
+177:商城
+178:人工翻译
+' WHERE `name` = 'addon_status' [ RunTime:0.0126s ]
+SQL: SELECT `id`,`title`,`url` FROM `yimei_menu` WHERE `pid` = 0 AND `hide` = 0 ORDER BY sort asc  [ RunTime:0.0012s ]
+SQL: SELECT `pid` FROM `yimei_menu` WHERE ( pid !=0 AND url like '%Update/getRemoteVersion%' ) LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT * FROM `yimei_menu` WHERE `id` = 68 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT DISTINCT  `group` FROM `yimei_menu` WHERE `group` <> '' AND `pid` = 68  [ RunTime:0.0005s ]
+SQL: SELECT `id`,`url` FROM `yimei_menu` WHERE `pid` = 68 AND `hide` = 0  [ RunTime:0.0003s ]
+SQL: SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yimei_menu` WHERE `group` = '系统设置' AND `pid` = 68 AND `hide` = 0 ORDER BY sort asc  [ RunTime:0.0004s ]
+SQL: SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yimei_menu` WHERE `group` = '数据备份' AND `pid` = 68 AND `hide` = 0 ORDER BY sort asc  [ RunTime:0.0004s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001067s ]
+INFO: Run Behavior\CronRunBehavior [ RunTime:0.002406s ]
+INFO: [ app_end ] --END-- [ RunTime:0.003784s ]
+
+[ 2017-02-10T16:00:35+08:00 ] ::1 /yimei/index.php?s=/Admin/Plugin/index.html
+ERR: 插件AliPlay的入口文件不存在！
+ERR: 插件BaiduStatistics的入口文件不存在！
+ERR: 插件ReturnTop的入口文件不存在！
+
+[ 2017-02-10T16:07:38+08:00 ] ::1 /yimei/index.php?s=/Admin/Plugin/index.html
+ERR: 插件AliPlay的入口文件不存在！
+ERR: 插件BaiduStatistics的入口文件不存在！
+ERR: 插件ReturnTop的入口文件不存在！
+

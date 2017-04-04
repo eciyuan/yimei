@@ -18,6 +18,11 @@
                     <notempty name="config.isopenwx">
                             <a href="#" type="button" data-paytype='0' class=""><em class="wxpay">&nbsp;</em>微信支付</a>
                     </notempty>
+                    <!-- <notempty name="config.isopenshop">
+                         <li class="mui-table-view-cell">
+                         <a href="#" data-paytype='10'><em class="rechpay">&nbsp;</em>到店自提</a>
+                         </li>
+                     </notempty>-->
                 </div>
             <div class="height10px"></div>
             <div class="height10px"></div>
@@ -58,19 +63,4 @@
             $(this).attr('href',url);
         });
     });
-    /*公共底部菜单js*/
-    mui(".bottom_menu").on('tap','.list-page-bottom',function(){
-        //获取id
-        var from = this.getAttribute("data");
-        if(from==1){
-            var url = "{:addons_url('HumanTranslation://Wap/index', array('token'=>$token))}";
-        }else if(from==2){
-            var url = "{:addons_url('HumanTranslation://Wap/translate', array('token'=>$token))}";
-        }else{
-            var url = "{:addons_url('HumanTranslation://Wap/ucenter', array('token'=>$token))}";
-        }
-        mui.openWindow({
-            url: url,
-        })
-    })
 </script>

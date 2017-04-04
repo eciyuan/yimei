@@ -389,7 +389,7 @@ var WeiPHP_RAND_COLOR = ["#ff6600","#ff9900","#99cc00","#33cc00","#0099cc","#339
 	var lastId = 0;
 	var minId =0;
 	var maxId = 0;
-	var pageIdsArr = [];
+	var pageIds ='';
 	//类型 0按页码 1按lastId
 	var loadType = 0;
 	//请求地址
@@ -402,29 +402,13 @@ var WeiPHP_RAND_COLOR = ["#ff6600","#ff9900","#99cc00","#33cc00","#0099cc","#339
 	var domContainer;
 	//加载数据
 	function loadMoreContent(){
-	/*	$('.contentItem').each(function(){
+		$('.contentItem').each(function(){
 			pageIds+= $(this).data('goodsids')+',';
-		});*/
-		//alert('sdf');
-	/*	$('.contentItem').each(function(){
-			console.log( $(this));
-			console.log($(this).data('lastid'));
-			pageIds+= $(this).data('lastid')+',';
-		});*/
-		//获得当前所有的id 在数据库进行比对 排除这些id
-		var pageIdsArr = [];
-		var pageids= $('.contentItem');
-		$.each(pageids, function (index,obj) {
-			//var self = $(this);
-			//pageIdsArr.push(self.attr('data-lastid'));
-			pageIdsArr.push($(this).data('lastid'));
 		});
-		pageIdsArr=pageIdsArr.join();
-
 		isLoading = true;
 		$('.moreLoading').show();
 		$('.noMore').hide();
-		$.get(loadUrl,{"count":pageCount,"lastId":lastId,'minId':minId,'maxId':maxId,'pageIds':pageIdsArr},function(data){
+		$.get(loadUrl,{"count":pageCount,"lastId":lastId,'minId':minId,'maxId':maxId,'pageIds':pageIds},function(data){
 				
 			if($.trim(data)==""||data.indexOf('default_png')>0){
 				hasMore = false;

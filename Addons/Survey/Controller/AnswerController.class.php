@@ -61,15 +61,6 @@ class AnswerController extends AddonsController {
 		$this->display ();
 	}
 	function detail() {
-		$top_more_button [] = array (
-			'title' => '导出数据',
-			'url' => U ( 'export', array (
-				'target_id' => I ( 'target_id' ),
-				'survey_id' => I ( 'survey_id' ),
-				'uid' => I ( 'uid' ),
-			) )
-		);
-		$this->assign ( 'top_more_button', $top_more_button );
 		$this->assign ( 'add_button', false );
 		$this->assign ( 'search_button', false );
 		$this->assign ( 'del_button', false );
@@ -128,49 +119,5 @@ class AnswerController extends AddonsController {
 	// 通用插件的删除模型
 	public function del() {
 		parent::common_del ( $this->model );
-	}
-	/*导出数据*/
-	function export() {
-		$map ['survey_id'] = intval ( $_REQUEST ['survey_id'] );
-		$questions = M ( 'survey_question' )->where ( $map )->select ();
-		foreach ( $questions as $q ) {
-			$title [$q ['id']] = $q ['title'];
-			$type [$q ['id']] = $q ['type'];
-			$extra [$q ['id']] = parse_config_attr ( $q ['extra'] );
-		}
-
-		$map ['uid'] = intval ( $_REQUEST ['uid'] );
-		$answers = M ( 'survey_answer' )->where ( $map )->select ();
-		foreach ( $answers as $a ) {
-			$qid = $a ['question_id'];
-			$data ['question'] = $title [$qid];
-			$value = unserialize ( $a ['answer'] );
-			switch ($type [$qid]) {
-				case 'radio' :
-					$data ['answer'] = $extra [$qid] [$value];
-					break;
-				case 'checkbox' :
-					foreach ( $value as $v ) {
-						$data ['answer'] [] = $extra [$qid] [$v];
-					}
-					$data ['answer'] = implode ( ',', $data ['answer'] );
-					break;
-				default :
-					$data ['answer'] = $value;
-			}
-			$list [] = $data;
-			unset ( $data );
-		}
-		// 搜索条件
-		$map ['addon'] = $this->addon;
-		$map ['target_id'] = I ( 'target_id' );
-		$map ['token'] = get_token ();
-		session ( 'common_condition', $map );
-		/*foreach($list as $k=>$val){
-			$list=$val;
-		}*/
-		outExcel ( $list, $map ['module'] );
-		//dump($list);exit();
-		//parent::common_export ( $list );
 	}
 }

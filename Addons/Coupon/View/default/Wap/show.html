@@ -42,7 +42,8 @@
             	<volist name="shop_list" id="vo">
                     <li class="item single_address">
                         <span class="title">{$vo.name}</span>
- 				<span style="display: block; ">营业时间：{$vo.open_time}</span>
+ 				<span style="padding-left: 8px;">营业时间：{$vo.open_time}</span>
+                <br/>
                         <notempty name="$vo[gps]">
                         	<a href="http://api.map.baidu.com/marker?location={$vo.gps}&title={$vo.name}&content={$vo.address}&output=html">{$vo.address}</a>
                         <else />

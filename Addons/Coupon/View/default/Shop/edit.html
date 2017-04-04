@@ -1,12 +1,14 @@
 <extend name="Base/common" />
 <block name="body">
+  
   <!-- 标签页导航 -->
   <div class="span9 page_message">
     <section id="contents">
       <include file="Addons/_nav" />
-      <div class="tab-content">
+      <div class="tab-content"> 
         <!-- 表单 -->
         <form id="form" action="{$post_url}" method="post" class="form-horizontal form-center">
+          
               <volist name="fields" id="field">
                 <if condition="$field['is_show'] == 4">
                   <input type="hidden" class="text" name="{$field.name}" value="{$data[$field['name']]}">
@@ -37,19 +39,19 @@
                         </case>
                         <case value="date">
                           <input type="datetime" name="{$field.name}" class="text date" value="{$data[$field['name']]|time_format='Y-m-d'}" placeholder="请选择时间" />
-                        </case>
+                        </case>                        
                         <case value="bool">
                           <volist name=":parse_field_attr($field['extra'])" id="vo">
                           	<div class="check-item">
-							<!--[if !IE]><!-->
+							<!--[if !IE]><!-->  
 								  <input type="radio" class="regular-radio toggle-data" value="{$key}" id="{$field.name}_{$key}" name="{$field.name}" toggle-data="{$vo|get_hide_attr}"
 								  <eq name="data[$field['name']]" value="$key">checked="checked"</eq> />
-								  <label for="{$field.name}_{$key}"></label>{$vo|clean_hide_attr}
+								  <label for="{$field.name}_{$key}"></label>{$vo|clean_hide_attr} 
 							  <!--<![endif]-->
 							   <!--[if IE]>
-							       <input type="radio" value="{$key}"
+							       <input type="radio" value="{$key}" 
 								   id="{$field.name}_{$key}" name="{$field.name}" class="toggle-data" toggle-data="{$vo|get_hide_attr}"
-								  <eq name="data[$field['name']]" value="$key">checked="checked"</eq>/>
+								  <eq name="data[$field['name']]" value="$key">checked="checked"</eq>/> 
 								  <label for="{$field.name}_{$key}"></label>{$vo|clean_hide_attr}
 							   <![endif]-->
                              </div>
@@ -67,7 +69,7 @@
                         <case value="cascade">
                         <div id="cascade_{$field.name}"></div>
                         {:hook('cascade', array('name'=>$field['name'],'value'=>$data[$field['name']],'extra'=>$field['extra']))}
-                        </case>
+                        </case>                      
                         <case value="dynamic_select">
                         <div id="dynamic_select_{$field.name}"></div>
                         {:hook('dynamic_select', array('name'=>$field['name'],'value'=>$data[$field['name']],'extra'=>$field['extra']))}
@@ -79,23 +81,23 @@
                         <case value="news">
                         <div id="news_{$field.name}"></div>
                         {:hook('news', array('name'=>$field['name'],'value'=>$data[$field['name']],'extra'=>$field['extra']))}
-                        </case>
+                        </case> 
                         <case value="image">
                         <div id="image_{$field.name}"></div>
                         {:hook('image', array('name'=>$field['name'],'value'=>$data[$field['name']],'extra'=>$field['extra']))}
-                        </case>
+                        </case>                                                    
                         <case value="radio">
                           <volist name=":parse_field_attr($field['extra'])" id="vo">
                           	<div class="check-item">
-							<!--[if !IE]><!-->
+							<!--[if !IE]><!-->  
 								  <input type="radio" class="regular-radio toggle-data" value="{$key}" id="{$field.name}_{$key}" name="{$field.name}" toggle-data="{$vo|get_hide_attr}"
 								  <eq name="data[$field['name']]" value="$key">checked="checked"</eq> />
-								  <label for="{$field.name}_{$key}"></label>{$vo|clean_hide_attr}
+								  <label for="{$field.name}_{$key}"></label>{$vo|clean_hide_attr} 
 							  <!--<![endif]-->
 							   <!--[if IE]>
-							       <input type="radio" value="{$key}"
+							       <input type="radio" value="{$key}" 
 								   id="{$field.name}_{$key}" name="{$field.name}" class="toggle-data" toggle-data="{$vo|get_hide_attr}"
-								  <eq name="data[$field['name']]" value="$key">checked="checked"</eq>/>
+								  <eq name="data[$field['name']]" value="$key">checked="checked"</eq>/> 
 								  <label for="{$field.name}_{$key}"></label>{$vo|clean_hide_attr}
 							   <![endif]-->
                              </div>
@@ -106,7 +108,7 @@
                           	<div class="check-item">
                               <input type="checkbox" class="regular-checkbox toggle-data" value="{$key}" id="{$field.name}_{$key}" name="{$field.name}[]" toggle-data="{$vo|get_hide_attr}"
                               <in name="key" value="$data[$field['name']]" >checked="checked"</in> >
-                              <label for="{$field.name}_{$key}"></label>{$vo|clean_hide_attr}
+                              <label for="{$field.name}_{$key}"></label>{$vo|clean_hide_attr} 
                              </div>
                           </volist>
                         </case>
@@ -155,7 +157,7 @@
                               </present>
                             </div>
                           </div>
-
+                          
                         </case>
                         <case value="user">
                         <div class="controls">
@@ -164,7 +166,7 @@
                                     <div class="item" onClick="$.WeiPHP.selectSingleUser('{:addons_url('UserCenter://UserCenter/lists')}','{$field.name}');">
                                         <php>
                                             $userInfo = getUserInfo($data[$field['name']]);
-
+                                            
                                         </php>
                                         <img src="{$userInfo['headimgurl']}"/><br/><span>{$userInfo['nickname']}</span>
                                         <input type="hidden" name="{$field.name}'" value="{$data[$field['name']]}"/>
@@ -186,12 +188,12 @@
                                 	<volist name="userIds" id="uid">
                                     <php>
                                             $userInfo = getUserInfo($uid);
-
+                                            
                                     </php>
                                     <div class="item" onClick="$.WeiPHP.selectSingleUser('{:addons_url('UserCenter://UserCenter/lists')}','{$field.name}');">
                                         <php>
                                             $userInfo = getUserInfo($data[$field['name']]);
-
+                                            
                                         </php>
                                         <img src="{$userInfo['headimgurl']}"/><br/><span>{$userInfo['nickname']}</span>
                                         <input type="hidden" name="{$field.name}'[]" value="{$data[$field['name']]}"/>
@@ -210,7 +212,7 @@
                   </div>
                 </if>
               </volist>
-
+           
         </div>
         <div class="form-item form_bh" style="text-align:center">
             <notempty name="data.id"><input type="hidden" name="id" value="{$data.id}"></notempty>
@@ -227,14 +229,14 @@
     <link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
     ';</php>
   <link href="__STATIC__/datetimepicker/css/dropdown.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
-  <script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
-  <script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js?v={:SITE_VERSION}" charset="UTF-8"></script>
+  <script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script> 
+  <script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js?v={:SITE_VERSION}" charset="UTF-8"></script> 
   <script type="text/javascript">
   $(function(){
 	 initUploadImg();
 	initUploadFile();
 	 })
-$(function(){
+$(function(){    
    $('.time').datetimepicker({
         format: 'yyyy-mm-dd hh:ii',
         language:"zh-CN",
@@ -246,19 +248,19 @@ $(function(){
         language:"zh-CN",
         minView:2,
         autoclose:true
-    });
+    });	
     showTab();
-
+	
 	$('.toggle-data').each(function(){
 		var data = $(this).attr('toggle-data');
-		if(data=='') return true;
-
+		if(data=='') return true;		
+		
 	     if($(this).is(":selected") || $(this).is(":checked")){
 			 change_event(this)
 		 }
 	});
-
+	
 	$('.toggle-data').bind("click",function(){ change_event(this) });
 });
-</script>
+</script> 
 </block>

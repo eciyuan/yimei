@@ -1,0 +1,70 @@
+[ 2017-02-09T18:13:10+08:00 ] ::1 /yimei/index.php?s=/Home/User/login/from/1.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000041s ]
+INFO: Run Common\Behavior\InitHookBehavior [ RunTime:0.002489s ]
+INFO: [ app_init ] --END-- [ RunTime:0.003182s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000686s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000833s ]
+NOTIC: [2] Missing argument 2 for post_data(), called in D:\wamp\www\yimei\ThinkPHP\Library\Vendor\jssdk\jssdk.php on line 49 and defined D:\wamp\www\yimei\Application\Common\Common\function.php 第 2798 行.
+NOTIC: [8] Undefined variable: param D:\wamp\www\yimei\Application\Common\Common\function.php 第 2800 行.
+NOTIC: [8] Undefined variable: param D:\wamp\www\yimei\Application\Common\Common\function.php 第 2824 行.
+NOTIC: [8] Undefined index: ticket D:\wamp\www\yimei\ThinkPHP\Library\Vendor\jssdk\jssdk.php 第 50 行.
+NOTIC: [8] Undefined index: expires_in D:\wamp\www\yimei\ThinkPHP\Library\Vendor\jssdk\jssdk.php 第 51 行.
+NOTIC: [2] unlink(./Runtime/Temp/yimei_8de41a6422257785590bacc32a92ee20.php): No such file or directory D:\wamp\www\yimei\ThinkPHP\Library\Think\Cache\Driver\File.class.php 第 157 行.
+NOTIC: [8] Undefined index: uid D:\wamp\www\yimei\ThinkPHP\Library\Think\Controller.class.php 第 524 行.
+SQL: SELECT `uid`,`nickname`,`password`,`truename`,`mobile`,`email`,`sex`,`headimgurl`,`city`,`province`,`country`,`language`,`score`,`experience`,`unionid`,`login_count`,`reg_ip`,`reg_time`,`last_login_ip`,`last_login_time`,`status`,`is_init`,`is_audit`,`subscribe_time`,`remark`,`groupid`,`come_from`,`login_name`,`login_password`,`manager_id`,`level`,`membership`,`idcardobverse`,`idcardfront` FROM `yimei_user` WHERE `login_name` = 'admin' LIMIT 1   [ RunTime:0.0481s ]
+SQL: SHOW COLUMNS FROM `yimei_action` [ RunTime:0.0020s ]
+SQL: SELECT * FROM `yimei_action` WHERE `name` = 'user_login' LIMIT 1   [ RunTime:0.0121s ]
+SQL: SELECT * FROM `yimei_user` WHERE `uid` = 1 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT `uid`,`has_public`,`headface_url`,`GammaAppId`,`GammaSecret`,`copy_right`,`tongji_code`,`website_logo` FROM `yimei_manager` WHERE ( uid='1' ) LIMIT 1   [ RunTime:0.0013s ]
+SQL: SHOW COLUMNS FROM `yimei_auth_group_access` [ RunTime:0.0011s ]
+SQL: SELECT a.group_id,g.title,g.type,g.icon FROM yimei_auth_group_access a INNER JOIN yimei_auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0124s ]
+SQL: SELECT `openid`,`token`,`uid`,`has_subscribe`,`syc_status`,`remark` FROM `yimei_public_follow` WHERE ( uid='1' )  [ RunTime:0.0233s ]
+NOTIC: [2] Invalid argument supplied for foreach() D:\wamp\www\yimei\Application\Common\Model\UserModel.class.php 第 251 行.
+NOTIC: [8] Undefined index:  D:\wamp\www\yimei\Application\Common\Model\UserModel.class.php 第 271 行.
+NOTIC: [8] Undefined index:  D:\wamp\www\yimei\Application\Common\Model\UserModel.class.php 第 272 行.
+NOTIC: [8192] preg_replace(): The /e modifier is deprecated, use preg_replace_callback instead D:\wamp\www\yimei\Application\Common\Common\function.php 第 3285 行.
+NOTIC: [8] Undefined variable: txt D:\wamp\www\yimei\Application\Common\Common\function.php 第 3294 行.
+SQL: SELECT `tag_id` FROM `yimei_user_tag_link` WHERE `uid` = 1  [ RunTime:0.0009s ]
+SQL: SHOW COLUMNS FROM `yimei_action_log` [ RunTime:0.0014s ]
+SQL: INSERT INTO `yimei_action_log` (`action_id`,`user_id`,`action_ip`,`model`,`record_id`,`create_time`,`remark`) VALUES ('1','1','0','user','1','1486635189','admin在2017-02-09 18:13登录了管理中心') [ RunTime:0.0102s ]
+SQL: SELECT * FROM `yimei_action` WHERE `name` = 'user_login' LIMIT 1   [ RunTime:0.0005s ]
+NOTIC: [8] Undefined offset: 1 D:\wamp\www\yimei\Application\Common\Common\function.php 第 823 行.
+NOTIC: [2] array_key_exists() expects parameter 2 to be array, null given D:\wamp\www\yimei\Application\Common\Common\function.php 第 823 行.
+SQL: SELECT COUNT(*) AS tp_count FROM `yimei_action_log` WHERE `action_id` = 1 AND `user_id` = 1 AND `create_time` > 1486548789 LIMIT 1   [ RunTime:0.0198s ]
+ERR: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'yimei.yimei_member' doesn't exist
+
+[ 2017-02-09T18:18:53+08:00 ] ::1 /yimei/index.php?s=/Home/User/login/from/1.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000039s ]
+INFO: Run Common\Behavior\InitHookBehavior [ RunTime:0.002954s ]
+INFO: [ app_init ] --END-- [ RunTime:0.003697s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001765s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003165s ]
+NOTIC: [2] Missing argument 2 for post_data(), called in D:\wamp\www\yimei\ThinkPHP\Library\Vendor\jssdk\jssdk.php on line 49 and defined D:\wamp\www\yimei\Application\Common\Common\function.php 第 2798 行.
+NOTIC: [8] Undefined variable: param D:\wamp\www\yimei\Application\Common\Common\function.php 第 2800 行.
+NOTIC: [8] Undefined variable: param D:\wamp\www\yimei\Application\Common\Common\function.php 第 2824 行.
+NOTIC: [8] Undefined index: ticket D:\wamp\www\yimei\ThinkPHP\Library\Vendor\jssdk\jssdk.php 第 50 行.
+NOTIC: [8] Undefined index: expires_in D:\wamp\www\yimei\ThinkPHP\Library\Vendor\jssdk\jssdk.php 第 51 行.
+NOTIC: [2] unlink(./Runtime/Temp/yimei_8de41a6422257785590bacc32a92ee20.php): No such file or directory D:\wamp\www\yimei\ThinkPHP\Library\Think\Cache\Driver\File.class.php 第 157 行.
+NOTIC: [8] Undefined index: uid D:\wamp\www\yimei\ThinkPHP\Library\Think\Controller.class.php 第 524 行.
+SQL: SELECT `uid`,`nickname`,`password`,`truename`,`mobile`,`email`,`sex`,`headimgurl`,`city`,`province`,`country`,`language`,`score`,`experience`,`unionid`,`login_count`,`reg_ip`,`reg_time`,`last_login_ip`,`last_login_time`,`status`,`is_init`,`is_audit`,`subscribe_time`,`remark`,`groupid`,`come_from`,`login_name`,`login_password`,`manager_id`,`level`,`membership`,`idcardobverse`,`idcardfront` FROM `yimei_user` WHERE `login_name` = 'admin' LIMIT 1   [ RunTime:0.0033s ]
+SQL: SELECT * FROM `yimei_action` WHERE `name` = 'user_login' LIMIT 1   [ RunTime:0.0012s ]
+SQL: INSERT INTO `yimei_action_log` (`action_id`,`user_id`,`action_ip`,`model`,`record_id`,`create_time`,`remark`) VALUES ('1','1','0','user','1','1486635532','admin在2017-02-09 18:18登录了管理中心') [ RunTime:0.0010s ]
+SQL: SELECT * FROM `yimei_action` WHERE `name` = 'user_login' LIMIT 1   [ RunTime:0.0004s ]
+NOTIC: [8] Undefined offset: 1 D:\wamp\www\yimei\Application\Common\Common\function.php 第 823 行.
+NOTIC: [2] array_key_exists() expects parameter 2 to be array, null given D:\wamp\www\yimei\Application\Common\Common\function.php 第 823 行.
+SQL: SELECT COUNT(*) AS tp_count FROM `yimei_action_log` WHERE `action_id` = 1 AND `user_id` = 1 AND `create_time` > 1486549132 LIMIT 1   [ RunTime:0.0021s ]
+SQL: UPDATE `yimei_user` SET `login_count`=`login_count`+1,`last_login_time`='1486635532',`last_login_ip`='0' WHERE `uid` = 1 [ RunTime:0.0005s ]
+
+[ 2017-02-09T18:21:01+08:00 ] ::1 /yimei/index.php?s=/addon/HumanTranslation/Wap/index/publicid/2.html
+ERR: SQLSTATE[HY000]: General error: 1364 Field 'aim_id' doesn't have a default value
+
+[ 2017-02-09T18:21:14+08:00 ] ::1 /yimei/index.php?s=/addon/HumanTranslation/Wap/orderDetail/id/1.html
+ERR: Think\Model:getOrderDetail方法不存在！
+
+[ 2017-02-09T18:21:41+08:00 ] ::1 /yimei/index.php?s=/addon/HumanTranslation/Wap/orderDetail/id/1.html
+ERR: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'yimei.yimei_category' doesn't exist
+

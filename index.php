@@ -46,7 +46,7 @@ if (! empty ( $_GET ['echostr'] ) && ! empty ( $_GET ["signature"] ) && ! empty 
  */
 define ( 'APP_DEBUG', true );
 define ( 'SHOW_ERROR', true );
-define ( 'DB_FIELDS_CACHE', false );//目标字段缓存禁止
+
 define ( 'IN_WEIXIN', false );
 define ( 'DEFAULT_TOKEN', 'weiphp' ); 
 //define ( 'DEFAULT_TOKEN', '-1' ); 

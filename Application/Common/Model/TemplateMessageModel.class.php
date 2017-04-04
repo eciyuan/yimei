@@ -134,43 +134,6 @@ class TemplateMessageModel extends Model {
 	    $templateId=='' && $templateId='na8JwAd--iYlefDZknhhKOFpmfGF6jSI83o2LL1oKzs';
 	    return $this->_replyData ( $uid, $param, $templateId,$url);
 	}
-	/*
-	服务申请提交成功
-	 {{first.DATA}}
-	服务单号：{{Apply_id.DATA}}
-	服务类型：{{Apply_Type.DATA}}
-	处理状态：{{Apply_State.DATA}}
-	提交时间：{{Apply_CreateTime.DATA}}
-	{{remark.DATA}}
-	 _HVLB9QNBhe9Uq5SFlDeVuPXOfCBmzFBrNOPOVT7eDY
-	翻译提交
-	 * */
-	public function replyServerNotice($uid, $name,$orderId='',$time='',$remark='',$first='',$url='',$templateId='',$status) {
-		$first == '' && $first='您的翻译订单有人接单了';
-		$orderId=='' && $orderId=time_format(time(),'YmdHis');
-		$remark =='' && $remark='您的翻译订单有人接单了，您的人气指数直接爆表！';
-		//第一句消息提醒
-		$param['data']['first']['value']=$first;
-		$param['data']['first']['color']="#E60B43";
-		//服务单号
-		$param['data']['Apply_id']['value']=$orderId;
-		$param['data']['Apply_id']['color']="#173177";
-		//服务类型
-		$param['data']['Apply_Type']['value']=$name;
-		$param['data']['Apply_Type']['color']="#173177";
-		//处理状态
-		$param['data']['Apply_State']['value']=$status;
-		$param['data']['Apply_State']['color']="#E60B43";
-		//提交时间
-		$param['data']['Apply_CreateTime']['value']=$time;
-		$param['data']['Apply_CreateTime']['color']="#E60B43";
-		//提示信息
-		$param['data']['remark']['value']=$remark;
-		$param['data']['remark']['color']="#173177";
-
-		$templateId=='' && $templateId='_HVLB9QNBhe9Uq5SFlDeVuPXOfCBmzFBrNOPOVT7eDY';
-		return $this->_replyData ( $uid, $param, $templateId,$url);
-	}
 	/* 发送回复模板消息到微信平台 */
 	function _replyData($uid, $param,$template_id,$jumpUrl='') {
 		$map ['token'] = get_token ();

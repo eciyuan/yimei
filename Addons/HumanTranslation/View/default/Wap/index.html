@@ -7,11 +7,12 @@
 <body>
     <div  class="mui-content">
     	<div class="block_content_bg m_10">
-            <!--<div class="block_content_top_min custom-theme-blue">
+            <div class="block_content_top_min custom-theme-blue">
                 <center>请填写以下信息</center>
-            </div>-->
+            </div>
              <!-- 表单 -->
-             <form id="form" action="{:addons_url('HumanTranslation://Wap/index')}" enctype="multipart/form-data"  method="post" class="form-horizontal p_10">
+             <form id="form" action="{:addons_url('HumanTranslation://Wap/add')}" method="post" class="form-horizontal p_10">
+                  <input type="hidden" class="text input-large" name="{$field.name}" value="{:I($field[name], $field[value])}">
                   <div class="form-item cf">
                     <div class="controls">
                         <!--多个数组选择-->
@@ -30,10 +31,10 @@
                             </volist>
                         </select>
                         <label class="item-label">标题<span class="check-tips">比如：关于……的翻译</span></label>
-                        <input type="text" class="text input-medium" id="title" name="title" value="">
+                        <input type="text" class="text input-medium" name="title" value="">
                         <!--输入框-->
                         <label class="item-label">手机<span class="check-tips">方便结果及时告知</span></label>
-                          <input type="text" class="text input-medium" name="mobile" id="mobile" value="">
+                          <input type="text" class="text input-medium" name="mobile" value="">
                         <!--文本编辑器-->
                        <!--   <label class="textarea input-large">
                             <textarea name="{$field.name}">{$data[$field['name']]}</textarea>
@@ -65,19 +66,27 @@
                                 <textarea id="textarea-content" name="content"></textarea>
                             </label>
                         </div>
+
                         <div id="img-translation" class="hidden">
                         <label class="item-label">翻译图片内容<span class="check-tips"></span></label>
                           <div class="controls">
                             <div class="upload_row muti_picture_row">
-                                <notempty name="data[$field['name']]">
-                                    <php>
-                                        $tempArr = explode(',',$data['img_ids']);
-                                        for($i=0;$i<count($tempArr);$i++){
-                                        echo '<div class="img_item"><em>X</em><input type="hidden" name="img_ids[]" multiple value="'.$tempArr[$i].'"/><img src="'.get_cover_url($tempArr[$i]).'"/></div>';
+                            	<notempty name="data[$field['name']]">
+                                	<php>
+                                       // $tempArr = explode(',',$data['img_url']);
+                                       $tempArr =$data['img_url'];
+                                    	for($i=0;$i<count($tempArr);$i++){
+                                    		if(!empty($data['id']) && $forms['can_edit']!=1){
+                                    			echo '<div class="img_item"><input type="hidden" name="img_url[]" value="'.$tempArr[$i].'"/><img src="'.get_cover_url($tempArr[$i]).'"/></div>';
+                                    		}else{
+                                       			echo '<div class="img_item"><em>X</em><input type="hidden" name="img_url[]" value="'.$tempArr[$i].'"/><img src="'.get_cover_url($tempArr[$i]).'"/></div>';
+                                       		}
                                         }
                                     </php>
                                 </notempty>
-                                <a class="img_item add_btn" href="javascript:;" style="width: 84px;height: 84px;"onClick="$.WeiPHP.wxChooseImg(this,5,'img_ids[]')"><img width="100%" src="__IMG__/add.png"/></a>
+                                <if condition="empty($data[id]) || $forms[can_edit]==1">
+                            	<a class="img_item add_btn" href="javascript:;" style="width: 84px;height: 84px;" onClick="$.WeiPHP.wxChooseImg(this,1,'img_url[]')"><img  src="__IMG__/add.png"/></a>
+                            	</if>
                             </div>
                           </div>
                             <label class="item-label">图片字数<span class="check-tips">请手动填写上传图片的字数</span></label>
@@ -98,7 +107,7 @@
                             <div class="mui-numbox">
                                 <!-- "-"按钮，点击可减小当前数值 -->
                                 <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
-                                <input class="mui-numbox-input" name="price"  id="price" type="number" />
+                                <input class="mui-numbox-input" name="price" type="number" />
                                 <!-- "+"按钮，点击可增大当前数值 -->
                                 <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
                             </div>
@@ -117,8 +126,8 @@
                       <div class="alert-content"></div>
                       </div>
           	<div class="form-item cf">
-                <button class="home_btn submit-btn mb_10 mt_10 custom-theme-blue" id="submit" type="button" target-form="form-horizontal">还差一步就可以成功了！</button>
-                <button class="home_btn submit-btn mb_10 mt_10 custom-theme-blue hidden" id="submitImg" type="button" target-form="form-horizontal">还差一步就可以成功了！</button>
+                <button class="home_btn submit-btn mb_10 mt_10 custom-theme-blue" id="submit" type="button" target-form="form-horizontal">翻译提交并支付</button>
+                <button class="home_btn submit-btn mb_10 mt_10 custom-theme-blue hidden" id="submitImg" type="button" target-form="form-horizontal">翻译提交</button>
             </div>
         </form>
       </div>
@@ -183,113 +192,48 @@
             return false;
         }
     }
-    //提交添加数据
-    function addData(from,imageIds,goal_language_id,count_str,select_language_id,title,mobile,translation_type,price){
-        $.Dialog.loading();
-        url="{:addons_url('HumanTranslation://Wap/index')}";
-        if(from==1){
-            //图片类型
-            $.ajax({
-                url:url,
-                type:'post',
-                data: {
-                    goal_language_id: goal_language_id,
-                    count_str: count_str,
-                    title   : title,
-                    select_language_id : select_language_id,
-                    mobile : mobile,
-                    translation_type : translation_type,
-                    price : price,
-                    imageIds: imageIds},
-                dataType:'json',
-                success:function(json){
-                    //$.Dialog.close();
-                    if(json.status==1){
-                        $.Dialog.success(json.info);
-                        //alert('2');
-                    }else{
-                        $.Dialog.fail(json.info);
-                        //alert('3');
-                    }
-                    if(json.url!=""&&json.url!=undefined){
-                        setTimeout(function(){
-                            window.location.href=json.url;
-                        },2000);
-                    }
-                },
-                error:function(){
-                    $.Dialog.close();
-                    //$.Dialog.fail();
-                }
-            });
-        }else{
-            $.ajax({
-                url:url,
-                type:'post',
-                data:$('#form').serializeArray(),
-                dataType:'json',
-                success:function(json){
-                    //$.Dialog.close();
-                    if(json.status==1){
-                        $.Dialog.success(json.info);
-                        //alert('2');
-                    }else{
-                        $.Dialog.fail(json.info);
-                        //alert('3');
-                    }
-                    if(json.url!=""&&json.url!=undefined){
-                        setTimeout(function(){
-                            window.location.href=json.url;
-                        },2000);
-                    }
-                },
-                error:function(){
-                    $.Dialog.close();
-                    //$.Dialog.fail();
-                }
-            });
-        }
 
-    }
-    //图片提交
-    $('#submitImg').click(function(){
-        check_subscribe();
-        var title = $("#title").val();
-        var mobile = $("#mobile").val();
-        var price = $("#price").val();
-        var count_str = $("#count_str").val();
-        var goal_language_id = $("#goal_language_id").val();
-        var select_language_id = $("#select_language_id").val();
-        var translation_type=$("input[name='translation_type']:checked").val();
-        var imageIds = '';
-        $('.img_item input').each(function(i, el){
-            imageIds = $(el).val()+','+imageIds;
-        });
-        if(goal_language_id==null||goal_language_id==''||goal_language_id==undefined){
-            $.Dialog.fail('请选择翻译语言！');
-            return false;
-        }
-        if(imageIds=='' ||imageIds==undefined){
+$('#submit').click(function(){
+   // $('#form').submit();
+    check_subscribe();
+    if($('#textarea-content').val()==null||$("#textarea-content").val()==''||$("#textarea-content").val()==undefined){
+        if($("#count_str").val()==null||$("#count_str").val()==''||$("#count_str").val()==undefined){
             $.Dialog.fail('翻译内容不能为空');
             return false;
         }
-        if(count_str==null||count_str==''||count_str==undefined){
-            $.Dialog.fail('翻译字数不能为空');
-            return false;
-        }
-        addData(1,imageIds,goal_language_id,count_str,select_language_id,title,mobile,translation_type,price);
-    });
-$('#submit').click(function(){
-    check_subscribe();
+    }
     if($("#goal_language_id").val()==null||$("#goal_language_id").val()==''||$("#goal_language_id").val()==undefined){
         $.Dialog.fail('请选择翻译语言！');
         return false;
     }
-    if($('#textarea-content').val()==null||$("#textarea-content").val()==''||$("#textarea-content").val()==undefined){
-        $.Dialog.fail('翻译内容不能为空');
-        return false;
-    }
-    addData();
+   $.Dialog.loading();
+   $.ajax({
+// 	   url:'{:U('add?model='.$model['id'])}',
+	   url:"{:addons_url('HumanTranslation://Wap/index')}",
+	   type:'post',
+	   data:$('#form').serializeArray(),
+	   dataType:'json',
+	   success:function(json){
+           console.log(json);
+		    //$.Dialog.close();
+			if(json.status==1){
+			   		$.Dialog.success(json.info);
+					//alert('2');
+			   }else{
+				   	$.Dialog.fail(json.info);
+					//alert('3');
+			}
+		   if(json.url!=""&&json.url!=undefined){
+			   setTimeout(function(){
+				   window.location.href=json.url;
+				   },2000);
+			   }
+   		},
+		error:function(){
+				$.Dialog.close();
+			 //$.Dialog.fail();
+			}
+	   });
 });
 $(function(){
     $('.time').datetimepicker({
@@ -337,24 +281,6 @@ $(function(){
         });
     }
 });
-    /*公共底部菜单js*/
-    mui(".bottom_menu").on('tap','.list-page-bottom',function(){
-        //获取id
-        var from = this.getAttribute("data");
-        if(from==1){
-            var url = "{:addons_url('HumanTranslation://Wap/index', array('token'=>$token))}";
-        }else if(from==2){
-            var url = "{:addons_url('HumanTranslation://Wap/translate', array('token'=>$token))}";
-        }else{
-            var url = "{:addons_url('HumanTranslation://Wap/ucenter', array('token'=>$token))}";
-        }
-        mui.openWindow({
-            url: url,
-        })
-    })
-    $("a[data=1]").addClass("current");
-    $("a[data=3]").removeClass("current");
-    $("a[data=2]").removeClass("current");
-</script>
+</script> 
 </body>
 </html>

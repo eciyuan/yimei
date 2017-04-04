@@ -9,32 +9,7 @@ use Think\Model;
  */
 class TranslationOrderModel extends Model {
 	protected $tableName = 'translation_order';
-	protected $fields = array(
-		'id',
-		'title',
-		'uid',
-		'remark',
-		'order_number',
-		'cTime',
-		'total_price',
-		'token',
-		'pay_type',
-		'order_status',
-		'mobile',
-		'select_select_language_id',
-		'goal_language_id',
-		'translation_type',
-		'content',
-		'img_ids',
-		'after_content',
-		'count_str',
-		'click',
-		'order_status',
-		'price',
-		'openid',
-		'_pk'=>'id',
-		'_autoinc'=>true
-	);
+
 	function getInfo($id, $update = false, $data = array()) {
 		$key = 'Order_getInfo_' . $id;
 		$info = S ( $key );
@@ -70,31 +45,27 @@ class TranslationOrderModel extends Model {
 				// $i['goodsinfo']=$goods;
 				$info = array_merge ( $info, $goods );
 			}
+
 			S ( $key, $info );
 		}
 		return $info;
 	}
-	/*获取全部订单*/
-	function getOrderList($map,$start,$limit) {
-		$list = ( array ) $this->where ( $map )->limit($start,$limit)->order ( 'id desc' )->select ();
+	function getOrderList($map) {
+		$list = ( array ) $this->where ( $map )->order ( 'id desc' )->select ();
 		foreach ( $list as &$v ) {
-			//$v ['content'] = html_entity_decode ( $v ['content'], ENT_QUOTES, 'UTF-8' );
+			/*$v ['pay_status'] = $v ['pay_status'] == 0 ? '待付款' : '成功';
+			$goods = $goods [0];
+			$goods ['goods_id'] = $goods ['id'];
+			unset ( $goods ['id'] );
+			$v = array_merge ( $v, $goods );*/
 			$v ['countSecondContent'] =$this->get_task_count($v ['id']);
-		}
-		return $list;
-	}
-	/*获取全部译文*/
-	function getTaskList($map,$start,$limit) {
-		$list = M ( 'translation_task' )->where ( $map )->limit($start,$limit)->order ( 'id desc' )->select ();
-		foreach ( $list as &$v ) {
-			$v ['orderContent'] =$this->fromTaskGetOrderDetail($v ['order_id']);
+			//$v ['img_url'] =$this->get_task_count($v ['id']); 取出图片
 		}
 		return $list;
 	}
 	/*
 	 * 订单
 	 * 详细操作
-	 * 用订单id附带关联译文
 	 */
 	function getOrderDetail($id) {
 		$where['id']=$id;
@@ -106,23 +77,6 @@ class TranslationOrderModel extends Model {
 			$list ['goal_language_id'] =$this->get_order_name($list ['goal_language_id']);
 		}
 		$list ['countSecondContent'] =$this->get_task_count($list ['id']);
-		$list ['SecondContent'] =$this->get_task_detail($list ['id']);
-		return $list;
-	}
-	/*
-	 * 订单
-	 * 详细操作
-	 * 用译文order_id关联订单详细
-	 */
-	function fromTaskGetOrderDetail($id) {
-		$where['id']=$id;
-		$list = M ( 'translation_order' )->where ( $where )->find ();
-		if($list ['select_language_id']){
-			$list ['select_language_id'] =$this->get_order_name($list ['select_language_id']);
-		}
-		if($list ['goal_language_id']){
-			$list ['goal_language_id'] =$this->get_order_name($list ['goal_language_id']);
-		}
 		return $list;
 	}
 	/*
@@ -143,15 +97,6 @@ class TranslationOrderModel extends Model {
 		//$cate = M ( 'translation_task' )->where ( $where )->select();
 		$count = M ( 'translation_task' )->where ( $where )->count();
 		return  $count;
-	}
-	/*
-	 * 译文详情
-	 *
-	 */
-	function get_task_detail($id){
-		$where['order_id']=$id;
-		$detail = M ( 'translation_task' )->where ( $where )->select();
-		return  $detail;
 	}
 	function update($id, $save) {
 		$map ['id'] = $id;

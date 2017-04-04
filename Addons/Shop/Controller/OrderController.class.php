@@ -74,7 +74,7 @@ class OrderController extends BaseController {
 			
 			$vo ['action'] = '<a href="' . addons_url ( 'Shop://Order/detail', $param ) . '">详情</a>';
 			if ($vo ['status_code'] == 1) {
-				$vo ['action'] .= '<br><br><a href="' . addons_url ( 'Shop://Order/set_confirm', $param ) . '">商家确认订单，开始拣货</a>';
+				$vo ['action'] .= '<br><br><a href="' . addons_url ( 'Shop://Order/set_confirm', $param ) . '">商家确认</a>';
 			}
 		}
 		// dump($list_data ['list_data'] );
@@ -206,16 +206,11 @@ class OrderController extends BaseController {
 		}
 		
 		$save ['send_number'] = I ( 'send_number' );
-		if($save ['send_number']!=='WXWL'){
-			//如果不是无需物流
-			if (empty ( $save ['send_number'] )) {
-				$this->error ( '请填写快递号' );
-			}
+		if (empty ( $save ['send_number'] )) {
+			$this->error ( '请填写快递号' );
 		}
-
         $code = array (
             "SF" => '顺丰快递',
-            "WXWL" => '无需物流',
             "STO" => '申通快递',
             "YD" => '韵达快递',
             "YTO" => '圆通速递',

@@ -752,7 +752,6 @@ abstract class Controller {
 			}
 		} else {
 			$fields = get_model_attribute ( $model ['id'] );
-			//dump($fields);exit();
 			$this->assign ( 'fields', $fields );
 			$this->assign ( 'data', $data );
 			

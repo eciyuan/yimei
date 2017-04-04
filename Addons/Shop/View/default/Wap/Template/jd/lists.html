@@ -42,15 +42,6 @@
 <script type="text/javascript">
     $(function(){
         var __lastId = $('.contentItem').last().data('lastid');
-
-       /* var pageIdsArr = [];
-        var pageids= $('.contentItem');//获取到的checkbox数据库的值
-        $.each(pageids, function (index,obj) {
-            var self = $(this);
-            pageIdsArr.push(self.attr('data-lastid'));
-        });
-        pageIdsArr=pageIdsArr.join();
-        console.log(pageIdsArr);*/
         $.WeiPHP.initLoadMore({
             "pageCount" : 10, //每次拉取的数量
             "lastId" : __lastId,//第一次加载的Id

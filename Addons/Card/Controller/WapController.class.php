@@ -265,7 +265,6 @@ class WapController extends BaseController {
 	        }else if ($endata){
 	           $data=array_merge($data,$endata);
 	       }
-			//dump($data);exit();
 	        $this->assign('coupon_shop',$data);
 	    }
 	    $this->assign('is_list',$is_list);

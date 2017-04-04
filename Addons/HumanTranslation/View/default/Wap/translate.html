@@ -1,20 +1,11 @@
 <include file="Public/mobile_head"/>
+<include file="header"/>
 <link rel="stylesheet" href="__STATIC__/mui.3.5.0/css/mui.min.css?v={:SITE_VERSION}">
 <link href="{:ADDON_PUBLIC_PATH}/css.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
-<style type="text/css">
-    #error {
-        color: red;
-    }
-</style>
-<!--<link rel="stylesheet" href="{:ADDON_PUBLIC_PATH}/swiper/dist/idangerous.swiper.css">
-<script src="{:ADDON_PUBLIC_PATH}/swiper/dist/idangerous.swiper.min.js"></script>
-<script src="{:ADDON_PUBLIC_PATH}/swiper/dist/idangerous.swiper.min.js"></script>-->
-<body  id="body_box" style="position: static;">
-<include file="header"/>
-<div class="mui-content">
-    <div  id="pullrefresh" class="mui-scroll-wrapper">
+<body>
+	<div  id="pullrefresh" class="mui-content mui-scroll-wrapper">
             <div class="mui-scroll">
-              <div class="translate">
+        <div class="translate">
           <!--  <div class="mui-card" >
                 <div class="mui-card-header">
                     <div class="mui-row" id="translate-tag">
@@ -42,67 +33,64 @@
                     </div>
                 </div>
                 </div>-->
-                     <template v-if="is_nodata == '1'">
-                         <template v-for="item in demoData" >
-                             <div class="mui-card">
-                        <div class="mui-card-header">
-                           <h5>{{item.title}}</h5>
-                            <span class="ask-wealth"><img class="wealth-icon" src="{:ADDON_PUBLIC_PATH}/money.png"/><em>{{item.total_price}}</em></span>
+            <volist name="orderList" id="vo">
+                <div class="mui-card">
+                    <div class="mui-card-header">
+                       <h5>{$vo.title}</h5>
+                        <span class="ask-wealth"><img class="wealth-icon" src="{:ADDON_PUBLIC_PATH}/money.png"/><em>{$vo.total_price}</em></span>
+                    </div>
+                <div class="mui-card-content">
+                    <div class="mui-row">
+                        <div class="docs-sub-content">
+                             <p class="page-description">{$vo.content}</p>
+                               <if condition="$vo.translation_type eq 1">
+                                   <volist name="img_url" id="vo">
+                                        <img class="mui-media-object mui-pull-left" src="{vo.img_url|get_cover_url}">
+                                   </volist>
+                                    <else />
+                                </if>
+                            <p><span>{$vo.countSecondContent}</span>个译文&nbsp;&nbsp;&nbsp;&nbsp;<span>{$vo.click}<i class="mui-icon mui-icon-person"></i></span></p>
                         </div>
-                         <div class="mui-card-content">
-                            <div class="docs-sub-content">
-                                <div v-html="item.content" id="detail_content_img" class="page-description content_imgs">
-                                    {{item.content}}
+                 </div>
+                    </div>
+                <div class="mui-card-footer">
+                    <div class="mui-row">
+                            <if condition="$vo.order_status eq 0">
+                                <div class=" mui-col-xs-6">
+                                    <a  onclick="addTranslateTask({$vo.id});" class="mui-btn current-btn"><span><i class="mui-icon  mui-icon-compose"></i></span>我要翻译</a>
                                 </div>
-                                <p><span>{{item.countSecondContent}}</span>个译文&nbsp;&nbsp;&nbsp;&nbsp;<span>{{item.click}}<i class="mui-icon mui-icon-person"></i></span></p>
-                            </div>
-                         </div>
-                        <div class="mui-card-footer">
-                            <div class="mui-row">
-                                    <if condition="item.order_status eq 0">
-                                        <div  class="mui-col-xs-6">
-                                            <a from="1" class="mui-btn current-btn" id="{{item.id}}" order_number="{{item.order_number}}"><span><i class="mui-icon  mui-icon-compose"></i></span>我要翻译</a>
-                                        </div>
-                                        <div class=" mui-col-xs-6">
-                                        <a  class="mui-btn" from="2" id="{{item.id}}"><i class="mui-icon mui-icon-email"></i>查看详情</a>
-                                            </div>
-                                        <elseif condition="item.order_status eq 1"/>
-                                        <div class=" mui-col-xs-6">
-                                        <a class="mui-btn" from="3" id="{{item.id}}"><span><i class="mui-icon mui-icon-help"></i></span>正在翻译</a>
-                                            </div>
-                                        <else/>
-                                        <div class=" mui-col-xs-6">
-                                        <a class="mui-btn" from="4" id="{{item.id}}"><span><i class="mui-icon mui-icon-help"></i></span>查看译文</a>
-                                        </div>
-                                    </if>
+                                <div class=" mui-col-xs-6">
+                                <a  onclick="shareAuthor();" class="mui-btn"><i class="mui-icon mui-icon-plusempty"></i>邀请翻译</a>
+                                    </div>
+                                <elseif condition="$vo.order_status eq 1"/>
+                                <div class=" mui-col-xs-6">
+                                <a class="mui-btn"><span><i class="mui-icon mui-icon-help"></i></span>正在翻译</a>
+                                    </div>
+                                <else/>
+                                <div class=" mui-col-xs-6">
+                                <a onclick="detailTranslate" class="mui-btn"><span><i class="mui-icon mui-icon-help"></i></span>查看译文</a>
                                 </div>
-                            </div>
-                             </div>
-                  </template>
-                   </template>
-                    <template v-else>
-                        <div class="mui-card">
-                        <div class="empty_container"><p>{{message}}</p></div>
-                            </div>
-                    </template>
-
-            </div>
+                            </if>
+                        </div>
+                    </div>
+                </div>
+            </volist>
          </div>
-        <!-- 底部导航 -->
-        <include file="_footer"/>
-     </div>
     </div>
+    </div>
+    <div id="addTranslate" class="box mui-popover mui-popover-action mui-popover-bottom"></div>
+    <!-- 底部导航 -->
+    <include file="_footer"/>
     <include file="Public/mobile_foot"/>
     <script src="__STATIC__/mui.3.5.0/js/mui.min.js?v={:SITE_VERSION}"></script>
-    <script src="__STATIC__/vue.2.2.0/vue.min.2.2.1.js?v={:SITE_VERSION}"></script>
     <script>
         /*分享{$weiba_detail.intro}*/
         wx.ready(function(){
             var shareData = {
-                title: '帮助别人翻译一句话也能赚钱了啊', // 分享标题
-                desc:"只要你掌握一门语言，这里就能给你发红包了", // 分享描述
-                link: "{:U( 'translate',array('token'=>get_token()))}", //分享的链接地址
-                imgUrl: "{:ADDON_PUBLIC_PATH}/icon.jpg", // 分享图标
+                title: '{$weiba_name}', // 分享标题
+                desc:"<php> echo  DeleteHtml($weiba_detail['intro']);</php>", // 分享描述
+                link: "{:U( 'detail',array('weiba_id'=>$weiba_detail['id'],'token'=>get_token()))}", //分享的链接地址
+                imgUrl: "{$weiba_detail.logo|get_cover_url}", // 分享图标
                 type: 'link', // 分享类型,music、video或link，不填默认为link
                 dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
                 success: function () {
@@ -119,193 +107,110 @@
             wx.onMenuShareQQ(shareData);
             wx.onMenuShareWeibo(shareData);
         });
-        var url_http="{:addons_url('HumanTranslation://Wap/translateAjax')}";
-        mui.init({
-            pullRefresh : {
-                container:"#pullrefresh",//待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
-                up : {
-                    height:50,//可选.默认50.触发上拉加载拖动距离
-                    auto:true,//可选,默认false.自动上拉加载一次
-                    contentrefresh : "正在加载...",//可选，正在加载状态时，上拉加载控件上显示的标题内容
-                    contentnomore:'没有更多数据了',//可选，请求完毕若没有更多数据时显示的提醒内容；
-                    callback :pullupRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
-                },
+        function shareAuthor(){
+            //邀请翻译
+            $.WeiPHP.showShareFriend();
+        }
+    function addTranslateTask(id){
+        //我要翻译
+      /*  $.Dialog.loading();
+        $.ajax({
+            url:"{:addons_url('HumanTranslation://Wap/addTranslateTask')}",
+            type:'post',
+            data:{id:id},
+            dataType:'json',
+            success:function(json){
+                console.log(json);
+                //$.Dialog.close();
+                if(json.status==1){
+                    $.Dialog.success(json.info);
+                    //alert('2');
+                }else{
+                    $.Dialog.fail(json.info);
+                    //alert('3');
+                }
+                if(json.url!=""){
+                    setTimeout(function(){
+                        window.location.href=json.url;
+                    },2000);
+                }
+            },
+            error:function(){
+                $.Dialog.close();
+                //$.Dialog.fail();
+            }
+        });*/
+    }
+        mui.init
+        ({
+            pullRefresh:
+            {
+                container: '#pullrefresh',
                 down: {
-                    //下拉刷新
-                    auto:true,//可选,默认false.自动下拉刷新一次
-                    contentdown : "下拉可以刷新",//可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
-                    contentover : "释放立即刷新",//可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
-                    contentrefresh : "正在刷新...",//可选，正在刷新状态时，下拉刷新控件上显示的标题内容
                     callback: pulldownRefresh
                 },
+                up: {
+                    contentrefresh: '正在加载...',
+                    callback: pullupRefresh
+                }
             }
         });
-        if(mui.os.plus) {
+
+        /*
+         * 下拉刷新具体业务实现
+         */
+        function pulldownRefresh()
+        {
+            setTimeout(function()
+            {
+                var table = document.body.querySelector('.translate');
+                var cells = document.body.querySelectorAll('.mui-card');
+                //模拟数据
+                for (var i = cells.length, len = i + 3; i < len; i++) {
+                    var li = document.createElement('li');
+                    li.className = 'mui-table-view-cell';
+                    li.innerHTML = '<a class="mui-navigate-right">Item ' + (i + 1) + '</a>';
+                    //下拉刷新，新纪录插到最前面；
+                    table.insertBefore(li, table.firstChild);
+                }
+
+                mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+            }, 1500);
+        }
+
+        var count = 0;
+        /*
+         * 上拉加载具体业务实现
+         */
+        function pullupRefresh()
+        {
+            setTimeout(function() {
+                mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
+                var table = document.body.querySelector('.translate');
+                var cells = document.body.querySelectorAll('.mui-card');
+
+                for (var i = cells.length, len = i + 20; i < len; i++) {
+                    var li = document.createElement('li');
+                    li.className = 'mui-table-view-cell';
+                    li.innerHTML = '<a class="mui-navigate-right">Item ' + (i + 1) + '</a>';
+                    table.appendChild(li);
+                }
+
+            }, 1500);
+        }
+        if (mui.os.plus) {
             mui.plusReady(function() {
                 setTimeout(function() {
-                    mui('#pullrefresh').pullRefresh().pulldownLoading();
+                    mui('#pullrefresh').pullRefresh().pullupLoading();
                 }, 1000);
+
             });
-        } else {
+        } else
+        {
             mui.ready(function() {
-                mui('#pullrefresh').pullRefresh().pulldownLoading();
+                mui('#pullrefresh').pullRefresh().pullupLoading();
             });
         }
-        //下拉刷新
-        function pulldownRefresh() {
-            setTimeout(function() {
-                start = 1;//刷新并显示第一页
-                data={
-                    start:0,
-                    limit:10
-                };
-                type=1;//代表下拉刷新
-                toList(data,type);//具体取数据的方法
-            }, 100);
-        }
-        //上拉加载
-        function pullupRefresh() {
-            setTimeout(function() {
-                start+=vmOrder.start;
-                limit=10;
-                data={
-                    start:start,
-                    limit:limit
-                };
-                type=2;//代表上拉加载
-                toList(data,type);//具体取数据的方法
-            }, 100);
-        }
-        /*vue 开始*/
-        var vmOrder = new Vue({
-            el: '#body_box',
-            data: {
-                companylist: null,
-            },
-            methods: {
-                addTranslateTask: function (msg1) {
-                    window.location.href='addTranslateTask.html&id='+msg1;
-                },
-                detailTranslate: function (msg1) {
-                    //查看译文
-                },
-                 detail: function (msg1) {
-                    //查看原文
-                    window.location.href='detail.html&id='+msg1;
-                },
-            },
-            created: function() {
-            }
-        });
-        var toList = function(data,type) {
-            mui.ajax(url_http, {
-                data:data,
-                dataType: 'json',
-                type: 'POST',
-                timeout: 10000,
-                success: function(data) {
-                    if (data.status!=1&&start==1){
-                        vmOrder.$set('is_nodata', '0');
-                        vmOrder.$set('message', '空空如也！');
-                        mui('#pullrefresh').pullRefresh().endPulldownToRefresh();//结束下拉刷新
-                        mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
-                    }else{
-                        for (var i in data.info) {
-                            var arr = new Array();
-                            for (var item in data.info[i]) {
-                                arr[item] = data.info[i][item];
-                            }
-                            if(type==1){
-                                //上拉刷新
-                                /*下面这句很关键！*/
-                                //console.log(data.info);
-                                mui('#pullrefresh').pullRefresh().refresh(true);//有重新触发上拉加载的需求（比如当前类别已无更多数据，但切换到另外一个类别后，应支持继续上拉加载）
-                                vmOrder.companylist = data.info;
-                                vmOrder.$set('is_nodata', '1');
-                                vmOrder.$set('demoData', vmOrder.companylist);  //把数据传给页面
-                                vmOrder.$set('start', vmOrder.companylist.length);
-                            }
-                            if(type==2){
-                                //下拉加载
-                                vmOrder.companylist.push(arr);
-
-                                vmOrder.$set('is_nodata', '1');
-                                vmOrder.$set('demoData', vmOrder.companylist);  //把数据传给页面
-                                vmOrder.$set('start', vmOrder.companylist.length);
-                            }
-                        }
-                        mui('#pullrefresh').pullRefresh().endPulldownToRefresh();//结束下拉刷新
-                        /*结束上拉加载，并根据情况切换“下拉显示更多数据”，以及“没有更多数据了”。执行endPullupToRefresh()方法，结束转雪花进度条的“正在加载...”过程,若还有更多数据，则传入false; 否则传入true，之后滚动条滚动到底时*/
-                        mui('#pullrefresh').pullRefresh().endPullupToRefresh(false);
-                    }
-                },
-                error: function(xhr, type, errerThrown) {
-                    mui.toast('网络异常,请稍候再试');
-                    mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
-                }
-            });
-        };
-        /*公共底部菜单js*/
-        mui(".bottom_menu").on('tap','.list-page-bottom',function(){
-            //获取id
-            var from = this.getAttribute("data");
-            if(from==1){
-                var url = "{:addons_url('HumanTranslation://Wap/index', array('token'=>$token))}";
-            }else if(from==2){
-                var url = "{:addons_url('HumanTranslation://Wap/translate', array('token'=>$token))}";
-            }else{
-                var url = "{:addons_url('HumanTranslation://Wap/ucenter', array('token'=>$token))}";
-            }
-            mui.openWindow({
-                url: url,
-            })
-        })
-        $("a[data=2]").addClass("current");
-        $("a[data=1]").removeClass("current");
-        $("a[data=3]").removeClass("current");
-        mui(".translate").on('tap','.mui-btn',function(){
-            //获取id
-            var id = this.getAttribute("id");
-            var from = this.getAttribute("from");
-            if(from==1){
-                //我要翻译
-                var url = "{:addons_url('HumanTranslation://Wap/addTask', array('token'=>$token))}";
-                var html='<div class="mui-input-row"><textarea name="content" class="translation-content" rows="8"></textarea></div><span id="error">&nbsp</span>';
-                    mui.confirm(html, '请输入内容', null, function(event) {
-                            var index = event.index;
-                             console.log(event);
-                        if(index === 1) {
-                            content = $('.translation-content').val();
-                            if (content == null || content == '' || content == undefined) {
-                                $("#error").html('内容不能为空');
-                                return false;
-                            }
-                            mui.post(url, {
-                                        translate_content: content,
-                                        order_id: id
-                                    }, function (data) {
-                                        $.Dialog.success(data.info);
-                                        setTimeout(function(){
-                                            location.reload();
-                                        },2000);
-                                    }, 'json'
-                            );
-                        }
-                    });
-                return false;
-            }else if(from==2){
-                //查看详情
-                var url = "{:addons_url('HumanTranslation://Wap/detail', array('token'=>$token))}";
-            }else if(from==4){
-                //查看译文
-                var url = "{:addons_url('HumanTranslation://Wap/detail', array('token'=>$token))}";
-            }else{
-            }
-            url=url+'&'+'id='+id;
-            //打开页面
-            mui.openWindow({ id:'detail.html', url:url });
-        })
-
     </script>
 </body>
 </html>

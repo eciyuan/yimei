@@ -90,7 +90,6 @@ class OrderModel extends Model {
 
 		return $list;
 	}
-	/*获取物流信息*/
 	function getSendInfo($id) {
 		$info = $this->getInfo($id);
         //电商ID

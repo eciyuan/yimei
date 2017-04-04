@@ -51,9 +51,9 @@ class RedBagModel extends Model {
 	// 获取红包共用方法
 	function getRedBag($id) {
 		$config = getAddonConfig ( 'RedBag' );
-		//dump($config);exit();
+		
 		$info = $this->getInfo ( $id, true );
-		//dump($info);exit();
+		
 		$left_num = $info ['total_num'] - $info ['collect_count'];
 		$left_amount = $info ['total_amount'] - $info ['collect_amount'];
 		
@@ -64,9 +64,10 @@ class RedBagModel extends Model {
 		}
 		
 		$recode ['redbag_id'] = $id;
-		$recode ['openid'] = getPaymentOpenid ( $config ['wxappid'], $config ['wxappsecret'] );//接受收红包的用户id
-
-		//dump($recode ['openid'] );echo"red";
+		
+		$recode ['openid'] = getPaymentOpenid ( $config ['wxappid'], $config ['wxappsecret'] );
+		
+		
 		if ($info ['collect_limit'] > 0) {
 			$my_count = M ( 'redbag_follow' )->where ( $recode )->count ();
 			if ($my_count >= $info ['collect_limit']) {
@@ -81,7 +82,7 @@ class RedBagModel extends Model {
 		}
 		
 		$money = rand ( $info ['min_value'], $info ['max_value'] );
-		//echo  $info ['act_name'];exit();
+		
 		// 商户和公众号信息
 		$data ['mch_id'] = $config ['mch_id']; // 微信支付分配的商户号
 		$data ['mch_billno'] = $config ['mch_id'] . date ( Ymd ) . $this->getRandStr (); // 商户订单号（每个订单号必须唯一）组成： mch_id+yyyymmdd+10位一天内不能重复的数字。接口根据商户订单号支持重入， 如出现超时可再调用。
@@ -117,7 +118,7 @@ class RedBagModel extends Model {
         <nonce_str>{$data ['nonce_str']}</nonce_str>
         </xml>";
 		// dump ( $data );
-		//dump ( $vars );exit();
+		// dump ( $vars );
 		$url = 'https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack';
 		// 获取证书路径
 		$ids [] = $config ['cert_dir'];
@@ -127,7 +128,7 @@ class RedBagModel extends Model {
 				$ids 
 		);
 		$fileData = M ( 'file' )->where ( $map )->select ();
-		//dump($fileData);exit();
+		
 		$downloadConfig = C ( DOWNLOAD_UPLOAD );
 		$certpath = $keypath = '';
 		foreach ( $fileData as $f ) {
@@ -137,18 +138,20 @@ class RedBagModel extends Model {
 				$keypath = SITE_PATH . substr ( $downloadConfig ['rootPath'], 1 ) . $f ['savepath'] . $f ['savename'] ;
 			}
 		}
+		
 		$res = $this->curl_post_ssl ( $url, $vars, $certpath, $keypath );
-	/*	if ($res ['return_code'] == 'FAIL') {
-			echo "ds";
+		
+		if ($res ['return_code'] == 'FAIL') {
 			$returnData ['msg_code'] = 0;
 			$returnData ['msg'] = $res ['return_msg'];
 			return $returnData;
-		}*/
+		}
 		if ($res ['result_code'] == 'FAIL') {
 			$returnData ['msg_code'] = 0;
 			$returnData ['msg'] = $res ['err_code_des'] . ', 错误码： ' . $res ['err_code'];
 			return $returnData;
 		}
+		
 		// dump($res);
 		// 记录个人日志
 		$recode ['openid'] = $data ['re_openid'];
@@ -211,8 +214,6 @@ class RedBagModel extends Model {
 		}
 	}
 	function curl_post_ssl($url, $vars, $cert_dir = '', $key_dir = '') {
-		//dump($vars);exit();
-		//dump($url);
 		$ch = curl_init ();
 		// 超时时间
 		curl_setopt ( $ch, CURLOPT_TIMEOUT, 30 );
@@ -240,7 +241,7 @@ class RedBagModel extends Model {
 		curl_setopt ( $ch, CURLOPT_POST, 1 );
 		curl_setopt ( $ch, CURLOPT_POSTFIELDS, $vars );
 		$content = curl_exec ( $ch );
-		//dump($content);exit();
+		
 		if ($content) {
 			$data = new \SimpleXMLElement ( $content );
 			foreach ( $data as $key => $value ) {

@@ -158,13 +158,13 @@ class ShopController extends AddonsController {
 	}
 	function add() {
 		$model = $this->getModel ( $this->table );
+		
 		parent::common_add ( $model );
 	}
 	public function edit() {
 		$model = $this->getModel ( $this->table );
-		//dump($_POST);exit();
-		//dump($model);exit();
 		$this->assign ( 'post_url', U ( 'edit' ) );
+		
 		parent::common_edit ( $model, 0, 'add' );
 	}
 

@@ -129,13 +129,6 @@ class SurveyController extends AddonsController {
 
 	}
 	function lists() {
-		$top_more_button [] = array (
-			'title' => '导出数据',
-			'url' => U ( 'export', array (
-				'target_id' => I ( 'target_id' )
-			) )
-		);
-		$this->assign ( 'top_more_button', $top_more_button );
 		$isAjax = I ( 'isAjax' );
 		$isRadio = I ( 'isRadio' );
 		$model = $this->getModel ( 'survey' );
@@ -248,16 +241,5 @@ class SurveyController extends AddonsController {
 		} else if (strtotime ( I ( 'post.start_time' ) ) >= strtotime ( I ( 'post.end_time' ) )) {
 			$this->error ( '开始时间不能大于或等于结束时间' );
 		}
-	}
-	/*导出数据*/
-	function export() {
-		$model = $this->getModel ( 'survey' );
-		// 搜索条件
-		$map ['addon'] = $this->addon;
-		$map ['target_id'] = I ( 'target_id' );
-		$map ['token'] = get_token ();
-		session ( 'common_condition', $map );
-
-		parent::common_export ( $model );
 	}
 }
